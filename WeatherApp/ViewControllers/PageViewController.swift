@@ -20,24 +20,20 @@ class PageViewController: UIPageViewController {
                 animated: true,
                 completion: nil)
         }
-
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-
     }
     
+    private var randomCity = City()
+    
     private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newColoredViewController("Green"),
-            self.newColoredViewController("Red"),
-            self.newColoredViewController("Blue")]
+        return [self.newColoredViewController("First"),
+            self.newColoredViewController("Second")]
     }()
     
     private func newColoredViewController(color: String) -> UIViewController {
         return UIStoryboard(name: "Main", bundle: nil) .
             instantiateViewControllerWithIdentifier("\(color)ViewController")
     }
+
 }
 
  // MARK: UIPageViewControllerDataSource
@@ -68,6 +64,7 @@ extension PageViewController: UIPageViewControllerDataSource {
     
     func pageViewController(pageViewController: UIPageViewController,
         viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+            
             guard let viewControllerIndex = orderedViewControllers.indexOf(viewController) else {
                 return nil
             }
@@ -87,7 +84,10 @@ extension PageViewController: UIPageViewControllerDataSource {
             
             return orderedViewControllers[nextIndex]
     }
+    
 }
+
+
 
 
 
