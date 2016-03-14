@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
       collectionView.configureLayout()
+//        automaticallyAdjustsScrollViewInsets = false
         DataParser.requestDataForCity("Chisinau")
     }
     
@@ -54,7 +55,7 @@ extension UICollectionView {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         layout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.collectionViewLayout = layout
+        collectionViewLayout = layout
     }
 }
 
