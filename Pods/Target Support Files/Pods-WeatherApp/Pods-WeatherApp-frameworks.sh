@@ -86,10 +86,14 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-WeatherApp/Alamofire.framework"
   install_framework "Pods-WeatherApp/AlamofireJsonToObjects.framework"
+  install_framework "Pods-WeatherApp/AlamofireObjectMapper.framework"
   install_framework "Pods-WeatherApp/EVReflection.framework"
+  install_framework "Pods-WeatherApp/ObjectMapper.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-WeatherApp/Alamofire.framework"
   install_framework "Pods-WeatherApp/AlamofireJsonToObjects.framework"
+  install_framework "Pods-WeatherApp/AlamofireObjectMapper.framework"
   install_framework "Pods-WeatherApp/EVReflection.framework"
+  install_framework "Pods-WeatherApp/ObjectMapper.framework"
 fi

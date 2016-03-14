@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -16,7 +15,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
       collectionView.configureLayout()
 //        automaticallyAdjustsScrollViewInsets = false
-        DataParser.requestDataForCity("Chisinau")
+        DataParser.requestDataForCity("Paris")
     }
     
 }

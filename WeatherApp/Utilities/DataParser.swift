@@ -13,16 +13,21 @@ let requestURL = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&app
 
 class DataParser  {
     
-    struct MyUrl {
-        static var base = "http://api.openweathermap.org"
-        static var version = "/data/2.5"
-        static var weather = "/weather"
+    struct Url {
+        static let base = "http://api.openweathermap.org"
+        static let version = "/data/2.5"
+        static let weather = "/weather"
         static let apiKey = "b1b15e88fa797225412429c1c50c122a"
     }
     
+    enum Units : String {
+        case Fahrenheit = "imperial"
+        case Celsius = "metric"
+    }
+    
     static func requestDataForCity(city: String) {
-        Alamofire.request(.GET, requestURL+city, parameters: ["q": city, "appid": MyUrl.apiKey]).responseJSON { response -> Void in
-            
+        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Fahrenheit.rawValue]).responseJSON { response -> Void in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             guard response.result.isSuccess else {
                 print("Error while fetching tags: \(response.result.error)")
                 return
@@ -32,7 +37,6 @@ class DataParser  {
                 print("Invalid tag information received from service")
                 return
             }
-            responseJSON 
             print(responseJSON)
         }
     }

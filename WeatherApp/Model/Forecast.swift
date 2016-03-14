@@ -8,7 +8,7 @@
 import RealmSwift
 import Foundation
 
-class City : Object {
+class Forecast : Object {
     
     dynamic var cityName : String?
     dynamic var precipitation : String?

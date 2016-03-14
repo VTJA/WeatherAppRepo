@@ -129,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="351" y="-71"/>
         </scene>
-        <!--View Controller-->
+        <!--Secondary View Controller-->
         <scene sceneID="PjG-NP-Dm6">
             <objects>
-                <viewController id="gpD-cl-U6Y" sceneMemberID="viewController">
+                <viewController id="gpD-cl-U6Y" customClass="SecondaryViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="k53-qP-yao"/>
                         <viewControllerLayoutGuide type="bottom" id="iDm-V3-HiP"/>
@@ -141,28 +141,35 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="jwY-aF-hV0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="Y55-Y2-dGo"/>
-                                    <constraint firstAttribute="height" constant="44" id="nDQ-jz-59J"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tvH-nR-Cqk">
                                 <rect key="frame" x="0.0" y="44" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="jwY-aF-hV0">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="C1S-L7-UaZ"/>
+                                    <constraint firstAttribute="width" secondItem="jwY-aF-hV0" secondAttribute="height" multiplier="150:11" id="QWb-5O-8vp"/>
+                                    <constraint firstAttribute="height" constant="44" id="mdk-N1-f6Z"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="QWb-5O-8vp"/>
+                                        <exclude reference="mdk-N1-f6Z"/>
+                                    </mask>
+                                </variation>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="trailing" secondItem="jwY-aF-hV0" secondAttribute="trailing" id="O8x-TF-gIX"/>
-                            <constraint firstAttribute="trailing" secondItem="jwY-aF-hV0" secondAttribute="trailing" id="STT-QH-rRs"/>
-                            <constraint firstItem="iDm-V3-HiP" firstAttribute="top" secondItem="tvH-nR-Cqk" secondAttribute="bottom" id="V1e-SF-cqj"/>
-                            <constraint firstItem="jwY-aF-hV0" firstAttribute="top" secondItem="k53-qP-yao" secondAttribute="bottom" id="Vhq-bN-gw2"/>
-                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="top" secondItem="jwY-aF-hV0" secondAttribute="bottom" id="W3m-Rq-SxN"/>
-                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="leading" secondItem="jwY-aF-hV0" secondAttribute="leading" id="WaQ-Pz-PJX"/>
-                            <constraint firstItem="jwY-aF-hV0" firstAttribute="leading" secondItem="php-CY-Pda" secondAttribute="leading" id="fI6-w4-uC9"/>
+                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="leading" secondItem="php-CY-Pda" secondAttribute="leading" id="4PP-cV-9CI"/>
+                            <constraint firstAttribute="trailing" secondItem="jwY-aF-hV0" secondAttribute="trailing" id="IQw-5F-wdw"/>
+                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="top" secondItem="jwY-aF-hV0" secondAttribute="bottom" id="Prc-fo-Pi9"/>
+                            <constraint firstItem="iDm-V3-HiP" firstAttribute="top" secondItem="tvH-nR-Cqk" secondAttribute="bottom" id="Rkv-qW-bil"/>
+                            <constraint firstItem="jwY-aF-hV0" firstAttribute="leading" secondItem="php-CY-Pda" secondAttribute="leading" id="aQS-fI-qg9"/>
+                            <constraint firstAttribute="trailing" secondItem="tvH-nR-Cqk" secondAttribute="trailing" id="kCT-ct-hfR"/>
+                            <constraint firstItem="jwY-aF-hV0" firstAttribute="top" secondItem="k53-qP-yao" secondAttribute="bottom" id="qHr-Lw-ozu"/>
                         </constraints>
                     </view>
                 </viewController>
