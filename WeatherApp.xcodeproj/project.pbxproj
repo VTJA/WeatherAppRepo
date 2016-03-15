@@ -18,10 +18,6 @@
 		69C6BFF91C9198E400B2B991 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69C6BFF71C9198E400B2B991 /* LaunchScreen.storyboard */; };
 		69C6C0041C9198E400B2B991 /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6C0031C9198E400B2B991 /* WeatherAppTests.swift */; };
 		69C6C00F1C9198E400B2B991 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6C00E1C9198E400B2B991 /* WeatherAppUITests.swift */; };
-		69D87F5B1C91A7FE00131749 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D87F591C91A7FE00131749 /* Realm.framework */; };
-		69D87F5C1C91A7FE00131749 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 69D87F591C91A7FE00131749 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		69D87F5D1C91A7FE00131749 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D87F5A1C91A7FE00131749 /* RealmSwift.framework */; };
-		69D87F5E1C91A7FE00131749 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 69D87F5A1C91A7FE00131749 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		69ECD4081C9709EB00DFB2A6 /* SecondaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ECD4071C9709EB00DFB2A6 /* SecondaryViewController.swift */; };
 		DD714217EFCD6EC516C6FCED /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A044E9E71242232280DE5250 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
@@ -50,8 +46,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				69D87F5E1C91A7FE00131749 /* RealmSwift.framework in Embed Frameworks */,
-				69D87F5C1C91A7FE00131749 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,8 +72,6 @@
 		69C6C00A1C9198E400B2B991 /* WeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69C6C00E1C9198E400B2B991 /* WeatherAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITests.swift; sourceTree = "<group>"; };
 		69C6C0101C9198E400B2B991 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		69D87F591C91A7FE00131749 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		69D87F5A1C91A7FE00131749 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		69ECD4071C9709EB00DFB2A6 /* SecondaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryViewController.swift; sourceTree = "<group>"; };
 		A044E9E71242232280DE5250 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -89,8 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69D87F5D1C91A7FE00131749 /* RealmSwift.framework in Frameworks */,
-				69D87F5B1C91A7FE00131749 /* Realm.framework in Frameworks */,
 				DD714217EFCD6EC516C6FCED /* Pods_WeatherApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,8 +140,6 @@
 		69C6BFDF1C9198E300B2B991 = {
 			isa = PBXGroup;
 			children = (
-				69D87F591C91A7FE00131749 /* Realm.framework */,
-				69D87F5A1C91A7FE00131749 /* RealmSwift.framework */,
 				69C6BFEA1C9198E400B2B991 /* WeatherApp */,
 				69C6C0021C9198E400B2B991 /* WeatherAppTests */,
 				69C6C00D1C9198E400B2B991 /* WeatherAppUITests */,

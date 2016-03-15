@@ -144,6 +144,20 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tvH-nR-Cqk">
                                 <rect key="frame" x="0.0" y="44" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="fep-bD-bkT">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fep-bD-bkT" id="jSe-gV-rWe">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="gpD-cl-U6Y" id="xdZ-NX-w13"/>
+                                    <outlet property="delegate" destination="gpD-cl-U6Y" id="ywf-yN-Wdk"/>
+                                </connections>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="jwY-aF-hV0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -159,6 +173,9 @@
                                         <exclude reference="mdk-N1-f6Z"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="gpD-cl-U6Y" id="Ghi-ju-IHV"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -172,10 +189,14 @@
                             <constraint firstItem="jwY-aF-hV0" firstAttribute="top" secondItem="k53-qP-yao" secondAttribute="bottom" id="qHr-Lw-ozu"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="matchesTableView" destination="tvH-nR-Cqk" id="2iz-sb-x6O"/>
+                        <outlet property="searchBar" destination="jwY-aF-hV0" id="iPK-0I-znu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A7M-GM-wVX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1055" y="-71"/>
+            <point key="canvasLocation" x="1043" y="-62"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fhc-XN-23n">

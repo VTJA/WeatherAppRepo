@@ -14,8 +14,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
       collectionView.configureLayout()
-//        automaticallyAdjustsScrollViewInsets = false
-        DataParser.requestDataForCity("Paris")
+        DataParser.requestDataForCity("Chis")
     }
     
 }

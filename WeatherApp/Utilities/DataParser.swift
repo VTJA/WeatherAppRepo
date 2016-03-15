@@ -27,9 +27,11 @@ class DataParser  {
     }
     
     static func requestDataForCity(city: String) {
-        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Celsius.rawValue]).responseJSON { response -> Void in
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
+        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Celsius.rawValue, "type": "like"]).responseJSON { response -> Void in
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             guard response.result.isSuccess else {
                 print("Error while fetching tags: \(response.result.error)")
