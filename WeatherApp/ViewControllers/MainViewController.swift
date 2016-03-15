@@ -14,9 +14,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
       collectionView.configureLayout()
-        DataParser.requestDataForCity("Chis")
+        DataParser.requestDataForCity("LosAngeles")
     }
-    
 }
 
 extension MainViewController : UICollectionViewDataSource {

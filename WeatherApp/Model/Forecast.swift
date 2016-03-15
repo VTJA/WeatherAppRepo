@@ -11,9 +11,9 @@ import RealmSwift
 
 class Forecast : Object, Mappable {
     
-    dynamic var cityName : String?
-    dynamic var weatherDescription : String?
-    dynamic  var icon: String?
+    dynamic var cityName : String = ""
+    dynamic var weatherDescription : String = ""
+    dynamic  var icon: String = ""
     var humidity: Float = 0
     var temp: Float = 0
     var tempMax: Float = 0
