@@ -8,6 +8,7 @@ target 'WeatherApp' do
 pod 'Alamofire', '~> 3.2'
 pod 'AlamofireJsonToObjects', '~> 1.3'
 pod 'AlamofireObjectMapper', '~> 2.1'
+pod 'ObjectMapper', '~> 1.1'
 use_frameworks!
 end
 

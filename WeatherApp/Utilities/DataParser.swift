@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ObjectMapper
 import Alamofire
 
 let requestURL = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a"
@@ -26,8 +27,10 @@ class DataParser  {
     }
     
     static func requestDataForCity(city: String) {
-        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Fahrenheit.rawValue]).responseJSON { response -> Void in
+        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Celsius.rawValue]).responseJSON { response -> Void in
+            
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            
             guard response.result.isSuccess else {
                 print("Error while fetching tags: \(response.result.error)")
                 return
@@ -37,7 +40,12 @@ class DataParser  {
                 print("Invalid tag information received from service")
                 return
             }
-            print(responseJSON)
+            
+//            print(responseJSON)
+            
+            let forecast : Forecast = Mapper<Forecast>().map(responseJSON)!
+            
+            print("The weather in \(forecast.cityName) is \(forecast.weatherDescription) and the temperature is \(forecast.temp)")
         }
     }
 }
