@@ -8,62 +8,39 @@
 
 import UIKit
 
-class SecondaryViewController: UIViewController , UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
-
+class SecondaryViewController: UIViewController  {
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var matchesTableView: UITableView!
+    @IBOutlet weak var tempLabel: UILabel!
     
     var searchActive : Bool = false
-    var data = ["San Francisco","New York","San Jose","Chicago","Los Angeles","Austin","Seattle"]
-    var filtered:[String] = []
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchActive = true;
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchActive = false;
-    }
-    
+    @IBOutlet weak var nameLabel: UILabel!
+    var filteredCities : [Forecast] = [Forecast]()
+}
+
+extension SecondaryViewController : UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filtered = data.filter({ (text) -> Bool in
-            let tmp: NSString = text
-            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
-            return range.location != NSNotFound
-        })
+        let params = ["q":searchText, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
         
-        if(filtered.count == 0) {
-            searchActive = false;
-        } else {
-            searchActive = true;
+        DataParser.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
+            if let filteredCities = result {
+                self.filteredCities = filteredCities
+            }
+            self.matchesTableView.reloadData()
         }
-        matchesTableView.reloadData()
     }
-    
+}
+
+extension SecondaryViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(searchActive) {
-            return filtered.count
-        }
-        return data.count;
+        return filteredCities.count == 0 ? 0 : (filteredCities.count)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell");
-        if(searchActive){
-            matchesTableView.hidden = false
-            cell!.textLabel?.text = filtered[indexPath.row]
-        } else {
-            matchesTableView.hidden = true
-        }
+        cell!.textLabel?.text = self.filteredCities[indexPath.row].cityName
         return cell!;
     }
 }
-

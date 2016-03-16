@@ -11,6 +11,8 @@ import ObjectMapper
 import Alamofire
 import AlamofireObjectMapper
 
+let APIkey = "b1b15e88fa797225412429c1c50c122a"
+
 public enum HTTPMethod: String {
     case GET = "GET"
     case POST = "POST"
@@ -33,7 +35,6 @@ extension MyEndpoint : Endpoint {
     public var baseURL: NSURL {
         return NSURL(string: "http://api.openweathermap.org/data/2.5")!
     }
-    
     public var path : String {
         switch self {
         case .Weather :
@@ -54,14 +55,8 @@ final class DataParser {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         
         Alamofire.request(.GET, URL , parameters: parameters, encoding: .URLEncodedInURL).responseArray("list") { (response:Alamofire.Response<[Forecast], NSError>) in
-                        responseCallback(response.result.value, response.result.error)
+            responseCallback(response.result.value, response.result.error)
             
-            if let forecasts = response.result.value {
-                for fr in forecasts {
-                    print(fr.cityName)
-                    print(fr.temp)
-                }
-            }
         }
     }
 }
