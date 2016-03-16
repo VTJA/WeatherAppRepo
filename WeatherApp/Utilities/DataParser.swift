@@ -30,81 +30,38 @@ public enum MyEndpoint {
 }
 
 extension MyEndpoint : Endpoint {
-    
     public var baseURL: NSURL {
-        return NSURL(string: "http://api.openweathermap.org/data/2.5/")!
+        return NSURL(string: "http://api.openweathermap.org/data/2.5")!
     }
     
     public var path : String {
         switch self {
         case .Weather :
-            return "weather/"
+            return "/weather"
         case .Search :
-            return "find/"
+            return "/find"
         }
     }
     
     public var method : HTTPMethod {
         return .GET
     }
-    
 }
 
 final class DataParser {
-    static var parameters : [String : AnyObject]?
-    static let endpoint = MyEndpoint.Search
-
-    //let parameters = ["q": parameters["city"], "appid": parameters["key"], "units": parameters["units"], "type": parameters["accuracy"], "mode": parameters["mode"]]
-    
-    static func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil) {
+    static func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([Forecast]?, NSError?)-> Void) {
         
+        let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         
-        let URL = endpoint.baseURL.URLByAppendingPathExtension(endpoint.path)
-        
-        
-        Alamofire.request(.GET, URL , parameters: parameters, encoding: .URLEncodedInURL).responseArray("list") { (response: Response<[Forecast], NSError>) in
-            //            guard response.result.isSuccess else {
-            //                print("Error while fetching tags: \(response.result.error)")
-            //                return
-            //            }
-            //
-            //            guard let responseJSON = response.result.value as? [String: AnyObject] else {
-            //                print("Invalid tag information received from service")
-            //                return
-            //            }
+        Alamofire.request(.GET, URL , parameters: parameters, encoding: .URLEncodedInURL).responseArray("list") { (response:Alamofire.Response<[Forecast], NSError>) in
+                        responseCallback(response.result.value, response.result.error)
+            
+            if let forecasts = response.result.value {
+                for fr in forecasts {
+                    print(fr.cityName)
+                    print(fr.temp)
+                }
+            }
         }
     }
 }
-
-
-
-//    static func requestDataForCity(city: String) {
-//
-//        let URL = MyEndpoint.Search
-//
-//
-//        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Celsius.rawValue, "type": "like"]).responseArray() { ( response: Response<[Forecast], NSError>) -> Void in
-//            print(response.result.value)
-//            print(response.result.error)
-//
-//        }
-//            responseArray<Forecast>(keyPath: "list", { (response: Response<[Forecast], NSError>) in
-//
-//        }
-
-//        Alamofire.request(.GET, Url.base + Url.version + Url.weather, parameters: ["q": city, "appid": Url.apiKey, "units": Units.Celsius.rawValue, "type": "like"]). { response -> Void in
-//
-//            guard response.result.isSuccess else {
-//                print("Error while fetching tags: \(response.result.error)")
-//                return
-//            }
-//
-//            guard let responseJSON = response.result.value as? [String: AnyObject] else {
-//                print("Invalid tag information received from service")
-//                return
-//            }
-//
-//            let forecasts : Forecast = Mapper<Forecast>().map(responseJSON)!
-//
-//            print("The weather in \(forecast.cityName) is \(forecast.weatherDescription) and the temperature is \(forecast.temp)")
-//        }

@@ -19,7 +19,6 @@
 		69C6C0041C9198E400B2B991 /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6C0031C9198E400B2B991 /* WeatherAppTests.swift */; };
 		69C6C00F1C9198E400B2B991 /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6C00E1C9198E400B2B991 /* WeatherAppUITests.swift */; };
 		69ECD4081C9709EB00DFB2A6 /* SecondaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ECD4071C9709EB00DFB2A6 /* SecondaryViewController.swift */; };
-		69F9D8951C98620F00A1B5C5 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F9D8941C98620F00A1B5C5 /* Response.swift */; };
 		DD714217EFCD6EC516C6FCED /* Pods_WeatherApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A044E9E71242232280DE5250 /* Pods_WeatherApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +73,6 @@
 		69C6C00E1C9198E400B2B991 /* WeatherAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITests.swift; sourceTree = "<group>"; };
 		69C6C0101C9198E400B2B991 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69ECD4071C9709EB00DFB2A6 /* SecondaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondaryViewController.swift; sourceTree = "<group>"; };
-		69F9D8941C98620F00A1B5C5 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = WeatherApp/Model/Response.swift; sourceTree = SOURCE_ROOT; };
 		A044E9E71242232280DE5250 /* Pods_WeatherApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -117,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				6999EE561C9712E2005F7A49 /* Forecast.swift */,
-				69F9D8941C98620F00A1B5C5 /* Response.swift */,
 			);
 			name = Model;
 			path = City;
@@ -396,7 +393,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69F9D8951C98620F00A1B5C5 /* Response.swift in Sources */,
 				6999EE571C9712E2005F7A49 /* Forecast.swift in Sources */,
 				69ECD4081C9709EB00DFB2A6 /* SecondaryViewController.swift in Sources */,
 				6999EE551C9712B0005F7A49 /* DataParser.swift in Sources */,

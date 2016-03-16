@@ -11,10 +11,15 @@ import UIKit
 class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    var results : [Forecast]?
     
     override func viewDidLoad() {
-      collectionView.configureLayout()
-        DataParser.requestDataForCity("LosAngeles")
+        collectionView.configureLayout()
+        let params = ["q":"Chi", "appid": "b1b15e88fa797225412429c1c50c122a", "units": "metric", "type": "like" , "mode": "json"]
+        
+        DataParser.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
+            print(result)
+        }
     }
 }
 
