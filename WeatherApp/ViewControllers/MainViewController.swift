@@ -7,24 +7,32 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-   
+    var storedForecasts = Results<Forecast>?()
     
     override func viewDidLoad() {
         collectionView.configureLayout()
+    }
+    override func viewWillAppear(animated: Bool) {
+
+        storedForecasts = realm.objects(Forecast)
+        print(storedForecasts)
+        collectionView.reloadData()
     }
 }
 
 extension MainViewController : UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return (storedForecasts?.count)!
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("collectionCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
+        cell.tempLabel.text = "\(storedForecasts![indexPath.row].cityName) \(storedForecasts![indexPath.row].tempMin)...\(storedForecasts![indexPath.row].tempMax) C\u{02DA}" ?? ""
         return cell
     }
 }

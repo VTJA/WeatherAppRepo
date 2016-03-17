@@ -29,7 +29,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionCell" id="PZ4-Ny-e3J">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="forecastCollectionCell" id="PZ4-Ny-e3J" customClass="ForecastCollectionCell" customModule="WeatherApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="74" width="374" height="452"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -99,6 +99,10 @@
                                             <constraint firstAttribute="bottom" secondItem="Smg-j9-zWy" secondAttribute="bottom" constant="22" id="mZg-O3-gHp"/>
                                             <constraint firstItem="Smg-j9-zWy" firstAttribute="top" secondItem="cxF-4J-aYx" secondAttribute="bottom" id="yem-hC-Nlz"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="tempLabel" destination="bM0-y6-xc0" id="TgL-h2-pmO"/>
+                                            <outlet property="weatherImageView" destination="Y74-eO-sVW" id="qdC-BL-6vj"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

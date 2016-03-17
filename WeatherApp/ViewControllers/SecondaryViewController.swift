@@ -8,6 +8,8 @@
 
 import UIKit
 
+// TODO: Fix empty search bar , data base storage
+
 class SecondaryViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -16,11 +18,11 @@ class SecondaryViewController: UIViewController {
     var filteredCities : [Forecast] = [Forecast]()
     
     func performSearch() {
-        print("Seraching ...")
+        print("Searching ...")
 
         if (searchBar.text!.characters.count > 3) {
             let params = ["q":searchBar.text!, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
-            DataParser.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
+            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
                 if let filteredCities = result {
                     self.filteredCities = filteredCities
                 }
@@ -46,7 +48,6 @@ extension SecondaryViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredCities.count == 0 ? 0 : (filteredCities.count)
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as! SearchResultCell
         cell.tempLabel.text = "\(self.filteredCities[indexPath.row].temp) C\u{02DA}"
@@ -57,7 +58,7 @@ extension SecondaryViewController : UITableViewDataSource {
 
 extension SecondaryViewController : UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        DataBaseManager.sharedInstance.store(self.filteredCities[indexPath.row])
         self.navigationController?.popViewControllerAnimated(true)
     }
 }

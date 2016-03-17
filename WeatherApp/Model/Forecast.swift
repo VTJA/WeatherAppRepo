@@ -14,13 +14,18 @@ class Forecast : Object, Mappable {
     dynamic var cityName : String = ""
     dynamic var weatherDescription : String = ""
     dynamic  var icon: String = ""
-    var humidity: Float = 0
-    var temp: Float = 0
-    var tempMax: Float = 0
-    var tempMin: Float = 0
+    dynamic var humidity: Float = 0
+    dynamic var temp: Float = 0
+    dynamic var tempMax: Float = 0
+    dynamic var tempMin: Float = 0
+    dynamic var id : Int = 0
     
     required convenience init?(_ map: Map) {
         self.init()
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
     }
     
     func mapping(map: Map) {
@@ -28,8 +33,9 @@ class Forecast : Object, Mappable {
         weatherDescription <- map["weather.0.description"]
         humidity <- map["humidity"]
         temp <- map["main.temp"]
-        tempMax <- map["main.tempMax"]
-        tempMin <- map["main.tempMin"]
+        tempMax <- map["main.temp_max"]
+        tempMin <- map["main.temp_min"]
         icon <- map["weather.0.icon"]
+        id <- map["id"]
     }
 }
