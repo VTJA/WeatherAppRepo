@@ -181,8 +181,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRS-5v-PGT">
-                                                    <rect key="frame" x="8" y="0.0" width="219" height="35"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRS-5v-PGT">
+                                                    <rect key="frame" x="8" y="18" width="42" height="21"/>
                                                     <color key="backgroundColor" red="0.57498374568893695" green="0.94411128423728918" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -205,7 +205,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="gpD-cl-U6Y" id="xdZ-NX-w13"/>
-                                    <outlet property="delegate" destination="gpD-cl-U6Y" id="ywf-yN-Wdk"/>
+                                    <outlet property="delegate" destination="gpD-cl-U6Y" id="XsC-yd-Jb7"/>
                                 </connections>
                             </tableView>
                         </subviews>

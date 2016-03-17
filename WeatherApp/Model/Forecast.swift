@@ -28,7 +28,8 @@ class Forecast : Object, Mappable {
         weatherDescription <- map["weather.0.description"]
         humidity <- map["humidity"]
         temp <- map["main.temp"]
-        tempMax <- map["tempMax"]
-        tempMin <- map["tempMin"]
+        tempMax <- map["main.tempMax"]
+        tempMin <- map["main.tempMin"]
+        icon <- map["weather.0.icon"]
     }
 }

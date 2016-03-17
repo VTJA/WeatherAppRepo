@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import RealmSwift
+
+let realm = try! Realm()
+
+final class DataBaseManager {
+    static func storeForecasts(forecasts : [Forecast]) {
+        try! realm.write {
+            realm.add(forecasts)
+        }
+    }
+}

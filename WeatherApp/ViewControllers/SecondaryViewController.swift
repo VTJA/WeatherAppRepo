@@ -8,29 +8,37 @@
 
 import UIKit
 
-class SecondaryViewController: UIViewController  {
+class SecondaryViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var matchesTableView: UITableView!
     
     var filteredCities : [Forecast] = [Forecast]()
-}
+    
+    func performSearch() {
+        print("Seraching ...")
 
-extension SecondaryViewController : UISearchBarDelegate {
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        let params = ["q":searchText, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
-        if (searchText.characters.count > 3) {
+        if (searchBar.text!.characters.count > 3) {
+            let params = ["q":searchBar.text!, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
             DataParser.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
                 if let filteredCities = result {
                     self.filteredCities = filteredCities
                 }
                 self.matchesTableView.reloadData()
                 
-                if let error = error {
-                    print(error.description)
+                guard error == nil else {
+                    print(error?.description)
+                    return
                 }
             }
         }
+    }
+}
+
+extension SecondaryViewController : UISearchBarDelegate {
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "performSearch", object: nil)
+        performSelector("performSearch", withObject: nil, afterDelay: 0.3)
     }
 }
 
@@ -44,5 +52,12 @@ extension SecondaryViewController : UITableViewDataSource {
         cell.tempLabel.text = "\(self.filteredCities[indexPath.row].temp) C\u{02DA}"
         cell.nameLabel.text = self.filteredCities[indexPath.row].cityName
         return cell;
+    }
+}
+
+extension SecondaryViewController : UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

@@ -12,6 +12,7 @@ import Alamofire
 import AlamofireObjectMapper
 
 let APIkey = "b1b15e88fa797225412429c1c50c122a"
+let keyPath = "list"
 
 public enum HTTPMethod: String {
     case GET = "GET"
@@ -54,7 +55,7 @@ final class DataParser {
         
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         
-        Alamofire.request(.GET, URL , parameters: parameters, encoding: .URLEncodedInURL).responseArray("list") { (response:Alamofire.Response<[Forecast], NSError>) in
+        Alamofire.request(.GET, URL , parameters: parameters, encoding: .URLEncodedInURL).responseArray(keyPath) { (response:Alamofire.Response<[Forecast], NSError>) in
             responseCallback(response.result.value, response.result.error)
             
         }
