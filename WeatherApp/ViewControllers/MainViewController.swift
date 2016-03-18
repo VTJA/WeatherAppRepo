@@ -17,8 +17,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         collectionView.configureLayout()
     }
+    
     override func viewWillAppear(animated: Bool) {
-
         storedForecasts = realm.objects(Forecast)
         print(storedForecasts)
         collectionView.reloadData()
@@ -32,7 +32,7 @@ extension MainViewController : UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
-        cell.tempLabel.text = "\(storedForecasts![indexPath.row].cityName) \(storedForecasts![indexPath.row].tempMin)...\(storedForecasts![indexPath.row].tempMax) C\u{02DA}" ?? ""
+        cell.tempLabel.text = "\(storedForecasts![indexPath.row].cityName) \(storedForecasts![indexPath.row].temp) C\u{02DA}" ?? ""
         return cell
     }
 }
@@ -63,4 +63,5 @@ extension UICollectionView {
         collectionViewLayout = layout
     }
 }
+
 

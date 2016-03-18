@@ -15,7 +15,6 @@ final class RequestDispatcher  {
     internal var reachibilityManager : NetworkReachabilityManager
     
     init(manager: Manager = Manager.sharedInstance) {
-        
         self.manager = manager
         reachibilityManager = NetworkReachabilityManager(host: "http://openweathermap.org/api")!
         reachibilityManager.listener = {[unowned self] status  in
@@ -25,7 +24,6 @@ final class RequestDispatcher  {
     }
     
     func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([Forecast]?, NSError?)-> Void) {
-        
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
         
@@ -43,6 +41,7 @@ final class RequestDispatcher  {
 }
 
 extension HTTPMethod {
+    
     func toAlamofireMethod() -> Alamofire.Method {
         switch self {
         case .GET:

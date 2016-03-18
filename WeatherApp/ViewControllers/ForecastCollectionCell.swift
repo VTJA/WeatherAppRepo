@@ -9,7 +9,6 @@
 import UIKit
 
 class ForecastCollectionCell: UICollectionViewCell {
-    
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
 }

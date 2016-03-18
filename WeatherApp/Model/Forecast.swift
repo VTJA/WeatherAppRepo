@@ -13,7 +13,7 @@ class Forecast : Object, Mappable {
     
     dynamic var cityName : String = ""
     dynamic var weatherDescription : String = ""
-    dynamic  var icon: String = ""
+    dynamic var icon: String = ""
     dynamic var humidity: Float = 0
     dynamic var temp: Float = 0
     dynamic var tempMax: Float = 0

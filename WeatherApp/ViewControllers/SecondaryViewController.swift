@@ -8,7 +8,7 @@
 
 import UIKit
 
-// TODO: Fix empty search bar , data base storage
+// TODO: Fix empty search bar
 
 class SecondaryViewController: UIViewController {
     
@@ -18,8 +18,6 @@ class SecondaryViewController: UIViewController {
     var filteredCities : [Forecast] = [Forecast]()
     
     func performSearch() {
-        print("Searching ...")
-
         if (searchBar.text!.characters.count > 3) {
             let params = ["q":searchBar.text!, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
             RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
@@ -27,11 +25,6 @@ class SecondaryViewController: UIViewController {
                     self.filteredCities = filteredCities
                 }
                 self.matchesTableView.reloadData()
-                
-                guard error == nil else {
-                    print(error?.description)
-                    return
-                }
             }
         }
     }
@@ -41,12 +34,17 @@ extension SecondaryViewController : UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "performSearch", object: nil)
         performSelector("performSearch", withObject: nil, afterDelay: 0.3)
+        
+        if (searchBar.text?.characters.count < 3) {
+            filteredCities = [Forecast]()
+        }
+        matchesTableView.reloadData()
     }
 }
 
 extension SecondaryViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCities.count == 0 ? 0 : (filteredCities.count)
+        return filteredCities.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as! SearchResultCell
