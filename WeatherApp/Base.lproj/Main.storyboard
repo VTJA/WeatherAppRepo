@@ -116,8 +116,8 @@
                                                         </tableViewCell>
                                                     </prototypes>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="cfx-VW-89z" id="3O0-1H-piQ"/>
-                                                        <outlet property="delegate" destination="cfx-VW-89z" id="JyC-nJ-fcx"/>
+                                                        <outlet property="dataSource" destination="EHR-Zw-eGy" id="c4h-KX-69L"/>
+                                                        <outlet property="delegate" destination="EHR-Zw-eGy" id="yRX-NP-38h"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>

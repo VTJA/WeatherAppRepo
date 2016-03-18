@@ -1,41 +1,49 @@
 //
-//  City.swift
+//  Forecast1.swift
 //  WeatherApp
 //
-//  Created by Vitalie Jurjiu on 3/10/16.
+//  Created by Vitalie Jurjiu on 3/18/16.
 //  Copyright © 2016 Vitalie Jurjiu. All rights reserved.
 //
-import Foundation
+
 import ObjectMapper
 import RealmSwift
 
-class Forecast : Object, Mappable {
+class Forecast: Object, Mappable  {
+    dynamic var name: String?
     
-    dynamic var cityName : String = ""
-    dynamic var weatherDescription : String = ""
-    dynamic var icon: String = ""
-    dynamic var humidity: Float = 0
-    dynamic var temp: Float = 0
-    dynamic var tempMax: Float = 0
-    dynamic var tempMin: Float = 0
-    dynamic var id : Int = 0
+    dynamic var clouds: Int = 0
+    
+    dynamic var humidity: Int = 0
+    
+    dynamic var dt: Int = 0
+    
+    dynamic var speed: Float = 0
+    
+    dynamic var rain: Float = 0
+    
+    dynamic var temp: Temp?
+    
+    dynamic var pressure: Float = 0
+    
+    dynamic var weather: [Weather]?
+    
+    dynamic var deg: Int = 0
     
     required convenience init?(_ map: Map) {
         self.init()
     }
     
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-    
     func mapping(map: Map) {
-        cityName <- map["name"]
-        weatherDescription <- map["weather.0.description"]
+        name <- map["name"]
+        clouds <- map["clouds"]
         humidity <- map["humidity"]
-        temp <- map["main.temp"]
-        tempMax <- map["main.temp_max"]
-        tempMin <- map["main.temp_min"]
-        icon <- map["weather.0.icon"]
-        id <- map["id"]
+        dt <- map["dt"]
+        speed <- map["speed"]
+        rain <- map["rain"]
+        temp <- map["temp"]
+        pressure <- map["pressure"]
+        weather <- map["weather"]
+        deg <- map["deg"]
     }
 }

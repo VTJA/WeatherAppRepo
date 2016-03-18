@@ -23,14 +23,14 @@ final class RequestDispatcher  {
         }
     }
     
-    func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([Forecast]?, NSError?)-> Void) {
+    func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([Request]?, NSError?)-> Void) {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
         
         manager.request(method, URL , parameters: parameters, encoding: .URLEncodedInURL)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .responseArray(keyPath) { (response:Alamofire.Response<[Forecast], NSError>) in
+            .responseArray(keyPath) { (response:Alamofire.Response<[Request], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }
     }

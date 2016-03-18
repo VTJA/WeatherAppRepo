@@ -9,13 +9,13 @@
 import Foundation
 import RealmSwift
 
-let realm = try! Realm()
 
 final class DataBaseManager {
     
     static let sharedInstance =  DataBaseManager()
     
     func store(forecast : Forecast) {
+        let realm = try! Realm()
         try! realm.write {
             realm.add(forecast, update: true)
         }

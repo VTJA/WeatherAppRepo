@@ -8,22 +8,27 @@
 
 import UIKit
 
-// TODO: Fix empty search bar
-
 class SecondaryViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var matchesTableView: UITableView!
     
-    var filteredCities : [Forecast] = [Forecast]()
+    var filteredCities : [Request] = [Request]()
     
     func performSearch() {
         if (searchBar.text!.characters.count > 3) {
-            let params = ["q":searchBar.text!, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
-            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
+            
+            let params = ["q":searchBar.text!,
+                        "appid": APIkey,
+                        "units": "metric",
+                        "type": "like" ,
+                        "mode": "json"]
+            
+            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params)
+                { (result : [Request]?, error : NSError?) -> Void in
                 
                 if let filteredCities = result {
-                    self.filteredCities = filteredCities.filter { $0.cityName.characters.count > 0}
+                    self.filteredCities = filteredCities
                 }
                 
                 self.matchesTableView.reloadData()
@@ -38,7 +43,7 @@ extension SecondaryViewController : UISearchBarDelegate {
         performSelector("performSearch", withObject: nil, afterDelay: 0.3)
         
         if (searchBar.text?.characters.count < 3) {
-            filteredCities = [Forecast]()
+            filteredCities = [Request]()
         }
         matchesTableView.reloadData()
     }
@@ -50,7 +55,7 @@ extension SecondaryViewController : UITableViewDataSource {
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as! SearchResultCell
-        cell.tempLabel.text = "\(self.filteredCities[indexPath.row].temp) C\u{02DA}"
+        cell.tempLabel.text = "\(self.filteredCities[indexPath.row].list.) C\u{02DA}"
         cell.nameLabel.text = self.filteredCities[indexPath.row].cityName
         return cell;
     }
