@@ -21,9 +21,11 @@ class SecondaryViewController: UIViewController {
         if (searchBar.text!.characters.count > 3) {
             let params = ["q":searchBar.text!, "appid": APIkey, "units": "metric", "type": "like" , "mode": "json"]
             RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params) { (result : [Forecast]?, error : NSError?) -> Void in
+                
                 if let filteredCities = result {
-                    self.filteredCities = filteredCities
+                    self.filteredCities = filteredCities.filter { $0.cityName.characters.count > 0}
                 }
+                
                 self.matchesTableView.reloadData()
             }
         }

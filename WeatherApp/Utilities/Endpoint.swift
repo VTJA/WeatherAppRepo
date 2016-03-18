@@ -30,6 +30,7 @@ protocol Endpoint {
 enum MyEndpoint {
     case Search
     case Weather
+    case Forecast
 }
 
 extension MyEndpoint : Endpoint {
@@ -42,6 +43,8 @@ extension MyEndpoint : Endpoint {
             return "/weather"
         case .Search :
             return "/find"
+        case .Forecast :
+            return "/forecast"
         }
     }
     var method : HTTPMethod {
