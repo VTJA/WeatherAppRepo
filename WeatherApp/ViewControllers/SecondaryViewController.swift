@@ -13,25 +13,25 @@ class SecondaryViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var matchesTableView: UITableView!
     
-    var filteredCities : [Request] = [Request]()
+    var filteredCities : [Forecast] = [Forecast]()
     
     func performSearch() {
         if (searchBar.text!.characters.count > 3) {
             
             let params = ["q":searchBar.text!,
-                        "appid": APIkey,
-                        "units": "metric",
-                        "type": "like" ,
-                        "mode": "json"]
+                "appid": APIkey,
+                "units": "metric",
+                "type": "like" ,
+                "mode": "json"]
             
             RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params)
-                { (result : [Request]?, error : NSError?) -> Void in
-                
-                if let filteredCities = result {
-                    self.filteredCities = filteredCities
-                }
-                
-                self.matchesTableView.reloadData()
+                { (result : [Forecast]?, error : NSError?) -> Void in
+                    
+                    if let filteredCities = result {
+                        self.filteredCities = filteredCities.filter { $0.name.characters.count > 0 }
+                    }
+                    
+                    self.matchesTableView.reloadData()
             }
         }
     }
@@ -43,7 +43,7 @@ extension SecondaryViewController : UISearchBarDelegate {
         performSelector("performSearch", withObject: nil, afterDelay: 0.3)
         
         if (searchBar.text?.characters.count < 3) {
-            filteredCities = [Request]()
+            filteredCities = [Forecast]()
         }
         matchesTableView.reloadData()
     }
@@ -55,8 +55,8 @@ extension SecondaryViewController : UITableViewDataSource {
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as! SearchResultCell
-        cell.tempLabel.text = "\(self.filteredCities[indexPath.row].list.) C\u{02DA}"
-        cell.nameLabel.text = self.filteredCities[indexPath.row].cityName
+        cell.tempLabel.text = "\(self.filteredCities[indexPath.row].main!.temp) C\u{02DA}"
+        cell.nameLabel.text = self.filteredCities[indexPath.row].name
         return cell;
     }
 }

@@ -14,7 +14,7 @@ class CachingManager {
     
     static let sharedInstance = CachingManager()
     
-//    func getForecast(forecast: Forecast, callback:()-><[Forecast],ErrorType>) {
+//    func getForecast(forecast: Forecast, callback:() -> (< Forecast,ErrorType>)) {
 //        
 //    }
 }

@@ -13,11 +13,11 @@ class Weather: Object, Mappable  {
     
     dynamic var id: Int = 0
     
-    dynamic var main: String?
+    dynamic var main: String = ""
     
-    dynamic var icon: String?
+    dynamic var icon: String = ""
     
-    dynamic var descriptionWeather: String?
+    dynamic var descriptionWeather: String = ""
     
     required convenience init?(_ map: Map) {
         self.init()

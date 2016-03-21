@@ -17,7 +17,7 @@ class Request: Object, Mappable {
     
     dynamic var cnt: Int = 0
     
-    dynamic var list: [Forecast]?
+    var list :List<Forecast> = List<Forecast>()
     
     required convenience init?(_ map: Map) {
         self.init()

@@ -12,11 +12,11 @@ class City: Object, Mappable {
     
     dynamic var id: Int = 0
     
-    dynamic var coord: Coord?
+    var coord: List<Coord> = List<Coord>()
     
-    dynamic var country: String?
+    dynamic var country: String = ""
     
-    dynamic var name: String?
+    dynamic var name: String = ""
     
     dynamic var population: Int = 0
     
