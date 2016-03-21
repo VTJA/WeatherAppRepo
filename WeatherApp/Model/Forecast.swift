@@ -15,33 +15,21 @@ class Forecast: Object, Mappable  {
     
     dynamic var name: String = ""
     
-    dynamic var clouds: Int = 0
-    
-    dynamic var humidity: Int = 0
+    dynamic var coord : Coord?
     
     dynamic var main : Main?
     
     dynamic var dt: Int = 0
     
-    dynamic var speed: Float = 0
+    dynamic var wind : Wind?
     
     dynamic var rain: Float = 0
     
-    dynamic var temp: Temp?
+    dynamic var sys : Sys?
     
-    dynamic var pressure: Float = 0
+    dynamic var clouds : Clouds?
     
-    var weather: List<Weather> = List<Weather>()
-    
-    dynamic var deg: Int = 0
-    
-    dynamic var coord : Coord?
-    
-    var message: String = ""
-
-    var cod: String = ""
-
-    var count: Int = 0
+    dynamic var weather : Weather?
     
     override static func primaryKey() -> String? {
         return "id"
@@ -54,17 +42,17 @@ class Forecast: Object, Mappable  {
     func mapping(map: Map) {
         id <- map["id"]
         name <- map["name"]
-        clouds <- map["clouds"]
-        humidity <- map["humidity"]
         main <- map["main"]
         dt <- map["dt"]
-        speed <- map["speed"]
+        wind <- map["wind"]
         rain <- map["rain"]
-        temp <- map["temp"]
-        pressure <- map["pressure"]
-        weather <- map["weather"]
-        deg <- map["deg"]
-        message <- map["message"]
+        clouds <- map["clouds"]
+        weather <- map["weather.0"]
         coord <- map["coord"]
     }
+}
+
+enum ForecastType : Int {
+    case CurrentForecast = 0
+    case DayForecast = 1
 }

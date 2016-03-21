@@ -8,7 +8,7 @@
 import ObjectMapper
 import RealmSwift
 
-class City: Object, Mappable {
+final class City: Object, Mappable {
     
     dynamic var id: Int = 0
     

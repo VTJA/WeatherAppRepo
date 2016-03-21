@@ -9,7 +9,7 @@
 import ObjectMapper
 import RealmSwift
 
-class Weather: Object, Mappable  {
+final class Weather: Object, Mappable {
     
     dynamic var id: Int = 0
     

@@ -134,6 +134,7 @@
                                             <constraint firstItem="Smg-j9-zWy" firstAttribute="top" secondItem="cxF-4J-aYx" secondAttribute="bottom" id="yem-hC-Nlz"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="daysTableview" destination="Smg-j9-zWy" id="59u-ck-gPb"/>
                                             <outlet property="tempLabel" destination="bM0-y6-xc0" id="TgL-h2-pmO"/>
                                             <outlet property="weatherImageView" destination="Y74-eO-sVW" id="qdC-BL-6vj"/>
                                         </connections>

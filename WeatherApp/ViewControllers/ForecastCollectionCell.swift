@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ForecastCollectionCell: UICollectionViewCell {
+final class ForecastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var daysTableview: UITableView!
 }

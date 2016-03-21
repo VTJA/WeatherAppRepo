@@ -9,7 +9,7 @@
 import ObjectMapper
 import RealmSwift
 
-class Request: Object, Mappable {
+final class Request: Object, Mappable {
     
     dynamic var cod: String?
     
@@ -17,7 +17,7 @@ class Request: Object, Mappable {
     
     dynamic var cnt: Int = 0
     
-    var list :List<Forecast> = List<Forecast>()
+    var list : List<Forecast> = List<Forecast>()
     
     required convenience init?(_ map: Map) {
         self.init()

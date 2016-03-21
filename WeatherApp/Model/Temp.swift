@@ -9,7 +9,7 @@
 import ObjectMapper
 import RealmSwift
 
-class Temp: Object, Mappable  {
+final class Temp: Object, Mappable  {
     
     dynamic var night: Float = 0
     

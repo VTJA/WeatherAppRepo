@@ -9,11 +9,12 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     var storedForecasts = Results<Forecast>?()
+    var daysForecasts = [Forecast]()
     
     override func viewDidLoad() {
         collectionView.configureLayout()
@@ -23,15 +24,30 @@ class MainViewController: UIViewController {
         let realm = try! Realm()
         storedForecasts = realm.objects(Forecast)
         collectionView.reloadData()
+        let params = ["q":"Chisinau",
+            "appid": APIkey,
+            "units": "metric",
+            "cnt" : "4",
+            "mode": "json"]
+        
+        RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { [unowned self] (result : [Forecast]?, error : NSError?) -> Void in
+            if let result = result {
+                self.daysForecasts = result
+            self.collectionView.reloadSections(NSIndexSet.init(index: 0))
+//                print(self.daysForecasts)
+            }
+        }
+        
+        print(storedForecasts)
     }
 }
 
 extension MainViewController : UICollectionViewDataSource {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (storedForecasts?.count)!
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         cell.tempLabel.text = "\(storedForecasts![indexPath.row].name) \(storedForecasts![indexPath.row].main!.temp) C\u{02DA}" ?? ""
         return cell
@@ -39,24 +55,25 @@ extension MainViewController : UICollectionViewDataSource {
 }
 
 extension MainViewController : UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    internal func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return self.collectionView.bounds.size
     }
 }
 
 extension MainViewController : UITableViewDataSource {
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return daysForecasts.count
     }
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
-//        cell?.textLabel?.text = "\(self.days[indexPath.row].dayTemp)...\(self.days[indexPath.row].nightTemp)"
+//        let text = storedForecasts![indexPath.row].weather[0].descriptionWeather ?? ""
+//        cell?.textLabel?.text = text
         return cell!
     }
 }
 
 extension UICollectionView {
-    func configureLayout() {
+   internal func configureLayout() {
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0

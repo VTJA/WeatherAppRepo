@@ -9,7 +9,7 @@
 import ObjectMapper
 import RealmSwift
 
-class Main: Object, Mappable {
+final class Main: Object, Mappable {
     
     dynamic var humidity: Int = 0
     
