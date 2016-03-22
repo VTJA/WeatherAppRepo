@@ -11,23 +11,15 @@ import RealmSwift
 
 class Forecast: Object, Mappable  {
     
-    var id : Int = 0
+    dynamic var id : Int = 0
     
-    dynamic var name: String = ""
+    dynamic var pressure: Double = 0
     
-    dynamic var coord : Coord?
+    dynamic var humidity: Double = 0
     
-    dynamic var main : Main?
+    dynamic var temp : Temp?
     
     dynamic var dt: Double = 0
-    
-    dynamic var wind : Wind?
-    
-    dynamic var rain: Float = 0
-    
-    dynamic var sys : Sys?
-    
-    dynamic var clouds : Clouds?
     
     dynamic var weather : Weather?
     
@@ -40,14 +32,11 @@ class Forecast: Object, Mappable  {
     }
     
     func mapping(map: Map) {
-        id <- map["id"]
-        name <- map["name"]
-        main <- map["main"]
+        id <- map[""]
         dt <- map["dt"]
-        wind <- map["wind"]
-        rain <- map["rain"]
-        clouds <- map["clouds"]
         weather <- map["weather.0"]
-        coord <- map["coord"]
+        temp <- map["temp"]
+        pressure <- map["pressure"]
+        humidity <- map["humidity"]
     }
 }

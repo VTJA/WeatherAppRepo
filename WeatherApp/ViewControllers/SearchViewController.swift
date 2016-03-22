@@ -8,13 +8,12 @@
 
 import UIKit
 
-final class SecondaryViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var matchesTableView: UITableView!
     
-    private var filteredCities : [Forecast] = [Forecast]()
-    private var daysForecasts : [DayForecast] = [DayForecast]()
+    private var filteredCities : [City] = [City]()
     
     func performSearch() {
         if (searchBar.text!.characters.count > 3) {
@@ -26,10 +25,13 @@ final class SecondaryViewController: UIViewController {
                 "mode": "json"]
             
             RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params)
-                {[unowned self] (result : [Forecast]?, error : NSError?) -> Void in
+                {[unowned self] (result : [City]?, error : NSError?) -> Void in
                     
                     if let filteredCities = result {
-                        self.filteredCities = filteredCities.filter { $0.name.characters.count > 0 }
+                        print(filteredCities)
+                        self.filteredCities = filteredCities
+                    } else {
+                        print(error?.description)
                     }
                     
                     self.matchesTableView.reloadData()
@@ -38,32 +40,31 @@ final class SecondaryViewController: UIViewController {
     }
 }
 
-extension SecondaryViewController : UISearchBarDelegate {
+extension SearchViewController : UISearchBarDelegate {
     internal func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SecondaryViewController.performSearch), object: nil)
-        performSelector(#selector(SecondaryViewController.performSearch), withObject: nil, afterDelay: 0.3)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SearchViewController.performSearch), object: nil)
+        performSelector(#selector(SearchViewController.performSearch), withObject: nil, afterDelay: 0.3)
         
         if searchBar.text?.characters.count < 3 {
-            filteredCities = [Forecast]()
+            filteredCities = [City]()
         }
         matchesTableView.reloadData()
     }
 }
 
-extension SecondaryViewController : UITableViewDataSource {
+extension SearchViewController : UITableViewDataSource {
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredCities.count
     }
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell : SearchResultCell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as! SearchResultCell
-        cell.tempLabel.text = "\(self.filteredCities[indexPath.row].main!.temp) C\u{02DA}"
-        cell.nameLabel.text = self.filteredCities[indexPath.row].name
-        cell.nameLabel.sizeToFit()
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        cell.textLabel!.text = self.filteredCities[indexPath.row].name
+        cell.textLabel!.sizeToFit()
         return cell;
     }
 }
 
-extension SecondaryViewController : UITableViewDelegate {
+extension SearchViewController : UITableViewDelegate {
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         DataBaseManager.sharedInstance.store(self.filteredCities[indexPath.row])
         self.navigationController?.popViewControllerAnimated(true)

@@ -35,5 +35,4 @@ final class Temp: Object, Mappable  {
         max <- map["max"]
         morn <- map["morn"]
     }
-    
 }

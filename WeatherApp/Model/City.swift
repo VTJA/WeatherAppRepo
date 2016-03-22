@@ -12,13 +12,11 @@ final class City: Object, Mappable {
     
     dynamic var id: Int = 0
     
-    var coord: List<Coord> = List<Coord>()
-    
-    dynamic var country: String = ""
+    dynamic var coord : Coord?
     
     dynamic var name: String = ""
     
-    dynamic var population: Int = 0
+    let forecasts = List<Forecast>()
     
     required convenience init?(_ map: Map) {
         self.init()
@@ -27,8 +25,10 @@ final class City: Object, Mappable {
     func mapping(map: Map) {
         id <- map["id"]
         coord <- map["coord"]
-        country <- map["country"]
         name <- map["name"]
-        population <- map["population"]
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
     }
 }

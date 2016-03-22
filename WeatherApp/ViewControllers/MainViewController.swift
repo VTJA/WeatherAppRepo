@@ -13,8 +13,8 @@ final class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var storedForecasts = Results<Forecast>?()
-    private var daysForecasts = [Forecast]()
+    private var cities = Results<City>?()
+    private var forecasts = [Forecast]()
     
     override func viewDidLoad() {
         collectionView.configureLayout()
@@ -22,36 +22,37 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         let realm = try! Realm()
-        storedForecasts = realm.objects(Forecast)
+        cities = realm.objects(City)
         collectionView.reloadData()
-        let params = ["q":"Chisinau",
-            "appid": APIkey,
-            "units": "metric",
-            "cnt" : "4",
-            "mode": "json"]
         
-        RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { [unowned self] (result : [Forecast]?, error : NSError?) -> Void in
-            if let result = result {
-                self.daysForecasts = result
-                self.collectionView.reloadSections(NSIndexSet.init(index: 0))
-                print(self.daysForecasts)
-            }
-        }
-        
-        CachingManager.sharedInstance.loadForecast(City()) { (result) in
+        if cities?.count != 0 {
+            let city = cities!.first!
+            let params : [String : AnyObject] = ["q":city.name,
+                                                 "appid": APIkey,
+                                                 "units": "metric",
+                                                 "cnt" : "4",
+                                                 "mode": "json"]
             
+            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (result : [Forecast]?, error:  NSError?) in
+                if let result = result {
+                    self.forecasts = result
+                    DataBaseManager.sharedInstance.store(self.forecasts[0])
+                    print(self.forecasts)
+                }
+            }
         }
     }
 }
 
 extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (storedForecasts?.count)!
+        return (cities?.count)!
     }
     
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
-        cell.tempLabel.text = "\(storedForecasts![indexPath.row].name) \(storedForecasts![indexPath.row].main!.temp) C\u{02DA}" ?? ""
+        cell.tempLabel.text = " \(cities![indexPath.row].name) C\u{02DA}" ?? ""
+        //        cell.tempLabel.text = "                cell?.textLabel?.text = storedForecasts![indexPath.row].name C\u{02DA}" ?? ""
         return cell
     }
 }
@@ -64,12 +65,10 @@ extension MainViewController : UICollectionViewDelegateFlowLayout {
 
 extension MainViewController : UITableViewDataSource {
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return daysForecasts.count
+        return forecasts.count
     }
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
-        //        let text = storedForecasts![indexPath.row].weather[0].descriptionWeather ?? ""
-        //        cell?.textLabel?.text = text
         return cell!
     }
 }

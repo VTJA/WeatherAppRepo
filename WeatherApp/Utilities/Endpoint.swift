@@ -11,8 +11,10 @@ import ObjectMapper
 import Alamofire
 import AlamofireObjectMapper
 
-let APIkey = "b1b15e88fa797225412429c1c50c122a"
+let APIkey = "867a6d0c3d80f5bb68392878262304f6"
 let keyPath = "list"
+
+
 
 enum HTTPMethod: String {
     case GET = "GET"
@@ -38,6 +40,7 @@ extension MyEndpoint : Endpoint {
     var baseURL: NSURL {
         return NSURL(string: "http://api.openweathermap.org/data/2.5")!
     }
+    
     var path : String {
         switch self {
         case .Weather :
