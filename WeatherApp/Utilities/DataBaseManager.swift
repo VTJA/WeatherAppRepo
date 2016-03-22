@@ -13,9 +13,9 @@ import RealmSwift
 final class DataBaseManager {
     
     static let sharedInstance =  DataBaseManager()
+    let realm = try! Realm()
     
     func store(forecast : Forecast) {
-        let realm = try! Realm()
         try! realm.write {
             realm.add(forecast, update: true)
         }

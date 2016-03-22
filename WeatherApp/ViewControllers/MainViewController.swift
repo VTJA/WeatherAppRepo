@@ -13,8 +13,8 @@ final class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var storedForecasts = Results<Forecast>?()
-    var daysForecasts = [Forecast]()
+    private var storedForecasts = Results<Forecast>?()
+    private var daysForecasts = [Forecast]()
     
     override func viewDidLoad() {
         collectionView.configureLayout()
@@ -33,12 +33,14 @@ final class MainViewController: UIViewController {
         RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { [unowned self] (result : [Forecast]?, error : NSError?) -> Void in
             if let result = result {
                 self.daysForecasts = result
-            self.collectionView.reloadSections(NSIndexSet.init(index: 0))
-//                print(self.daysForecasts)
+                self.collectionView.reloadSections(NSIndexSet.init(index: 0))
+                print(self.daysForecasts)
             }
         }
         
-        print(storedForecasts)
+        CachingManager.sharedInstance.loadForecast(City()) { (result) in
+            
+        }
     }
 }
 
@@ -66,14 +68,14 @@ extension MainViewController : UITableViewDataSource {
     }
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
-//        let text = storedForecasts![indexPath.row].weather[0].descriptionWeather ?? ""
-//        cell?.textLabel?.text = text
+        //        let text = storedForecasts![indexPath.row].weather[0].descriptionWeather ?? ""
+        //        cell?.textLabel?.text = text
         return cell!
     }
 }
 
 extension UICollectionView {
-   internal func configureLayout() {
+    internal func configureLayout() {
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
@@ -81,5 +83,3 @@ extension UICollectionView {
         collectionViewLayout = layout
     }
 }
-
-

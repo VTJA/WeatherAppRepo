@@ -6,6 +6,7 @@
 //  Copyright © 2016 Vitalie Jurjiu. All rights reserved.
 //
 import Alamofire
+import ObjectMapper
 
 final class RequestDispatcher  {
     
@@ -23,14 +24,14 @@ final class RequestDispatcher  {
         }
     }
     
-    func performRequest(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([Forecast]?, NSError?)-> Void) {
+    func performRequest<T: Mappable>(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([T]?, NSError?)-> Void) {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
         
         manager.request(method, URL , parameters: parameters, encoding: .URLEncodedInURL)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .responseArray(keyPath) { (response:Alamofire.Response<[Forecast], NSError>) in
+            .responseArray(keyPath) { (response:Alamofire.Response<[T], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }
     }

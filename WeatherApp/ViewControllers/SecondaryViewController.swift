@@ -14,6 +14,7 @@ final class SecondaryViewController: UIViewController {
     @IBOutlet weak var matchesTableView: UITableView!
     
     private var filteredCities : [Forecast] = [Forecast]()
+    private var daysForecasts : [DayForecast] = [DayForecast]()
     
     func performSearch() {
         if (searchBar.text!.characters.count > 3) {
@@ -39,8 +40,8 @@ final class SecondaryViewController: UIViewController {
 
 extension SecondaryViewController : UISearchBarDelegate {
     internal func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "performSearch", object: nil)
-        performSelector("performSearch", withObject: nil, afterDelay: 0.3)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SecondaryViewController.performSearch), object: nil)
+        performSelector(#selector(SecondaryViewController.performSearch), withObject: nil, afterDelay: 0.3)
         
         if searchBar.text?.characters.count < 3 {
             filteredCities = [Forecast]()
@@ -68,3 +69,5 @@ extension SecondaryViewController : UITableViewDelegate {
         self.navigationController?.popViewControllerAnimated(true)
     }
 }
+
+

@@ -7,31 +7,58 @@
 //
 
 import Foundation
+import RealmSwift
 
 final class CachingManager {
     
     static let sharedInstance = CachingManager()
     
-    func validateForecasts(forecast: [Forecast]) {
+    /**
+     Lorem ipsum dolor sit amet.
+     
+     - parameter bar: Consectetur adipisicing elit.
+     
+     - returns: Sed do eiusmod tempor.
+     */
+    private func validateForecasts(forecast: Forecast) -> Bool {
         
-        let currentDate = NSDate()
+        let nextDayDate = NSDate().timeIntervalSince1970 * 1000 + 86400000
         
-        let dateStamp = Double(forecast[0].dt)
-        
-        let dateOfLastForecast = NSDate(timeIntervalSince1970: dateStamp)
-        
-        let dayComponent = NSDateComponents()
-        
-        dayComponent.day = 1
-        
-        let calendar = NSCalendar.currentCalendar()
-        
-        let nextDayDate = calendar.dateByAddingComponents(dayComponent, toDate: dateOfLastForecast, options: [])
-        
-        if currentDate.compare(nextDayDate!) != .OrderedAscending {
-            print("send reuqest to refresh data")
+        if forecast.dt < nextDayDate {
+            return true
         } else {
-            print("the data is actual")
+            return false
         }
     }
+    
+    func loadForecast(city: City, withCompletion completion: (result: Results<Forecast>?)->()) {
+        
+        
+        let predicate = NSPredicate(format: "id = %@", city.id)
+        let forecasts = DataBaseManager.sharedInstance.realm.objects(Forecast).filter(predicate)
+        let latestForecast = forecasts.sorted("dt", ascending: false)
+        
+        if let forecast = latestForecast.first {
+            if validateForecasts(forecast) {
+                completion(result: forecasts)
+            } else {
+                downloadForecasts(city, withCompletion: completion)
+            }
+            
+        } else {
+            downloadForecasts(city, withCompletion: completion)
+        }
+    }
+    
+    private func downloadForecasts(city: City, withCompletion completion: (result: Results<Forecast>?)->()) {
+        
+        RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { [unowned self] (result : [Forecast]?, error : NSError?) -> Void in
+            if let result = result {
+                self.daysForecasts = result
+                self.collectionView.reloadSections(NSIndexSet.init(index: 0))
+                print(self.daysForecasts)
+            }
+        }
+    }
+    
 }

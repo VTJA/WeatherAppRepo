@@ -19,7 +19,7 @@ class Forecast: Object, Mappable  {
     
     dynamic var main : Main?
     
-    dynamic var dt: Int = 0
+    dynamic var dt: Double = 0
     
     dynamic var wind : Wind?
     
@@ -50,9 +50,4 @@ class Forecast: Object, Mappable  {
         weather <- map["weather.0"]
         coord <- map["coord"]
     }
-}
-
-enum ForecastType : Int {
-    case CurrentForecast = 0
-    case DayForecast = 1
 }

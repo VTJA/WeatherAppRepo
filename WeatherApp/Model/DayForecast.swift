@@ -1,14 +1,14 @@
 //
 //  DayForecast.swift
+//  WeatherApp
 //
-//
-//  Created by Vitalie Jurjiu on 3/21/16.
-//
+//  Created by Vitalie Jurjiu on 3/22/16.
+//  Copyright © 2016 Vitalie Jurjiu. All rights reserved.
 //
 import ObjectMapper
 import RealmSwift
 
-class DayForecast : Forecast {
+class DayForecast: Forecast {
     
     dynamic var temp: Temp?
     
@@ -21,6 +21,10 @@ class DayForecast : Forecast {
     dynamic var cloudsDay : Int = 0
     
     dynamic var deg : Int = 0
+    
+    required convenience init?(_ map: Map) {
+        self.init()
+    }
     
     override func mapping(map: Map) {
         temp <- map["temp"]
