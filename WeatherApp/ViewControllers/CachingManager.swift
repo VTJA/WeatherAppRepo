@@ -31,7 +31,7 @@ final class CachingManager {
     }
     
     /**
-     Check forecasts in database by id, if the latest forecast date has expired or if the latest the forecast is nil, download it
+     Check the latest forecast for a city. if it's missing or 
      
      - parameter city: a city stored in data base
      
@@ -75,9 +75,7 @@ final class CachingManager {
                             next(nil)
                         })
                     }
-                    
                 }
-                
                 queue.tasks += { result, next in
                     withCompletion(cities: cities.map{$0})
                     print(self.queue)
@@ -89,13 +87,12 @@ final class CachingManager {
     }
     
     /**
-     Download Forecasts For ID
+     Download forecasts for a specific city
      
-     - parameter forecast:forecast id of which to be downloaded
+     - parameter city: city forecasts of which to download
      
-     -param
-     
-     - returns: void
+     - parameter completion: closure in which to retrieve forecasts array in case of success
+     or error in case of failure
      
      */
     
