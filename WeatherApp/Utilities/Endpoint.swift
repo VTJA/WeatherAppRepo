@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import ObjectMapper
-import Alamofire
 import AlamofireObjectMapper
 
 let APIkey = "867a6d0c3d80f5bb68392878262304f6"

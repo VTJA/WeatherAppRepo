@@ -115,8 +115,8 @@
                                                         </tableViewCell>
                                                     </prototypes>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="EHR-Zw-eGy" id="c4h-KX-69L"/>
-                                                        <outlet property="delegate" destination="EHR-Zw-eGy" id="yRX-NP-38h"/>
+                                                        <outlet property="dataSource" destination="EHR-Zw-eGy" id="ej3-4k-raA"/>
+                                                        <outlet property="delegate" destination="EHR-Zw-eGy" id="s5u-2W-1Sn"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>
@@ -134,6 +134,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="daysTableview" destination="Smg-j9-zWy" id="59u-ck-gPb"/>
+                                            <outlet property="tableView" destination="Smg-j9-zWy" id="5ux-yN-din"/>
                                             <outlet property="tempLabel" destination="bM0-y6-xc0" id="TgL-h2-pmO"/>
                                             <outlet property="weatherImageView" destination="Y74-eO-sVW" id="qdC-BL-6vj"/>
                                         </connections>

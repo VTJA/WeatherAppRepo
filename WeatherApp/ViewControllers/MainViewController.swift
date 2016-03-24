@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-final class MainViewController: UIViewController {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -19,8 +19,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         collectionView.configureLayout()
-        self.navigationController?.delegate = self
-                print("hello")
+        print("hello")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -28,14 +27,6 @@ final class MainViewController: UIViewController {
             self.cities = cities
             self.collectionView.reloadData()
         }
-        
-        cities = repo.readObjects(City)
-    }
-}
-
-extension MainViewController : UINavigationControllerDelegate {
-    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-
     }
 }
 
@@ -47,23 +38,31 @@ extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         cell.tempLabel.text = " \(cities[indexPath.row].name)"
+        cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         return cell
+    }
+}
+
+extension MainViewController : UITableViewDataSource, UITableViewDelegate {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities[tableView.tag].forecasts.count
+        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
+        
+        let city = cities[tableView.tag]
+        let forecast = city.forecasts[indexPath.row]
+        
+        cell?.textLabel?.text = "\(forecast.temp?.day)"
+        return cell!
     }
 }
 
 extension MainViewController : UICollectionViewDelegateFlowLayout {
     internal func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return self.collectionView.bounds.size
-    }
-}
-
-extension MainViewController : UITableViewDataSource {
-    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecasts.count
-    }
-    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
-        return cell!
     }
 }
 

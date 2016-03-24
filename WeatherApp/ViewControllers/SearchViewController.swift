@@ -66,7 +66,6 @@ extension SearchViewController : UITableViewDataSource {
 
 extension SearchViewController : UITableViewDelegate {
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //        DataBaseManager.sharedInstance.store(city: self.filteredCities[indexPath.row])
         if !repo.storeObject(self.filteredCities[indexPath.row]) { print("error writing to the database") }
         self.navigationController?.popViewControllerAnimated(true)
     }
