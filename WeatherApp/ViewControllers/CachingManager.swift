@@ -106,7 +106,7 @@ final class CachingManager {
         let params = ["id":String(city.id),
                       "appid": APIkey,
                       "units": "metric",
-                      "cnt" : "4",
+                      "cnt" : "14",
                       "mode": "json"]
         
         RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
@@ -114,11 +114,11 @@ final class CachingManager {
                 print("error: \(error.description)")
                 completion(result: nil, error: error)
             } else {
-                let realm = try! Realm()
-                try! realm.write({
-                    city.forecasts.removeAll()
-                    city.forecasts.appendContentsOf(forecasts!)
-                })
+                if let forecasts = forecasts {
+                    let repo = GenericRepository<QueryImpl, City>()
+                    repo.updateValue(forecasts, forKeypath: "forecasts", forObject: city)
+                }
+
                 completion(result: forecasts, error: nil)
             }
         }

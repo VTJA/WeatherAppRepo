@@ -43,7 +43,7 @@ extension MainViewController : UICollectionViewDataSource {
     }
 }
 
-extension MainViewController : UITableViewDataSource, UITableViewDelegate {
+extension MainViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities[tableView.tag].forecasts.count
         
@@ -55,7 +55,7 @@ extension MainViewController : UITableViewDataSource, UITableViewDelegate {
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
         
-        cell?.textLabel?.text = "\(forecast.temp?.day)"
+        cell?.textLabel?.text = "\(forecast.temp!.day)"
         return cell!
     }
 }

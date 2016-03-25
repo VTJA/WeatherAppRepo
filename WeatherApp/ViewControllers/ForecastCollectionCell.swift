@@ -16,10 +16,8 @@ final class ForecastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var tableView: UITableView!
     
     func setTableViewDataSourceDelegate
-        <D where D:UITableViewDataSource, D: UITableViewDelegate>
+        <D:UITableViewDataSource>
         (dataSourceDelegate: D, forRow row: Int) {
-        
-        tableView.delegate = dataSourceDelegate
         tableView.dataSource = dataSourceDelegate
         tableView.tag = row
         tableView.reloadData()

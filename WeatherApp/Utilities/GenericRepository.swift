@@ -21,7 +21,7 @@ class GenericRepository <T : Query, C : Object>: Store {
     func storeObject(object: StoredObject) -> Bool {
         do {
             try context.write({
-                context.add(object)
+                context.add(object, update: true)
             }) } catch {
                 return false
         }
@@ -31,7 +31,7 @@ class GenericRepository <T : Query, C : Object>: Store {
     func storeObjects(object: [StoredObject]) -> Bool {
         do {
             try context.write({
-                context.add(object)
+                context.add(object, update: true)
             }) } catch {
                 return false
         }
@@ -45,6 +45,16 @@ class GenericRepository <T : Query, C : Object>: Store {
     
     func readObjects(objectType: StoredObject.Type) -> [StoredObject] {
         return context.objects(objectType).map(){$0}
+    }
+    
+    func updateValue(objects: AnyObject, forKeypath keyPath: String, forObject object: StoredObject) -> Bool {
+        if(object[keyPath] != nil) {
+            try! context.write({
+                object.setValue(objects, forKey: keyPath)
+            })
+            return true
+        }
+        return false
     }
 }
 
@@ -61,6 +71,8 @@ protocol Store {
     func readObjects(query: QueryType) -> [StoredObject]?
     
     func readObjects(objectType: StoredObject.Type) -> [StoredObject]
+    
+    func updateValue(objects:AnyObject, forKeypath: String, forObject object: StoredObject) -> Bool
 }
 
 protocol Query {
