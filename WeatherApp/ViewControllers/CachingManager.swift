@@ -22,7 +22,7 @@ final class CachingManager {
      
      - parameter forecast: a forecast from database
      
-     - returns: true if difference between current date forecast date exceeds seconds per day else false
+     - returns: true if difference between current date forecast date exceeds seconds per day else fail
      
      */
     
@@ -31,22 +31,19 @@ final class CachingManager {
     }
     
     /**
-     Check the latest forecast for a city. if it's missing or 
+     Check the latest forecast for a city. If it's missing or it's date has expired
+     call download forecasts
      
      - parameter city: a city stored in data base
      
      - parameter completion: completion callback
      
-     - returns: void
-     
      */
     
     func loadForecasts(city:City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
         
-        //        let predicate = NSPredicate(format: "id = %@", city.id)
-        //        let city = DataBaseManager.sharedInstance.realm.objects(City).filter(predicate)
-        let cityForecasts = city.forecasts.map { $0 }
-        let latestForecast = city.forecasts.sorted("dt", ascending: false)
+        let cityForecasts = city.forecasts.map {$0}
+        let latestForecast = city.forecasts.sorted("dt", ascending: true)
         
         if let forecast = latestForecast.first {
             if validateForecast(forecast) {
@@ -54,7 +51,7 @@ final class CachingManager {
                 completion(result:cityForecasts, error: nil)
             } else {
                 downloadForecasts(city, withCompletion: completion)
-                print("forecasts for \(city.name) have invalid date.Downloading new forecasts...")
+                print("forecasts for \(city.name) have invalid date.Refreshing...")
             }
         } else {
             downloadForecasts(city, withCompletion: completion)
@@ -62,7 +59,16 @@ final class CachingManager {
         }
     }
     
-    func updateCacheIfNeed(withCompletion: (cities: [City])->()) {
+    /**
+    Schedule the downloading of forecasts in a task queue to send requests in a serial manner
+     
+     - parameter city: a city stored in data base
+     
+     - parameter completion: completion callback
+     
+     */
+    
+    func updateCacheIfNeed(withCompletion:(cities: [City])->()) {
         if queue.tasks.count == 0 {
             let realm = try! Realm()
             let cities = realm.objects(City)
@@ -111,7 +117,6 @@ final class CachingManager {
                 let realm = try! Realm()
                 try! realm.write({
                     city.forecasts.removeAll()
-                    print(city.forecasts)
                     city.forecasts.appendContentsOf(forecasts!)
                 })
                 completion(result: forecasts, error: nil)

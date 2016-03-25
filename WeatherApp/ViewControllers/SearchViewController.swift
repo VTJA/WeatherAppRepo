@@ -15,25 +15,26 @@ final class SearchViewController: UIViewController {
     
     private var filteredCities : [City] = [City]()
     
+    private var repo = GenericRepository<QueryImpl, City>()
+    
     func performSearch() {
         if (searchBar.text!.characters.count > 3) {
             
             let params = ["q":searchBar.text!,
-                "appid": APIkey,
-                "units": "metric",
-                "type": "like" ,
-                "mode": "json"]
+                          "appid": APIkey,
+                          "units": "metric",
+                          "type": "like" ,
+                          "mode": "json"]
             
             RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params)
-                {[unowned self] (result : [City]?, error : NSError?) -> Void in
-                    
-                    if let filteredCities = result {
-                        self.filteredCities = filteredCities
-                    } else {
-                        print(error?.description)
-                    }
-                    
-                    self.matchesTableView.reloadData()
+            {[unowned self] (result : [City]?, error : NSError?) -> Void in
+                
+                if let filteredCities = result {
+                    self.filteredCities = filteredCities
+                } else {
+                    print(error?.description)
+                }
+                self.matchesTableView.reloadData()
             }
         }
     }
@@ -65,7 +66,8 @@ extension SearchViewController : UITableViewDataSource {
 
 extension SearchViewController : UITableViewDelegate {
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        DataBaseManager.sharedInstance.store(city: self.filteredCities[indexPath.row])
+        //        DataBaseManager.sharedInstance.store(city: self.filteredCities[indexPath.row])
+        if !repo.storeObject(self.filteredCities[indexPath.row]) { print("error writing to the database") }
         self.navigationController?.popViewControllerAnimated(true)
     }
 }

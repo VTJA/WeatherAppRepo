@@ -15,9 +15,12 @@ final class MainViewController: UIViewController {
     
     private var cities = [City]()
     private var forecasts = [Forecast]()
+    private let repo = GenericRepository<QueryImpl, City>()
     
     override func viewDidLoad() {
         collectionView.configureLayout()
+        self.navigationController?.delegate = self
+                print("hello")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -25,6 +28,14 @@ final class MainViewController: UIViewController {
             self.cities = cities
             self.collectionView.reloadData()
         }
+        
+        cities = repo.readObjects(City)
+    }
+}
+
+extension MainViewController : UINavigationControllerDelegate {
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+
     }
 }
 
@@ -35,8 +46,7 @@ extension MainViewController : UICollectionViewDataSource {
     
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
-        cell.tempLabel.text = " \(cities[indexPath.row].name) C\u{02DA}" ?? ""
-        //        cell.tempLabel.text = "                cell?.textLabel?.text = storedForecasts![indexPath.row].name C\u{02DA}" ?? ""
+        cell.tempLabel.text = " \(cities[indexPath.row].name)"
         return cell
     }
 }
