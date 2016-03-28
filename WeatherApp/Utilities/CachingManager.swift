@@ -13,6 +13,8 @@ final class CachingManager {
     
     static let sharedInstance = CachingManager()
     static let secPerDay: Double = 86400
+    private var downloadQueue = NSOperationQueue()
+    private var imageBook = [String:NSData]()
     
     let queue = TaskQueue()
     
@@ -60,7 +62,7 @@ final class CachingManager {
     }
     
     /**
-    Schedule the downloading of forecasts in a task queue to send requests in a serial manner
+     Schedule the downloading of forecasts in a task queue to send requests in a serial manner
      
      - parameter city: a city stored in data base
      
@@ -106,7 +108,7 @@ final class CachingManager {
         let params = ["id":String(city.id),
                       "appid": APIkey,
                       "units": "metric",
-                      "cnt" : "14",
+                      "cnt" : "7",
                       "mode": "json"]
         
         RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
@@ -118,9 +120,40 @@ final class CachingManager {
                     let repo = GenericRepository<QueryImpl, City>()
                     repo.updateValue(forecasts, forKeypath: "forecasts", forObject: city)
                 }
-
+                
                 completion(result: forecasts, error: nil)
             }
         }
     }
+    
+    func image(name: String, withCompletion completion: (image: UIImage)->()) {
+        // if key exist >>
+        if imageBook[name] != nil {
+            let imageData = imageBook[name]
+            let image = UIImage(data: imageData!)
+            completion(image: image!)
+            print("image \(name) already cached")
+        } else {
+            let url = NSURL(string:"http://openweathermap.org/img/w/\(name).png")
+            downloadImage(url!, completion: { (imageData) in
+                let image = UIImage(data: imageData!)
+                completion(image: image!)
+                self.imageBook[name] = imageData
+            })
+        }
+        //        else >> download and call completions?>>
+    }
+    
+    func downloadImage(URL: NSURL , completion: (imageData: NSData?)->()) {
+        
+        let imageDownloader = ImageDownloader(url: URL)
+        imageDownloader.completionBlock = {
+            completion(imageData: imageDownloader.imageData)
+        }
+        downloadQueue.addOperation(imageDownloader)
+    }
+    
+    //    private func getImagesURLs(forecast : [Forecast]) -> [NSURL] {
+    //
+    //    }
 }

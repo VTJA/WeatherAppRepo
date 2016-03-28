@@ -17,9 +17,10 @@ class MainViewController: UIViewController {
     private var forecasts = [Forecast]()
     private let repo = GenericRepository<QueryImpl, City>()
     
+    private var imageBook = [String : NSData]()
+    
     override func viewDidLoad() {
         collectionView.configureLayout()
-        print("hello")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,21 +45,44 @@ extension MainViewController : UICollectionViewDataSource {
 }
 
 extension MainViewController : UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities[tableView.tag].forecasts.count
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
         
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
         
         cell?.textLabel?.text = "\(forecast.temp!.day)"
+        
+        let imageName = forecast.weather?.icon
+        
+        CachingManager.sharedInstance.image(imageName!, withCompletion: { (image) in
+            cell?.imageView?.image = image
+            cell?.imageView?.setNeedsDisplay()
+        })
+        
         return cell!
     }
+    
+    //    internal func downloadImageFromURL(url: NSURL?, tableView:UITableView, indexPath: NSIndexPath) {
+    //        if let imageUrl = url {
+    //            let imageDownloader = ImageDownloader(url: imageUrl)
+    //            imageDownloader.completionBlock = {
+    //                dispatch_async(dispatch_get_main_queue(), {
+    //                    let cell = tableView.cellForRowAtIndexPath(indexPath)
+    //                    cell?.imageView?.image = imageDownloader.icon
+    //                    cell?.imageView?.setNeedsDisplay()
+    //                })
+    //            }
+    //            downloadQueue.addOperation(imageDownloader)
+    //        }
+    //    }
 }
+
 
 extension MainViewController : UICollectionViewDelegateFlowLayout {
     internal func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

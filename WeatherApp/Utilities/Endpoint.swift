@@ -23,6 +23,7 @@ enum HTTPMethod: String {
 
 protocol Endpoint {
     var baseURL: NSURL { get }
+    var imageURL: NSURL { get }
     var path: String { get }
     var method: HTTPMethod { get }
 }
@@ -37,6 +38,9 @@ enum MyEndpoint {
 extension MyEndpoint : Endpoint {
     var baseURL: NSURL {
         return NSURL(string: "http://api.openweathermap.org/data/2.5")!
+    }
+    var imageURL: NSURL {
+        return NSURL(string: "http://openweathermap.org/img/w/")!
     }
     
     var path : String {
