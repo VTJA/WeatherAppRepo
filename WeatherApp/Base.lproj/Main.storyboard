@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -123,13 +124,40 @@
                                                     <rect key="frame" x="0.0" y="327" width="374" height="103"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <prototypes>
-                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCell" id="5ui-rG-der">
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dailyCell" id="5ui-rG-der" customClass="DailyForecastCell" customModule="WeatherApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28" width="374" height="44"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5ui-rG-der" id="hYK-fe-xsw">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="43"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8UR-Gg-Gr8">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="52" height="43"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="8UR-Gg-Gr8" secondAttribute="height" multiplier="52:43" id="gfW-hk-uj0"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zjA-Lj-du4">
+                                                                        <rect key="frame" x="52" y="0.0" width="322" height="43"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="zjA-Lj-du4" firstAttribute="leading" secondItem="8UR-Gg-Gr8" secondAttribute="trailing" id="06f-xI-cPP"/>
+                                                                    <constraint firstItem="zjA-Lj-du4" firstAttribute="top" secondItem="hYK-fe-xsw" secondAttribute="topMargin" constant="-8" id="2ZN-Ih-3MD"/>
+                                                                    <constraint firstAttribute="bottomMargin" secondItem="zjA-Lj-du4" secondAttribute="bottom" constant="-8" id="JoG-rj-e3f"/>
+                                                                    <constraint firstItem="8UR-Gg-Gr8" firstAttribute="leading" secondItem="hYK-fe-xsw" secondAttribute="leading" id="NZI-9E-0TT"/>
+                                                                    <constraint firstItem="8UR-Gg-Gr8" firstAttribute="top" secondItem="hYK-fe-xsw" secondAttribute="top" id="agI-FT-r0O"/>
+                                                                    <constraint firstAttribute="trailingMargin" secondItem="zjA-Lj-du4" secondAttribute="trailing" constant="-8" id="e2k-tG-A02"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="8UR-Gg-Gr8" secondAttribute="bottom" id="s2s-15-ufs"/>
+                                                                </constraints>
                                                             </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="dayLabel" destination="zjA-Lj-du4" id="mjw-Nk-X3Q"/>
+                                                                <outlet property="iconImageView" destination="8UR-Gg-Gr8" id="WSl-do-GJU"/>
+                                                            </connections>
                                                         </tableViewCell>
                                                     </prototypes>
                                                     <connections>

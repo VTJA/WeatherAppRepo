@@ -15,6 +15,7 @@ final class CachingManager {
     static let secPerDay: Double = 86400
     private var downloadQueue = NSOperationQueue()
     private var imageBook = [String:NSData]()
+    private var fileManager = FileManager()
     
     let queue = TaskQueue()
     
@@ -136,10 +137,11 @@ final class CachingManager {
         } else {
             let url = NSURL(string:"http://openweathermap.org/img/w/\(name).png")
             downloadImage(url!, completion: { [weak self] (imageData) in
+                self!.fileManager.writeData(imageData!, filename: name)
                 let image = UIImage(data: imageData!)
-                completion(image: image!)
                 self!.imageBook[name] = imageData
-            })
+                completion(image: image!)
+                })
         }
         //        else >> download and call completions?>>
     }

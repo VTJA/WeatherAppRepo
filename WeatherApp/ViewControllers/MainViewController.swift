@@ -18,6 +18,8 @@ class MainViewController: UIViewController {
     private var forecasts = [Forecast]()
     
     private let repo = GenericRepository<QueryImpl, City>()
+    
+
 }
 
 extension MainViewController {
@@ -80,21 +82,21 @@ extension MainViewController : UITableViewDataSource {
     }
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tableCell")
+        let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
         
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
         
-        cell?.textLabel?.text = "\(forecast.temp!.day)"
+        cell.dayLabel?.text = "\(forecast.temp!.day)"
         
         let imageName = forecast.weather?.icon
         
         CachingManager.sharedInstance.image(imageName!, withCompletion: { (image) in
-            cell?.imageView?.image = image
-            cell?.imageView?.setNeedsDisplay()
+            cell.iconImageView?.image = image
+            cell.iconImageView?.setNeedsDisplay()
         })
         
-        return cell!
+        return cell
     }
 }
 
