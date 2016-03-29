@@ -14,10 +14,23 @@ class MainViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var cities = [City]()
-    private var forecasts = [Forecast]()
-    private let repo = GenericRepository<QueryImpl, City>()
     
-    private var imageBook = [String : NSData]()
+    private var forecasts = [Forecast]()
+    
+    private let repo = GenericRepository<QueryImpl, City>()
+}
+
+extension MainViewController {
+    
+    @IBAction func deleteItemAction(sender: UIButton) {
+        if let selectedCell = sender.getForecastCell() {
+            let indexPath = collectionView.indexPathForCell(selectedCell)
+            let selectedCity = cities[(indexPath?.row)!]
+            cities.removeAtIndex((indexPath?.row)!)
+            repo.deleteObject(selectedCity)
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         collectionView.configureLayout()
@@ -31,6 +44,20 @@ class MainViewController: UIViewController {
     }
 }
 
+extension UIView {
+    func getForecastCell() -> (ForecastCollectionCell?) {
+        if self.superview == nil {
+            return nil
+        }
+        
+        if let cell = self.superview as? ForecastCollectionCell {
+            return cell
+        }
+        
+        return self.superview?.getForecastCell()
+    }
+}
+
 extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cities.count
@@ -40,12 +67,14 @@ extension MainViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         cell.tempLabel.text = " \(cities[indexPath.row].name)"
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
+        
         return cell
     }
 }
 
 extension MainViewController : UITableViewDataSource {
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return cities[tableView.tag].forecasts.count
         
     }
@@ -67,22 +96,7 @@ extension MainViewController : UITableViewDataSource {
         
         return cell!
     }
-    
-    //    internal func downloadImageFromURL(url: NSURL?, tableView:UITableView, indexPath: NSIndexPath) {
-    //        if let imageUrl = url {
-    //            let imageDownloader = ImageDownloader(url: imageUrl)
-    //            imageDownloader.completionBlock = {
-    //                dispatch_async(dispatch_get_main_queue(), {
-    //                    let cell = tableView.cellForRowAtIndexPath(indexPath)
-    //                    cell?.imageView?.image = imageDownloader.icon
-    //                    cell?.imageView?.setNeedsDisplay()
-    //                })
-    //            }
-    //            downloadQueue.addOperation(imageDownloader)
-    //        }
-    //    }
 }
-
 
 extension MainViewController : UICollectionViewDelegateFlowLayout {
     internal func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -91,7 +105,7 @@ extension MainViewController : UICollectionViewDelegateFlowLayout {
 }
 
 extension UICollectionView {
-    internal func configureLayout() {
+    func configureLayout() {
         let layout : UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0

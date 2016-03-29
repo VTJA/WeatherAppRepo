@@ -72,8 +72,8 @@ final class CachingManager {
     
     func updateCacheIfNeed(withCompletion:(cities: [City])->()) {
         if queue.tasks.count == 0 {
-            let realm = try! Realm()
-            let cities = realm.objects(City)
+            let repo = GenericRepository<QueryImpl, City>()
+            let cities = repo.readObjects(City)
             
             if !cities.isEmpty {
                 for city in cities {
@@ -127,7 +127,7 @@ final class CachingManager {
     }
     
     func image(name: String, withCompletion completion: (image: UIImage)->()) {
-        // if key exist >>
+        // if key exist >> return image at key
         if imageBook[name] != nil {
             let imageData = imageBook[name]
             let image = UIImage(data: imageData!)
@@ -135,10 +135,10 @@ final class CachingManager {
             print("image \(name) already cached")
         } else {
             let url = NSURL(string:"http://openweathermap.org/img/w/\(name).png")
-            downloadImage(url!, completion: { (imageData) in
+            downloadImage(url!, completion: { [weak self] (imageData) in
                 let image = UIImage(data: imageData!)
                 completion(image: image!)
-                self.imageBook[name] = imageData
+                self!.imageBook[name] = imageData
             })
         }
         //        else >> download and call completions?>>

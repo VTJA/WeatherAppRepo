@@ -56,6 +56,16 @@ class GenericRepository <T : Query, C : Object>: Store {
         }
         return false
     }
+    
+    func deleteObject(object:StoredObject) -> Bool {
+        do {
+            try context.write({
+                context.delete(object)
+            }) } catch {
+                return false
+        }
+        return true
+    }
 }
 
 protocol Store {
@@ -73,6 +83,8 @@ protocol Store {
     func readObjects(objectType: StoredObject.Type) -> [StoredObject]
     
     func updateValue(objects:AnyObject, forKeypath: String, forObject object: StoredObject) -> Bool
+    
+    func deleteObject(object:StoredObject) -> Bool
 }
 
 protocol Query {

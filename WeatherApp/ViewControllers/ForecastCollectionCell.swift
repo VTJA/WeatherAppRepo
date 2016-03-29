@@ -13,7 +13,9 @@ final class ForecastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var daysTableview: UITableView!
     
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    
     
     func setTableViewDataSourceDelegate
         <D:UITableViewDataSource>
@@ -22,4 +24,5 @@ final class ForecastCollectionCell: UICollectionViewCell {
         tableView.tag = row
         tableView.reloadData()
     }
+    
 }

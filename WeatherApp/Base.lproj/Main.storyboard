@@ -43,8 +43,20 @@
                                                             <color key="backgroundColor" red="0.38861052515103295" green="0.78642763766259904" blue="0.87375245418848169" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Y74-eO-sVW" secondAttribute="height" multiplier="374:327" id="B9T-DN-PTk"/>
+                                                                <constraint firstAttribute="width" secondItem="Y74-eO-sVW" secondAttribute="height" multiplier="374:327" id="rFm-Uc-Xyf"/>
                                                             </constraints>
                                                         </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kl9-cq-bMA">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                                            <color key="backgroundColor" red="1" green="0.50689520076386452" blue="0.43723040308309402" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="Kl9-cq-bMA" secondAttribute="height" multiplier="17:2" id="2uP-y7-uYO"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Delete"/>
+                                                            <connections>
+                                                                <action selector="deleteItemAction:" destination="EHR-Zw-eGy" eventType="touchUpInside" id="yVa-0T-WLB"/>
+                                                            </connections>
+                                                        </button>
                                                         <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bM0-y6-xc0">
                                                             <rect key="frame" x="0.0" y="267" width="310" height="60"/>
                                                             <color key="backgroundColor" red="0.69714727901322859" green="0.87375245418848169" blue="0.671080526192391" alpha="1" colorSpace="calibratedRGB"/>
@@ -81,16 +93,22 @@
                                                         <constraint firstItem="bM0-y6-xc0" firstAttribute="leading" secondItem="XZR-1I-1cf" secondAttribute="trailing" id="72E-gQ-fmm"/>
                                                         <constraint firstItem="bM0-y6-xc0" firstAttribute="leading" secondItem="cxF-4J-aYx" secondAttribute="leading" constant="64" id="7EP-ey-46o"/>
                                                         <constraint firstAttribute="bottom" secondItem="XZR-1I-1cf" secondAttribute="bottom" id="7X7-KG-Hs7"/>
+                                                        <constraint firstItem="Y74-eO-sVW" firstAttribute="top" secondItem="cxF-4J-aYx" secondAttribute="top" id="DeF-RH-zQr"/>
                                                         <constraint firstItem="XZR-1I-1cf" firstAttribute="leading" secondItem="bM0-y6-xc0" secondAttribute="trailing" id="Erk-Zx-55e"/>
                                                         <constraint firstAttribute="trailing" secondItem="Y74-eO-sVW" secondAttribute="trailing" id="GIB-mr-qGP"/>
                                                         <constraint firstAttribute="width" secondItem="cxF-4J-aYx" secondAttribute="height" multiplier="374:327" id="Kxn-Rk-Seh"/>
                                                         <constraint firstItem="Y74-eO-sVW" firstAttribute="leading" secondItem="cxF-4J-aYx" secondAttribute="leading" id="LZi-N9-cvK"/>
                                                         <constraint firstItem="bM0-y6-xc0" firstAttribute="leading" secondItem="cxF-4J-aYx" secondAttribute="leading" id="LvG-F8-EeK"/>
                                                         <constraint firstAttribute="trailing" secondItem="XZR-1I-1cf" secondAttribute="trailing" id="LyG-QA-Ogz"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Kl9-cq-bMA" secondAttribute="trailing" id="MtK-qX-6tR"/>
                                                         <constraint firstItem="Y74-eO-sVW" firstAttribute="top" secondItem="cxF-4J-aYx" secondAttribute="top" id="VGa-I0-UxW"/>
+                                                        <constraint firstItem="Y74-eO-sVW" firstAttribute="leading" secondItem="cxF-4J-aYx" secondAttribute="leading" id="Z2O-sw-vJZ"/>
                                                         <constraint firstAttribute="trailing" secondItem="bM0-y6-xc0" secondAttribute="trailing" constant="64" id="foi-PR-eWe"/>
+                                                        <constraint firstItem="Kl9-cq-bMA" firstAttribute="top" secondItem="cxF-4J-aYx" secondAttribute="top" id="krL-on-w2N"/>
+                                                        <constraint firstItem="Kl9-cq-bMA" firstAttribute="leading" secondItem="cxF-4J-aYx" secondAttribute="leading" id="pvh-kK-0rm"/>
                                                         <constraint firstAttribute="bottom" secondItem="bM0-y6-xc0" secondAttribute="bottom" id="un1-LC-EbX"/>
                                                         <constraint firstAttribute="trailing" secondItem="XZR-1I-1cf" secondAttribute="trailing" id="wQK-ew-oWC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Y74-eO-sVW" secondAttribute="trailing" id="zKn-s7-OS7"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
