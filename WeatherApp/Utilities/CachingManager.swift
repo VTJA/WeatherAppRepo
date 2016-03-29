@@ -129,17 +129,14 @@ final class CachingManager {
     
     func image(name: String, withCompletion completion: (image: UIImage)->()) {
         // if key exist >> return image at key
-        if imageBook[name] != nil {
-            let imageData = imageBook[name]
-            let image = UIImage(data: imageData!)
-            completion(image: image!)
+        if let image = fileManager.readData(name) {
+            completion(image: image)
             print("image \(name) already cached")
         } else {
             let url = NSURL(string:"http://openweathermap.org/img/w/\(name).png")
             downloadImage(url!, completion: { [weak self] (imageData) in
                 self!.fileManager.writeData(imageData!, filename: name)
                 let image = UIImage(data: imageData!)
-                self!.imageBook[name] = imageData
                 completion(image: image!)
                 })
         }
@@ -150,7 +147,10 @@ final class CachingManager {
         
         let imageDownloader = ImageDownloader(url: URL)
         imageDownloader.completionBlock = {
-            completion(imageData: imageDownloader.imageData)
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(imageData: imageDownloader.imageData)
+            })
+
         }
         downloadQueue.addOperation(imageDownloader)
     }

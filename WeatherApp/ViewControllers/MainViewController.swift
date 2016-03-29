@@ -94,6 +94,7 @@ extension MainViewController : UITableViewDataSource {
         CachingManager.sharedInstance.image(imageName!, withCompletion: { (image) in
             cell.iconImageView?.image = image
             cell.iconImageView?.setNeedsDisplay()
+
         })
         
         return cell
