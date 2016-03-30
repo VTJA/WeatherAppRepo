@@ -174,8 +174,8 @@
 		69B770E51C9B01B9003B41C4 /* MainViewController */ = {
 			isa = PBXGroup;
 			children = (
-				699833771CAAA98C00689305 /* DailyForecastCell.swift */,
 				69B1256B1C92CEDE0000DD65 /* MainViewController.swift */,
+				699833771CAAA98C00689305 /* DailyForecastCell.swift */,
 				69B770E31C9AEFB2003B41C4 /* ForecastCollectionCell.swift */,
 			);
 			name = MainViewController;

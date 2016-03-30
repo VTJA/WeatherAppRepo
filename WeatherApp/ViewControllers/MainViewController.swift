@@ -18,7 +18,6 @@ class MainViewController: UIViewController {
     private var forecasts = [Forecast]()
     
     private let repo = GenericRepository<QueryImpl, City>()
-    
 
 }
 
@@ -35,6 +34,7 @@ extension MainViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         collectionView.configureLayout()
     }
     
