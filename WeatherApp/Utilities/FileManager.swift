@@ -22,7 +22,7 @@ class FileManager {
             
             let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).png")
             UIImagePNGRepresentation(image)!.writeToFile(destinationPath, atomically: false)
-            print("\(filename) written to path :\(destinationPath)")
+            print("\(filename) written to path")
             return true
         }
         else {
@@ -42,7 +42,7 @@ class FileManager {
                 return nil
             }
             
-            print("\(filename) read from \(destinationPath)")
+            print("\(filename) read from path")
             return UIImage(data:imageData)
         }
         else {

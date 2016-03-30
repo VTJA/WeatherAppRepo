@@ -109,7 +109,7 @@ final class CachingManager {
         let params = ["id":String(city.id),
                       "appid": APIkey,
                       "units": "metric",
-                      "cnt" : "7",
+                      "cnt" : "10",
                       "mode": "json"]
         
         RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
