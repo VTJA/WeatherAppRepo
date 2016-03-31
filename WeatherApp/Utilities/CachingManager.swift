@@ -112,7 +112,7 @@ final class CachingManager {
                       "cnt" : "10",
                       "mode": "json"]
         
-        RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
+        RequestDispatcher.sharedInstance.performRequest(WeatherEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
             if let error = error {
                 print("error: \(error.description)")
                 completion(result: nil, error: error)

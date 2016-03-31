@@ -24,14 +24,14 @@ final class RequestDispatcher  {
         }
     }
     
-    func performRequest<T: Mappable>(endpoint: MyEndpoint, parameters: [String: AnyObject]? = nil, responseCallback: ([T]?, NSError?)-> Void) {
+    func performRequest<T: Mappable, E : Endpoint>(endpoint: E, parameters: [String: AnyObject]? = nil, responseCallback: ([T]?, NSError?)-> Void) {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
         
-        manager.request(method, URL , parameters: parameters, encoding: .URLEncodedInURL)
+        manager.request(method, URL, parameters: parameters, encoding: .URLEncodedInURL)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .responseArray(keyPath) { (response:Alamofire.Response<[T], NSError>) in
+            .responseArray(endpoint.keypath) { (response:Alamofire.Response<[T], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }
     }

@@ -15,6 +15,7 @@ final class ForecastCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var deleteButtonTop: NSLayoutConstraint!
     
+    @IBOutlet weak var deleteButton: UIButton!
     var toggleStatus : Bool = true
     
     @IBOutlet weak var tableView: UITableView!
@@ -43,7 +44,7 @@ final class ForecastCollectionCell: UICollectionViewCell {
     
     func handleSwipes(sender:UISwipeGestureRecognizer) {
         if (sender.direction == .Up) {
-            deleteButtonTop.constant = -45
+            deleteButtonTop.constant = -deleteButton.bounds.size.height
             UIView.animateWithDuration(0.3) {
                 self.layoutIfNeeded()
             }

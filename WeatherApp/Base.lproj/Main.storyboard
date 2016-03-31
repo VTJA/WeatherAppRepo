@@ -140,7 +140,6 @@
                                                         <constraint firstItem="bM0-y6-xc0" firstAttribute="centerY" secondItem="Azj-SL-n8B" secondAttribute="centerY" constant="-27" id="4bV-lV-KI3"/>
                                                         <constraint firstItem="bM0-y6-xc0" firstAttribute="leading" secondItem="Azj-SL-n8B" secondAttribute="leading" id="6FC-WD-MRB"/>
                                                         <constraint firstItem="Smg-j9-zWy" firstAttribute="top" secondItem="bM0-y6-xc0" secondAttribute="bottom" id="CKD-uX-Xb0"/>
-                                                        <constraint firstItem="Y74-eO-sVW" firstAttribute="top" secondItem="Azj-SL-n8B" secondAttribute="top" id="WRn-F1-u4U"/>
                                                         <constraint firstAttribute="trailing" secondItem="Y74-eO-sVW" secondAttribute="trailing" id="gBj-uh-JNb"/>
                                                         <constraint firstAttribute="bottom" secondItem="Y74-eO-sVW" secondAttribute="bottom" id="lqb-70-Zod"/>
                                                         <constraint firstAttribute="trailing" secondItem="Smg-j9-zWy" secondAttribute="trailing" id="mFm-g4-v31"/>
@@ -148,11 +147,6 @@
                                                         <constraint firstItem="Smg-j9-zWy" firstAttribute="leading" secondItem="Azj-SL-n8B" secondAttribute="leading" id="vBu-CI-Za4"/>
                                                         <constraint firstItem="Y74-eO-sVW" firstAttribute="top" secondItem="Azj-SL-n8B" secondAttribute="top" id="wJ5-Fr-y0Z"/>
                                                     </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="WRn-F1-u4U"/>
-                                                        </mask>
-                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -177,6 +171,7 @@
                                         </variation>
                                         <connections>
                                             <outlet property="daysTableview" destination="Smg-j9-zWy" id="59u-ck-gPb"/>
+                                            <outlet property="deleteButton" destination="Kl9-cq-bMA" id="4Aa-FJ-OYP"/>
                                             <outlet property="deleteButtonTop" destination="mYv-ei-xVy" id="AVd-NL-6yc"/>
                                             <outlet property="tableView" destination="Smg-j9-zWy" id="5ux-yN-din"/>
                                             <outlet property="tempLabel" destination="bM0-y6-xc0" id="TgL-h2-pmO"/>

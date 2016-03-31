@@ -18,20 +18,12 @@ class MainViewController: UIViewController {
     private var forecasts = [Forecast]()
     
     private let repo = GenericRepository<QueryImpl, City>()
-
+    
+    private var photos = [FlickrPhoto]()
+    
 }
 
 extension MainViewController {
-    
-    @IBAction func deleteItemAction(sender: UIButton) {
-        if let selectedCell = sender.getForecastCell() {
-            let indexPath = collectionView.indexPathForCell(selectedCell)
-            let selectedCity = cities[(indexPath?.row)!]
-            cities.removeAtIndex((indexPath?.row)!)
-            repo.deleteObject(selectedCity)
-            collectionView.reloadData()
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +34,31 @@ extension MainViewController {
         CachingManager.sharedInstance.updateCacheIfNeed { (cities) in
             self.cities = cities
             self.collectionView.reloadData()
+        }
+        
+        let params = ["method":"flickr.photos.search",
+                      "api_key":"c2c481fa8d8cdb4ff387a4fbc46919c7",
+                      "lat":"lat",
+                      "long":"long",
+                      "per_page":"1",
+                      "format":"json",
+                      "nojsoncallback":"1",
+                      "api_sig":"ffea32d38b1c1e085317c96a98a6c572"]
+        
+//        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint, parameters: params) { (result: [FlickrPhoto]?, error: NSError?)->() in
+//            <#code#>
+//        }
+    }
+}
+
+extension MainViewController {
+    @IBAction func deleteItemAction(sender: UIButton) {
+        if let selectedCell = sender.getForecastCell() {
+            let indexPath = collectionView.indexPathForCell(selectedCell)
+            let selectedCity = cities[(indexPath?.row)!]
+            cities.removeAtIndex((indexPath?.row)!)
+            repo.deleteObject(selectedCity)
+            collectionView.reloadData()
         }
     }
 }
@@ -67,7 +84,9 @@ extension MainViewController : UICollectionViewDataSource {
     
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
+        
         cell.tempLabel.text = " \(cities[indexPath.row].name)"
+        
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         
         return cell
@@ -94,7 +113,7 @@ extension MainViewController : UITableViewDataSource {
         CachingManager.sharedInstance.image(imageName!, withCompletion: { (image) in
             cell.iconImageView?.image = image
             cell.iconImageView?.setNeedsDisplay()
-
+            
         })
         
         return cell

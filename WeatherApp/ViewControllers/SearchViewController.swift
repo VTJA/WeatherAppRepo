@@ -27,7 +27,7 @@ final class SearchViewController: UIViewController {
                           "type": "like" ,
                           "mode": "json"]
             
-            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.Search, parameters: params)
+            RequestDispatcher.sharedInstance.performRequest(WeatherEndpoint.Search, parameters: params)
             {[unowned self] (result : [City]?, error : NSError?) -> Void in
                 
                 if let filteredCities = result {
