@@ -7,18 +7,17 @@
 //
 
 import ObjectMapper
-import RealmSwift
 
-class FlickrPhoto : Object, Mappable {
+class FlickrPhoto : Mappable {
     
-    var photoId: String = ""
+    var id: String = ""
     var farm: Int = 0
     var secret: String = ""
     var server: String = ""
     var title: String = ""
     
     var photoUrl: NSURL {
-        return NSURL(string: "http://farm\(farm).staticflickr.com/\(server)/\(photoId)_\(secret)_m.jpg")!
+        return NSURL(string: "http://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg")!
     }
     
     required convenience init?(_ map: Map) {
@@ -26,7 +25,7 @@ class FlickrPhoto : Object, Mappable {
     }
     
     func mapping(map: Map) {
-        photoId <- map["photoId"]
+        id <- map["id"]
         farm <- map["farm"]
         secret <- map["secret"]
         server <- map["server"]

@@ -18,6 +18,8 @@ final class City: Object, Mappable {
     
     var forecasts = List<Forecast>()
     
+    var photo : FlickrPhoto?
+    
     required convenience init?(_ map: Map) {
         self.init()
 

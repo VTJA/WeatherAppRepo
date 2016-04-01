@@ -39,15 +39,9 @@
                                                     <rect key="frame" x="0.0" y="-45" width="497" height="45"/>
                                                     <color key="backgroundColor" red="1" green="0.50689520076386452" blue="0.43723040308309402" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="Kl9-cq-bMA" secondAttribute="height" multiplier="497:30" id="RXK-gW-2cE"/>
                                                         <constraint firstAttribute="height" constant="45" id="bcE-M3-pdI"/>
                                                     </constraints>
                                                     <state key="normal" title="Delete"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="RXK-gW-2cE"/>
-                                                        </mask>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="deleteItemAction:" destination="EHR-Zw-eGy" eventType="touchUpInside" id="yVa-0T-WLB"/>
                                                     </connections>
@@ -170,12 +164,12 @@
                                             </mask>
                                         </variation>
                                         <connections>
+                                            <outlet property="cityImageView" destination="Y74-eO-sVW" id="PjC-FF-4ae"/>
                                             <outlet property="daysTableview" destination="Smg-j9-zWy" id="59u-ck-gPb"/>
                                             <outlet property="deleteButton" destination="Kl9-cq-bMA" id="4Aa-FJ-OYP"/>
                                             <outlet property="deleteButtonTop" destination="mYv-ei-xVy" id="AVd-NL-6yc"/>
                                             <outlet property="tableView" destination="Smg-j9-zWy" id="5ux-yN-din"/>
                                             <outlet property="tempLabel" destination="bM0-y6-xc0" id="TgL-h2-pmO"/>
-                                            <outlet property="weatherImageView" destination="Y74-eO-sVW" id="qdC-BL-6vj"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

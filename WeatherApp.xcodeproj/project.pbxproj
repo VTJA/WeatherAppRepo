@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				69B770E51C9B01B9003B41C4 /* MainViewController */,
-				69B770E61C9B01CB003B41C4 /* SecondaryViewController */,
+				69B770E61C9B01CB003B41C4 /* SearchViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -184,12 +184,12 @@
 			name = MainViewController;
 			sourceTree = "<group>";
 		};
-		69B770E61C9B01CB003B41C4 /* SecondaryViewController */ = {
+		69B770E61C9B01CB003B41C4 /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
 				69ECD4071C9709EB00DFB2A6 /* SearchViewController.swift */,
 			);
-			name = SecondaryViewController;
+			name = SearchViewController;
 			sourceTree = "<group>";
 		};
 		69C6BFDF1C9198E300B2B991 = {

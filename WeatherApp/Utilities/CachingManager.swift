@@ -12,9 +12,13 @@ import RealmSwift
 final class CachingManager {
     
     static let sharedInstance = CachingManager()
+    
     static let secPerDay: Double = 86400
+    
     private var downloadQueue = NSOperationQueue()
+    
     private var imageBook = [String:NSData]()
+    
     private var fileManager = FileManager()
     
     let queue = TaskQueue()
@@ -107,7 +111,7 @@ final class CachingManager {
     
     private func downloadForecasts(city: City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
         let params = ["id":String(city.id),
-                      "appid": APIkey,
+                      "appid": WeatherAPIKey,
                       "units": "metric",
                       "cnt" : "10",
                       "mode": "json"]
@@ -121,21 +125,19 @@ final class CachingManager {
                     let repo = GenericRepository<QueryImpl, City>()
                     repo.updateValue(forecasts, forKeypath: "forecasts", forObject: city)
                 }
-                
                 completion(result: forecasts, error: nil)
             }
         }
     }
     
-    func image(name: String, withCompletion completion: (image: UIImage)->()) {
+    func image(name: String, format: String, url: NSURL, withCompletion completion: (image: UIImage)->()) {
         // if key exist >> return image at key
-        if let image = fileManager.readData(name) {
+        if let image = fileManager.readData(name, format: format) {
             completion(image: image)
             print("image \(name) already cached")
         } else {
-            let url = NSURL(string:"http://openweathermap.org/img/w/\(name).png")
-            downloadImage(url!, completion: { [weak self] (imageData) in
-                self!.fileManager.writeData(imageData!, filename: name)
+            downloadImage(url, completion: { [weak self] (imageData) in
+                self!.fileManager.writeData(imageData!, filename: name, format: format)
                 let image = UIImage(data: imageData!)
                 completion(image: image!)
                 })
@@ -150,12 +152,28 @@ final class CachingManager {
             dispatch_async(dispatch_get_main_queue(), {
                 completion(imageData: imageDownloader.imageData)
             })
-
         }
         downloadQueue.addOperation(imageDownloader)
     }
     
-    //    private func getImagesURLs(forecast : [Forecast]) -> [NSURL] {
-    //
-    //    }
+    func getCityPhotos(cities:[City], withCompletion completion: (photo: FlickrPhoto) -> ()) {
+        for city in cities {
+            let params = ["method":"flickr.photos.search",
+                          "api_key":"cd7373c8e4090c4782dd61b8ebcac88d",
+                          "lat":String(city.coord!.lat),
+                          "lon":String(city.coord!.lon),
+                          "per_page":"1",
+                          "format":"json",
+                          "nojsoncallback":"1"]
+            
+            RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (results: [FlickrPhoto]?, error : NSError?) in
+                if let results = results {
+                    let cityPhoto = results[0]
+                    completion(photo: cityPhoto)
+                } else {
+                    print("error downlaoding city photos \(error?.description)")
+                }
+            }
+        }
+    }
 }

@@ -22,7 +22,7 @@ final class SearchViewController: UIViewController {
         if (searchBar.text!.characters.count > 3) {
             
             let params = ["q":searchBar.text!,
-                          "appid": APIkey,
+                          "appid": WeatherAPIKey,
                           "units": "metric",
                           "type": "like" ,
                           "mode": "json"]

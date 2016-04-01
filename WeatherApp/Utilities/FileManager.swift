@@ -10,7 +10,7 @@ import UIKit
 
 class FileManager {
     
-    func writeData(data: NSData, filename:String) -> Bool {
+    func writeData(data: NSData, filename: String, format: String) -> Bool {
         
         if let documentsPath = getDocumentsPath() {
             
@@ -20,8 +20,10 @@ class FileManager {
                 return false
             }
             
-            let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).png")
+            let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).\(format)")
+            
             UIImagePNGRepresentation(image)!.writeToFile(destinationPath, atomically: false)
+            
             print("\(filename) written to path")
             return true
         }
@@ -30,12 +32,12 @@ class FileManager {
         }
     }
     
-    func readData(filename:String) -> UIImage? {
+    func readData(filename: String, format: String) -> UIImage? {
         let filemgr = NSFileManager.defaultManager()
         
         if let documentsPath = getDocumentsPath() {
             
-            let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).png")
+            let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).\(format)")
             
             guard let imageData = filemgr.contentsAtPath(destinationPath) else {
                 print("file \(filename) not found at path \(destinationPath)")

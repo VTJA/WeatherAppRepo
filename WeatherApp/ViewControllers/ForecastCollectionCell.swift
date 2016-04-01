@@ -9,14 +9,15 @@
 import UIKit
 
 final class ForecastCollectionCell: UICollectionViewCell {
-    @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
+    
     @IBOutlet weak var daysTableview: UITableView!
+    
+    @IBOutlet weak var cityImageView: UIImageView!
     
     @IBOutlet weak var deleteButtonTop: NSLayoutConstraint!
     
     @IBOutlet weak var deleteButton: UIButton!
-    var toggleStatus : Bool = true
     
     @IBOutlet weak var tableView: UITableView!
     func setTableViewDataSourceDelegate
@@ -36,10 +37,6 @@ final class ForecastCollectionCell: UICollectionViewCell {
         
         self.contentView.addGestureRecognizer(upSwipe)
         self.contentView.addGestureRecognizer(downSwipe)
-    }
-    
-    @IBAction func toggleDeleteButton(sender: UIButton) {
-        
     }
     
     func handleSwipes(sender:UISwipeGestureRecognizer) {

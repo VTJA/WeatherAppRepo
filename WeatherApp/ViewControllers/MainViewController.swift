@@ -20,7 +20,6 @@ class MainViewController: UIViewController {
     private let repo = GenericRepository<QueryImpl, City>()
     
     private var photos = [FlickrPhoto]()
-    
 }
 
 extension MainViewController {
@@ -36,18 +35,11 @@ extension MainViewController {
             self.collectionView.reloadData()
         }
         
-        let params = ["method":"flickr.photos.search",
-                      "api_key":"c2c481fa8d8cdb4ff387a4fbc46919c7",
-                      "lat":"lat",
-                      "long":"long",
-                      "per_page":"1",
-                      "format":"json",
-                      "nojsoncallback":"1",
-                      "api_sig":"ffea32d38b1c1e085317c96a98a6c572"]
+        CachingManager.sharedInstance.getCityPhotos(cities) { (photo) in
+            print("downloaded :\(photo.photoUrl)")
+        }
         
-//        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint, parameters: params) { (result: [FlickrPhoto]?, error: NSError?)->() in
-//            <#code#>
-//        }
+        print(self.cities)
     }
 }
 
@@ -85,7 +77,9 @@ extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         
-        cell.tempLabel.text = " \(cities[indexPath.row].name)"
+        let city = cities[indexPath.row]
+        
+        cell.tempLabel.text = city.name
         
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         
@@ -102,19 +96,18 @@ extension MainViewController : UITableViewDataSource {
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
-        
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
-        
         cell.dayLabel?.text = "\(forecast.temp!.day)"
-        
         let imageName = forecast.weather?.icon
-        
-        CachingManager.sharedInstance.image(imageName!, withCompletion: { (image) in
+        let url = forecast.weather?.iconURL
+        CachingManager.sharedInstance.image(imageName!, format:"png", url:url!, withCompletion: { (image) in
             cell.iconImageView?.image = image
             cell.iconImageView?.setNeedsDisplay()
             
         })
+        
+//        CachingManager.sharedInstance.image(<#T##name: String##String#>, format: <#T##String#>, url: <#T##NSURL#>, withCompletion: <#T##(image: UIImage) -> ()#>)
         
         return cell
     }

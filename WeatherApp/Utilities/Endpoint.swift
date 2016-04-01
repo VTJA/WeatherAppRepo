@@ -9,7 +9,7 @@
 import Foundation
 import AlamofireObjectMapper
 
-let APIkey = "867a6d0c3d80f5bb68392878262304f6"
+let WeatherAPIKey = "867a6d0c3d80f5bb68392878262304f6"
 
 enum HTTPMethod: String {
     case GET = "GET"
@@ -32,10 +32,14 @@ enum WeatherEndpoint {
     case ForecastByDays
 }
 
-struct PhotoEndpoint : Endpoint {
+enum PhotoEndpoint {
+    case Photos
+}
+
+extension PhotoEndpoint : Endpoint {
     var baseURL : NSURL { return NSURL(string: "https://api.flickr.com/services")! }
     
-    var path : String { return "/rest/?" }
+    var path : String { return "/rest" }
     
     var method : HTTPMethod { return .GET }
     
@@ -43,9 +47,7 @@ struct PhotoEndpoint : Endpoint {
 }
 
 extension WeatherEndpoint : Endpoint {
-    var baseURL: NSURL {
-        return NSURL(string: "http://api.openweathermap.org/data/2.5")!
-    }
+    var baseURL: NSURL { return NSURL(string: "http://api.openweathermap.org/data/2.5")! }
     
     var path : String {
         switch self {
@@ -59,11 +61,9 @@ extension WeatherEndpoint : Endpoint {
             return "/forecast/daily"
         }
     }
-    var method : HTTPMethod {
-        return .GET
-    }
+    
+    var method : HTTPMethod { return .GET }
     
     var keypath: String { return "list" }
-    
 }
 
