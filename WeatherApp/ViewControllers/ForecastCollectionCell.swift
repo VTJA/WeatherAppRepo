@@ -10,16 +10,12 @@ import UIKit
 
 final class ForecastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var tempLabel: UILabel!
-    
     @IBOutlet weak var daysTableview: UITableView!
-    
     @IBOutlet weak var cityImageView: UIImageView!
-    
     @IBOutlet weak var deleteButtonTop: NSLayoutConstraint!
-    
     @IBOutlet weak var deleteButton: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
+    
     func setTableViewDataSourceDelegate
         <D:UITableViewDataSource>
         (dataSourceDelegate: D, forRow row: Int) {

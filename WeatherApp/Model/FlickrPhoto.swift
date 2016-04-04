@@ -7,14 +7,14 @@
 //
 
 import ObjectMapper
+import RealmSwift
 
 class FlickrPhoto : Mappable {
-    
-    var id: String = ""
-    var farm: Int = 0
-    var secret: String = ""
-    var server: String = ""
-    var title: String = ""
+    dynamic var id: String = ""
+    dynamic var farm: Int = 0
+    dynamic var secret: String = ""
+    dynamic var server: String = ""
+    dynamic var title: String = ""
     
     var photoUrl: NSURL {
         return NSURL(string: "http://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg")!
@@ -32,3 +32,4 @@ class FlickrPhoto : Mappable {
         title <- map["title"]
     }
 }
+

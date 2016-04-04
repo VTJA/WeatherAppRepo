@@ -10,17 +10,11 @@ import ObjectMapper
 import RealmSwift
 
 final class Temp: Object, Mappable  {
-    
     dynamic var night: Float = 0
-    
     dynamic var min: Float = 0
-    
     dynamic var eve: Float = 0
-    
     dynamic var day: Float = 0
-    
     dynamic var max: Float = 0
-    
     dynamic var morn: Float = 0
     
     required convenience init?(_ map: Map) {

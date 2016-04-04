@@ -10,11 +10,8 @@ import ObjectMapper
 import RealmSwift
 
 final class Weather: Object, Mappable {
-    
     dynamic var id: Int = 0
-    
     dynamic var main: String = ""
-    
     dynamic var icon: String = ""
     
     dynamic var iconURL : NSURL {

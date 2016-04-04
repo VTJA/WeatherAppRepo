@@ -10,9 +10,7 @@ import ObjectMapper
 import RealmSwift
 
 final class Coord: Object, Mappable  {
-    
     dynamic var lon: Float = 0
-    
     dynamic var lat: Float = 0
     
     required convenience init?(_ map: Map) {

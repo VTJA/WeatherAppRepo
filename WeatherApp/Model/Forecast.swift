@@ -10,15 +10,10 @@ import ObjectMapper
 import RealmSwift
 
 class Forecast: Object, Mappable  {
-    
     dynamic var pressure: Double = 0
-    
     dynamic var humidity: Double = 0
-    
     dynamic var temp : Temp?
-    
     dynamic var dt: Double = 0
-    
     dynamic var weather : Weather?
     
     required convenience init?(_ map: Map) {

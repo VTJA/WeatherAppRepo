@@ -10,20 +10,14 @@ import UIKit
 import RealmSwift
 
 class MainViewController: UIViewController {
-    
     @IBOutlet weak var collectionView: UICollectionView!
-    
     private var cities = [City]()
-    
     private var forecasts = [Forecast]()
-    
     private let repo = GenericRepository<QueryImpl, City>()
-    
     private var photos = [FlickrPhoto]()
 }
 
 extension MainViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.configureLayout()
@@ -36,10 +30,9 @@ extension MainViewController {
         }
         
         CachingManager.sharedInstance.getCityPhotos(cities) { (photo) in
-            print("downloaded :\(photo.photoUrl)")
         }
         
-        print(self.cities)
+        //        print(self.cities)
     }
 }
 
@@ -69,6 +62,7 @@ extension UIView {
     }
 }
 
+//MARK: - Collection View Data Source
 extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cities.count
@@ -79,6 +73,16 @@ extension MainViewController : UICollectionViewDataSource {
         
         let city = cities[indexPath.row]
         
+//        if let cityPhoto = city.photo {
+//            
+//            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
+//                cell.cityImageView.image = image
+//                cell.cityImageView.setNeedsDisplay()
+//            }
+//        } else {
+//            print("photo is nil")
+//        }
+        
         cell.tempLabel.text = city.name
         
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
@@ -87,6 +91,7 @@ extension MainViewController : UICollectionViewDataSource {
     }
 }
 
+//MARK: - Table View Data Source
 extension MainViewController : UITableViewDataSource {
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -96,18 +101,23 @@ extension MainViewController : UITableViewDataSource {
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
+        cell.selectionStyle = .None
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
-        cell.dayLabel?.text = "\(forecast.temp!.day)"
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM"
+        let dateOfForecast = NSDate(timeIntervalSince1970: forecast.dt)
+        let forecastString = formatter.stringFromDate(dateOfForecast)
+        let temperatureString = String(NSString(format: "%.0f",(forecast.temp?.day)!))
+
+        cell.dayLabel?.text = temperatureString + "\u{00B0}C " + forecastString
         let imageName = forecast.weather?.icon
         let url = forecast.weather?.iconURL
         CachingManager.sharedInstance.image(imageName!, format:"png", url:url!, withCompletion: { (image) in
             cell.iconImageView?.image = image
             cell.iconImageView?.setNeedsDisplay()
-            
         })
-        
-//        CachingManager.sharedInstance.image(<#T##name: String##String#>, format: <#T##String#>, url: <#T##NSURL#>, withCompletion: <#T##(image: UIImage) -> ()#>)
         
         return cell
     }
