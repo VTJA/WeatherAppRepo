@@ -28,20 +28,30 @@ extension MainViewController {
             self.cities = cities
             self.collectionView.reloadData()
         }
-        
-        CachingManager.sharedInstance.getCityPhotos(cities) { (photo) in
-        }
     }
 }
 
 extension MainViewController {
     @IBAction func deleteItemAction(sender: UIButton) {
         if let selectedCell = sender.getForecastCell() {
-            let indexPath = collectionView.indexPathForCell(selectedCell)
-            let selectedCity = cities[(indexPath?.row)!]
-            cities.removeAtIndex((indexPath?.row)!)
-            repo.deleteObject(selectedCity)
-            collectionView.reloadData()
+            
+            let alertController = UIAlertController(title: "Warning", message: "Remove the city from list", preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            }
+            alertController.addAction(cancelAction)
+            
+            let destroyAction = UIAlertAction(title: "Remove", style: .Destructive) { (action) in
+                let indexPath = self.collectionView.indexPathForCell(selectedCell)
+                let selectedCity = self.cities[(indexPath?.row)!]
+                self.cities.removeAtIndex((indexPath?.row)!)
+                self.repo.deleteObject(selectedCity)
+                self.collectionView.reloadData()
+            }
+            alertController.addAction(destroyAction)
+            
+            self.presentViewController(alertController, animated: true) {
+            }
         }
     }
 }
@@ -71,15 +81,19 @@ extension MainViewController : UICollectionViewDataSource {
         
         let city = cities[indexPath.row]
         
-        //        if let cityPhoto = city.photo {
-        //
-        //            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
-        //                cell.cityImageView.image = image
-        //                cell.cityImageView.setNeedsDisplay()
-        //            }
-        //        } else {
-        //            print("photo is nil")
-        //        }
+        CachingManager.sharedInstance.getCityPhotos(city) { (photo) in
+            city.photo = photo
+        }
+        
+        if let cityPhoto = city.photo {
+            
+            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
+                cell.cityImageView.image = image
+                cell.cityImageView.setNeedsDisplay()
+            }
+        } else {
+            print("photo is nil")
+        }
         
         let temperatureStr = city.forecasts[0].temp!.day
         
@@ -88,43 +102,6 @@ extension MainViewController : UICollectionViewDataSource {
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         
         return cell
-    }
-}
-
-//MARK: - Table View Data Source
-extension MainViewController : UITableViewDataSource {
-    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return cities[tableView.tag].forecasts.count
-        
-    }
-    
-    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
-        cell.selectionStyle = .None
-        let city = cities[tableView.tag]
-        let forecast = city.forecasts[indexPath.row]
-        
-        let forecastString = formatDate(forecast.dt)
-        let temperatureString = String(NSString(format: "%.0f",(forecast.temp?.day)!))
-        
-        cell.dayLabel?.text = temperatureString + "\u{00B0} C " + forecastString
-        let imageName = forecast.weather?.icon
-        let url = forecast.weather?.iconURL
-        CachingManager.sharedInstance.image(imageName!, format:"png", url:url!, withCompletion: { (image) in
-            cell.iconImageView?.image = image
-            cell.iconImageView?.setNeedsDisplay()
-        })
-        
-        return cell
-    }
-    
-    func formatDate(date: Double) -> String {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "EEEE, d MMMM"
-        let dateOfForecast = NSDate(timeIntervalSince1970: date)
-        let forecastString = formatter.stringFromDate(dateOfForecast)
-        return forecastString
     }
 }
 
@@ -143,3 +120,42 @@ extension UICollectionView {
         collectionViewLayout = layout
     }
 }
+
+
+//MARK: - Table View Data Source
+extension MainViewController : UITableViewDataSource {
+    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities[tableView.tag].forecasts.count
+    }
+    
+    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
+        cell.selectionStyle = .None
+        let city = cities[tableView.tag]
+        let forecast = city.forecasts[indexPath.row]
+        
+        let forecastString = formatDate(forecast.dt)
+        let temperatureString = String(NSString(format: "%.0f",(forecast.temp?.day)!))
+        
+        cell.dayLabel?.text = temperatureString + "\u{00B0} C " + forecastString
+        
+        let imageName = forecast.weather?.icon
+        let url = forecast.weather?.iconURL
+        
+        CachingManager.sharedInstance.image(imageName!, format:"png", url:url!, withCompletion: { (image) in
+            cell.iconImageView?.image = image
+            cell.iconImageView?.setNeedsDisplay()
+        })
+        
+        return cell
+    }
+    
+    func formatDate(date: Double) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM"
+        let dateOfForecast = NSDate(timeIntervalSince1970: date)
+        let forecastString = formatter.stringFromDate(dateOfForecast)
+        return forecastString
+    }
+}
+

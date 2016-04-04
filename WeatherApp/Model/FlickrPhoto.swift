@@ -17,7 +17,7 @@ class FlickrPhoto : Mappable {
     dynamic var title: String = ""
     
     var photoUrl: NSURL {
-        return NSURL(string: "http://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_m.jpg")!
+        return NSURL(string: "http://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_b.jpg")!
     }
     
     required convenience init?(_ map: Map) {

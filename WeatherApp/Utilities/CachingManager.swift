@@ -156,25 +156,25 @@ final class CachingManager {
         downloadQueue.addOperation(imageDownloader)
     }
     
-    func getCityPhotos(cities:[City], withCompletion completion: (photo: FlickrPhoto) -> ()) {
-        for city in cities {
-            let params = ["method":"flickr.photos.search",
-                          "api_key":"b4988504fe7318e5d2d27672a50927b2",
-                          "lat":String(city.coord!.lat),
-                          "lon":String(city.coord!.lon),
-                          "format":"json",
-                          "in_gallery":"1",
-                          "nojsoncallback":"1"]
-            
-            RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (results: [FlickrPhoto]?, error : NSError?) in
-                if let results = results {
-                    let cityPhoto = results[10]
-                    city.photo = cityPhoto
-                    print("the url for \(city.name) is \(city.photo?.photoUrl)")
-                    completion(photo: cityPhoto)
-                } else {
-                    print("error downlaoding city photos \(error?.description)")
-                }
+    func getCityPhotos(city: City, withCompletion completion: (photo: FlickrPhoto) -> ()) {
+        let params = ["method":"flickr.photos.search",
+                      "api_key":"b4988504fe7318e5d2d27672a50927b2",
+                      "lat":String(city.coord!.lat),
+                      "lon":String(city.coord!.lon),
+                      "format":"json",
+                      "in_gallery":"1",
+                      "privacy_filter":"1",
+                      "accuracy":"11",
+                      "group_id":"projectweather",
+                      "nojsoncallback":"1"]
+        
+        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (results: [FlickrPhoto]?, error : NSError?) in
+            if let results = results {
+                let cityPhoto = results[7]
+                print("the url for \(city.name) is \(city.photo?.photoUrl)")
+                completion(photo: cityPhoto)
+            } else {
+                print("error downlaoding city photos \(error?.description)")
             }
         }
     }
