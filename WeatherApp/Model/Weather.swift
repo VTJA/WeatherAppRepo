@@ -13,7 +13,6 @@ final class Weather: Object, Mappable {
     dynamic var id: Int = 0
     dynamic var main: String = ""
     dynamic var icon: String = ""
-    
     dynamic var iconURL : NSURL {
         return NSURL(string:"http://openweathermap.org/img/w/\(icon).png")!
     }

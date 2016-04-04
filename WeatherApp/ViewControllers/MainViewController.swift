@@ -31,8 +31,6 @@ extension MainViewController {
         
         CachingManager.sharedInstance.getCityPhotos(cities) { (photo) in
         }
-        
-        //        print(self.cities)
     }
 }
 
@@ -73,17 +71,19 @@ extension MainViewController : UICollectionViewDataSource {
         
         let city = cities[indexPath.row]
         
-//        if let cityPhoto = city.photo {
-//            
-//            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
-//                cell.cityImageView.image = image
-//                cell.cityImageView.setNeedsDisplay()
-//            }
-//        } else {
-//            print("photo is nil")
-//        }
+        //        if let cityPhoto = city.photo {
+        //
+        //            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
+        //                cell.cityImageView.image = image
+        //                cell.cityImageView.setNeedsDisplay()
+        //            }
+        //        } else {
+        //            print("photo is nil")
+        //        }
         
-        cell.tempLabel.text = city.name
+        let temperatureStr = city.forecasts[0].temp!.day
+        
+        cell.tempLabel.text = "\(city.name) \(temperatureStr)\u{00B0} C"
         
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         
@@ -105,13 +105,10 @@ extension MainViewController : UITableViewDataSource {
         let city = cities[tableView.tag]
         let forecast = city.forecasts[indexPath.row]
         
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "EEEE, d MMMM"
-        let dateOfForecast = NSDate(timeIntervalSince1970: forecast.dt)
-        let forecastString = formatter.stringFromDate(dateOfForecast)
+        let forecastString = formatDate(forecast.dt)
         let temperatureString = String(NSString(format: "%.0f",(forecast.temp?.day)!))
-
-        cell.dayLabel?.text = temperatureString + "\u{00B0}C " + forecastString
+        
+        cell.dayLabel?.text = temperatureString + "\u{00B0} C " + forecastString
         let imageName = forecast.weather?.icon
         let url = forecast.weather?.iconURL
         CachingManager.sharedInstance.image(imageName!, format:"png", url:url!, withCompletion: { (image) in
@@ -120,6 +117,14 @@ extension MainViewController : UITableViewDataSource {
         })
         
         return cell
+    }
+    
+    func formatDate(date: Double) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "EEEE, d MMMM"
+        let dateOfForecast = NSDate(timeIntervalSince1970: date)
+        let forecastString = formatter.stringFromDate(dateOfForecast)
+        return forecastString
     }
 }
 
