@@ -18,7 +18,7 @@ final class RequestDispatcher  {
     init(manager: Manager = Manager.sharedInstance) {
         self.manager = manager
         reachibilityManager = NetworkReachabilityManager(host:"http://openweathermap.org/api")!
-        reachibilityManager.listener = {[unowned self] status  in
+        reachibilityManager.listener = {[unowned self] status in
             
             self.reachibilityDidChange(status)
         }
@@ -32,8 +32,7 @@ final class RequestDispatcher  {
             .validate(contentType: ["application/json"])
 //            .responseString { response in
 //                print("Success: \(response.result.isSuccess)")
-//                print("Response String: \(response.result.value)")
-//            }
+//                print("Response String: \(
             .responseArray(endpoint.keypath) { (response:Alamofire.Response<[T], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }

@@ -33,7 +33,7 @@ final class CachingManager {
      
      */
     
-    internal func validateForecast(forecast: Forecast) -> Bool {
+     internal func validateForecast(forecast: Forecast) -> Bool {
         return NSDate().timeIntervalSince1970 - forecast.dt > CachingManager.secPerDay ? false : true
     }
     

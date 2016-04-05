@@ -24,7 +24,7 @@ extension MainViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        CachingManager.sharedInstance.updateCacheIfNeed { (cities) in
+        CachingManager.sharedInstance.updateCacheIfNeed {[unowned self] (cities) in
             self.cities = cities
             self.collectionView.reloadData()
         }

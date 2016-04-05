@@ -25,22 +25,20 @@ class CachingManagerTest: XCTestCase {
     }
     
     func testValidateForecasts() {
+        
         let forecastDate : NSTimeInterval = NSDate().timeIntervalSince1970 - 86400
         let forecast = Forecast()
         
         forecast.dt = forecastDate
         
-        XCTAssertFalse(cachingManagerInstance.validateForecasts(forecast))
-        
-        
+        XCTAssertFalse(cachingManagerInstance.validateForecast(forecast))
         
         let forecastDate2 : NSTimeInterval = NSDate().timeIntervalSince1970 - 86300
         let forecast2 = Forecast()
         
         forecast2.dt = forecastDate2
         
-        XCTAssertTrue(cachingManagerInstance.validateForecasts(forecast2))
+        XCTAssertTrue(cachingManagerInstance.validateForecast(forecast2))
     }
-    
 }
 
