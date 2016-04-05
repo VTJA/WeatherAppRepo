@@ -4,6 +4,7 @@ PODS:
     - Alamofire (~> 3.2)
     - ObjectMapper (~> 1.0)
   - ObjectMapper (1.2.0)
+  - OCMock (3.2.2)
   - Realm (0.98.6):
     - Realm/Headers (= 0.98.6)
   - Realm/Headers (0.98.6)
@@ -14,12 +15,14 @@ DEPENDENCIES:
   - Alamofire (~> 3.2)
   - AlamofireObjectMapper (~> 2.1)
   - ObjectMapper (~> 1.1)
+  - OCMock (~> 3.2)
   - RealmSwift (~> 0.98)
 
 SPEC CHECKSUMS:
   Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
   AlamofireObjectMapper: 82391c31f23e37bdb2660da174bcf81b202da39d
   ObjectMapper: b1e9c7c8a9f6400b72690c80072c131504caa66f
+  OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
   Realm: 44803f35418c5d89b27825a564247fcd190de37e
   RealmSwift: c7239c52c83f8c43525a5269ba7be1694da33afc
 

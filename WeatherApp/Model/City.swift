@@ -24,6 +24,8 @@ final class City: Object, Mappable {
         id <- map["id"]
         coord <- map["coord"]
         name <- map["name"]
+        
+        
     }
     
     override static func primaryKey() -> String? {
