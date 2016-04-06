@@ -28,14 +28,15 @@ final class SearchViewController: UIViewController {
                           "mode": "json"]
             
             RequestDispatcher.sharedInstance.performRequest(WeatherEndpoint.Search, parameters: params)
-            {[unowned self] (result : [City]?, error : NSError?) -> Void in
-                
-                if let filteredCities = result {
-                    self.filteredCities = filteredCities
-                } else {
-                    print(error?.description)
+            {[weak self] (result : [City]?, error : NSError?) -> Void in
+                if let strongSelf = self {
+                    if let filteredCities = result {
+                        strongSelf.filteredCities = filteredCities
+                    } else {
+                        print(error?.description)
+                    }
+                    strongSelf.matchesTableView.reloadData()
                 }
-                self.matchesTableView.reloadData()
             }
         }
     }

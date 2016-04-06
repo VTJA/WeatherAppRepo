@@ -1,0 +1,408 @@
+{
+  "message": "like",
+  "cod": "200",
+  "count": 11,
+  "list": [
+    {
+      "id": 1264793,
+      "name": "Lonavale",
+      "coord": {
+        "lon": 73.416672,
+        "lat": 18.75
+      },
+      "main": {
+        "temp": 303.619,
+        "temp_min": 303.619,
+        "temp_max": 303.619,
+        "pressure": 997.97,
+        "sea_level": 1022.74,
+        "grnd_level": 997.97,
+        "humidity": 53
+      },
+      "dt": 1459948863,
+      "wind": {
+        "speed": 2.06,
+        "deg": 332.003
+      },
+      "sys": {
+        "country": "IN"
+      },
+      "clouds": {
+        "all": 76
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04d"
+        }
+      ]
+    },
+    {
+      "id": 1264794,
+      "name": "Lonar",
+      "coord": {
+        "lon": 76.533333,
+        "lat": 19.98333
+      },
+      "main": {
+        "temp": 308.169,
+        "temp_min": 308.169,
+        "temp_max": 308.169,
+        "pressure": 965.87,
+        "sea_level": 1020.72,
+        "grnd_level": 965.87,
+        "humidity": 24
+      },
+      "dt": 1459948863,
+      "wind": {
+        "speed": 3.01,
+        "deg": 355.003
+      },
+      "sys": {
+        "country": "IN"
+      },
+      "clouds": {
+        "all": 76
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04n"
+        }
+      ]
+    },
+    {
+      "id": 2035970,
+      "name": "Longjiang",
+      "coord": {
+        "lon": 123.183609,
+        "lat": 47.33028
+      },
+      "main": {
+        "temp": 283.069,
+        "temp_min": 283.069,
+        "temp_max": 283.069,
+        "pressure": 981.76,
+        "sea_level": 1010.14,
+        "grnd_level": 981.76,
+        "humidity": 72
+      },
+      "dt": 1459948863,
+      "wind": {
+        "speed": 5.71,
+        "deg": 239.503
+      },
+      "sys": {
+        "country": "CN"
+      },
+      "rain": {
+        "3h": 0.105
+      },
+      "clouds": {
+        "all": 56
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10n"
+        }
+      ]
+    },
+    {
+      "id": 1575627,
+      "name": "Long Xuyen",
+      "coord": {
+        "lon": 105.416672,
+        "lat": 10.38333
+      },
+      "main": {
+        "temp": 304.319,
+        "temp_min": 304.319,
+        "temp_max": 304.319,
+        "pressure": 1023.18,
+        "sea_level": 1023.51,
+        "grnd_level": 1023.18,
+        "humidity": 51
+      },
+      "dt": 1459948360,
+      "wind": {
+        "speed": 3.36,
+        "deg": 147.503
+      },
+      "sys": {
+        "country": "VN"
+      },
+      "clouds": {
+        "all": 64
+      },
+      "weather": [
+        {
+          "id": 803,
+          "main": "Clouds",
+          "description": "broken clouds",
+          "icon": "04n"
+        }
+      ]
+    },
+    {
+      "id": 1802476,
+      "name": "Longquan",
+      "coord": {
+        "lon": 102.161301,
+        "lat": 24.671921
+      },
+      "main": {
+        "temp": 289.719,
+        "temp_min": 289.719,
+        "temp_max": 289.719,
+        "pressure": 828.4,
+        "sea_level": 1018.49,
+        "grnd_level": 828.4,
+        "humidity": 70
+      },
+      "dt": 1459948863,
+      "wind": {
+        "speed": 1.41,
+        "deg": 209.503
+      },
+      "sys": {
+        "country": "CN"
+      },
+      "rain": {
+        "3h": 0.37
+      },
+      "clouds": {
+        "all": 32
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10n"
+        }
+      ]
+    },
+    {
+      "id": 1802550,
+      "name": "Longkou",
+      "coord": {
+        "lon": 120.328613,
+        "lat": 37.650829
+      },
+      "main": {
+        "temp": 284.669,
+        "temp_min": 284.669,
+        "temp_max": 284.669,
+        "pressure": 1018.15,
+        "sea_level": 1022.42,
+        "grnd_level": 1018.15,
+        "humidity": 62
+      },
+      "dt": 1459948863,
+      "wind": {
+        "speed": 6.06,
+        "deg": 171.003
+      },
+      "sys": {
+        "country": "CN"
+      },
+      "clouds": {
+        "all": 88
+      },
+      "weather": [
+        {
+          "id": 804,
+          "main": "Clouds",
+          "description": "overcast clouds",
+          "icon": "04n"
+        }
+      ]
+    },
+    {
+      "id": 2035966,
+      "name": "Longjing",
+      "coord": {
+        "lon": 129.423325,
+        "lat": 42.771389
+      },
+      "main": {
+        "temp": 278.73,
+        "temp_min": 278.73,
+        "temp_max": 278.73,
+        "pressure": 964.62,
+        "sea_level": 1025.21,
+        "grnd_level": 964.62,
+        "humidity": 68
+      },
+      "dt": 1459948205,
+      "wind": {
+        "speed": 1.37,
+        "deg": 164.004
+      },
+      "sys": {
+        "country": "CN"
+      },
+      "clouds": {
+        "all": 36
+      },
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03n"
+        }
+      ]
+    },
+    {
+      "id": 2035980,
+      "name": "Longfeng",
+      "coord": {
+        "lon": 125.116669,
+        "lat": 46.549999
+      },
+      "main": {
+        "temp": 285.369,
+        "temp_min": 285.369,
+        "temp_max": 285.369,
+        "pressure": 991.81,
+        "sea_level": 1011.97,
+        "grnd_level": 991.81,
+        "humidity": 50
+      },
+      "dt": 1459948864,
+      "wind": {
+        "speed": 7.56,
+        "deg": 198.003
+      },
+      "sys": {
+        "country": "CN"
+      },
+      "clouds": {
+        "all": 20
+      },
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "few clouds",
+          "icon": "02n"
+        }
+      ]
+    },
+    {
+      "id": 2643734,
+      "name": "Londonderry County Borough",
+      "coord": {
+        "lon": -7.30917,
+        "lat": 54.997211
+      },
+      "main": {
+        "temp": 279.719,
+        "temp_min": 279.719,
+        "temp_max": 279.719,
+        "pressure": 1006,
+        "sea_level": 1013.46,
+        "grnd_level": 1006,
+        "humidity": 99
+      },
+      "dt": 1459948339,
+      "wind": {
+        "speed": 10.16,
+        "deg": 282.503
+      },
+      "sys": {
+        "country": "GB"
+      },
+      "rain": {
+        "3h": 1.64
+      },
+      "clouds": {
+        "all": 76
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ]
+    },
+    {
+      "id": 3458449,
+      "name": "Londrina",
+      "coord": {
+        "lon": -51.162781,
+        "lat": -23.31028
+      },
+      "main": {
+        "temp": 297.15,
+        "pressure": 1019,
+        "humidity": 78,
+        "temp_min": 297.15,
+        "temp_max": 297.15
+      },
+      "dt": 1459944000,
+      "wind": {
+        "speed": 2.6,
+        "deg": 160
+      },
+      "sys": {
+        "country": "BR"
+      },
+      "clouds": {
+        "all": 0
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "Sky is Clear",
+          "icon": "01d"
+        }
+      ]
+    },
+    {
+      "id": 1264773,
+      "name": "Loni",
+      "coord": {
+        "lon": 77.283333,
+        "lat": 28.75
+      },
+      "main": {
+        "temp": 307.15,
+        "pressure": 1006,
+        "humidity": 17,
+        "temp_min": 307.15,
+        "temp_max": 307.15
+      },
+      "dt": 1459945800,
+      "wind": {
+        "speed": 2.6,
+        "deg": 130
+      },
+      "sys": {
+        "country": "IN"
+      },
+      "clouds": {
+        "all": 40
+      },
+      "weather": [
+        {
+          "id": 721,
+          "main": "Haze",
+          "description": "haze",
+          "icon": "50d"
+        }
+      ]
+    }
+  ]
+}

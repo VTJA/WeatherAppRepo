@@ -8,7 +8,7 @@
 import Alamofire
 import ObjectMapper
 
-final class RequestDispatcher  {
+class RequestDispatcher {
     
     static let sharedInstance = RequestDispatcher()
     
@@ -30,9 +30,6 @@ final class RequestDispatcher  {
         manager.request(method, URL, parameters: parameters, encoding: .URLEncodedInURL)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-//            .responseString { response in
-//                print("Success: \(response.result.isSuccess)")
-//                print("Response String: \(
             .responseArray(endpoint.keypath) { (response:Alamofire.Response<[T], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }

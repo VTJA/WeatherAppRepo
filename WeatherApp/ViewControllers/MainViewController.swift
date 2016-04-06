@@ -24,23 +24,19 @@ extension MainViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        CachingManager.sharedInstance.updateCacheIfNeed {[unowned self] (cities) in
-            self.cities = cities
-            self.collectionView.reloadData()
+        CachingManager.sharedInstance.updateCacheIfNeed {[weak self] (cities) in
+            if let strongSelf = self {
+                strongSelf.cities = cities
+                strongSelf.collectionView.reloadData()
+            }
         }
     }
 }
 
 extension MainViewController {
+    
     @IBAction func deleteItemAction(sender: UIButton) {
         if let selectedCell = sender.getForecastCell() {
-            
-            let alertController = UIAlertController(title: "Warning", message: "Remove the city from list", preferredStyle: .Alert)
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-            }
-            alertController.addAction(cancelAction)
-            
             let destroyAction = UIAlertAction(title: "Remove", style: .Destructive) { (action) in
                 let indexPath = self.collectionView.indexPathForCell(selectedCell)
                 let selectedCity = self.cities[(indexPath?.row)!]
@@ -48,11 +44,22 @@ extension MainViewController {
                 self.repo.deleteObject(selectedCity)
                 self.collectionView.reloadData()
             }
-            alertController.addAction(destroyAction)
             
-            self.presentViewController(alertController, animated: true) {
-            }
+            let alertController = createAlertController(destroyAction)
+            
+            self.presentViewController(alertController, animated: true) {}
         }
+    }
+    
+    func createAlertController(destroyAction : UIAlertAction) -> UIAlertController {
+        let alertController = UIAlertController(title: "Warning", message: "Remove the city from list", preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(destroyAction)
+        
+        return alertController
     }
 }
 
@@ -80,20 +87,6 @@ extension MainViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         
         let city = cities[indexPath.row]
-        
-        CachingManager.sharedInstance.getCityPhotos(city) { (photo) in
-            city.photo = photo
-        }
-        
-        if let cityPhoto = city.photo {
-            
-            CachingManager.sharedInstance.image(cityPhoto.id, format:"jpg", url: cityPhoto.photoUrl) { (image) in
-                cell.cityImageView.image = image
-                cell.cityImageView.setNeedsDisplay()
-            }
-        } else {
-            print("photo is nil")
-        }
         
         let temperatureStr = city.forecasts[0].temp!.day
         
