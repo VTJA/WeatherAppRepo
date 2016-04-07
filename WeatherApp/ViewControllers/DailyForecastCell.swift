@@ -9,6 +9,8 @@
 import UIKit
 
 class DailyForecastCell: UITableViewCell {
+    
     @IBOutlet weak var iconImageView: UIImageView!
+    
     @IBOutlet weak var dayLabel: UILabel!
 }

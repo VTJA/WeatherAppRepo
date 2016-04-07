@@ -11,16 +11,16 @@ import ObjectMapper
 class RequestDispatcher {
     
     static let sharedInstance = RequestDispatcher()
-    
     internal var manager: Manager
     internal var reachibilityManager : NetworkReachabilityManager
     
     init(manager: Manager = Manager.sharedInstance) {
         self.manager = manager
         reachibilityManager = NetworkReachabilityManager(host:"http://openweathermap.org/api")!
-        reachibilityManager.listener = {[unowned self] status in
-            
-            self.reachibilityDidChange(status)
+        reachibilityManager.listener = {[weak self] status in
+            if let strongSelf = self {
+                strongSelf.reachibilityDidChange(status)
+            }
         }
     }
     

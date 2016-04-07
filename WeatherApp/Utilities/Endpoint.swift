@@ -36,21 +36,6 @@ enum PhotoEndpoint {
     case Photos
 }
 
-extension PhotoEndpoint : Endpoint {
-    var baseURL : NSURL {
-        return NSURL(string: "https://api.flickr.com/services")!
-    }
-    var path : String {
-        return "/rest"
-    }
-    var method : HTTPMethod {
-        return .GET
-    }
-    var keypath: String {
-        return "photos.photo"
-    }
-}
-
 extension WeatherEndpoint : Endpoint {
     var baseURL: NSURL { return NSURL(string: "http://api.openweathermap.org/data/2.5")! }
     

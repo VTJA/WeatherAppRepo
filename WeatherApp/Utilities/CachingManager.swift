@@ -12,15 +12,10 @@ import RealmSwift
 final class CachingManager {
     
     static let sharedInstance = CachingManager()
-    
     static let secPerDay: Double = 86400
-    
     private var downloadQueue = NSOperationQueue()
-    
     private var imageBook = [String:NSData]()
-    
     private var fileManager = FileManager()
-    
     let queue = TaskQueue()
     
     /**
@@ -33,7 +28,7 @@ final class CachingManager {
      
      */
     
-     internal func validateForecast(forecast: Forecast) -> Bool {
+    internal func validateForecast(forecast: Forecast) -> Bool {
         return NSDate().timeIntervalSince1970 - forecast.dt > CachingManager.secPerDay ? false : true
     }
     
@@ -48,7 +43,6 @@ final class CachingManager {
      */
     
     func loadForecasts(city:City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
-        
         let cityForecasts = city.forecasts.map {$0}
         let latestForecast = city.forecasts.sorted("dt", ascending: true)
         
@@ -130,22 +124,41 @@ final class CachingManager {
         }
     }
     
+    /**
+    Load an image from disk if it already exists, else download it from source url
+    - parameter name: file name of the image
+    
+    - parameter url: url of the image
+ 
+    - parameter completion: callback to retrieve the result image
+    */
+    
     func image(name: String, format: String, url: NSURL, withCompletion completion: (image: UIImage)->()) {
-        // if key exist >> return image at key
+        
         if let image = fileManager.readData(name, format: format) {
             completion(image: image)
             print("image \(name) already cached")
         } else {
             downloadImage(url, completion: { [weak self] (imageData) in
-                self!.fileManager.writeData(imageData!, filename: name, format: format)
-                let image = UIImage(data: imageData!)
-                completion(image: image!)
-                })
+                if let strongSelf = self {
+                    strongSelf.fileManager.writeData(imageData!, filename: name, format: format)
+                    let image = UIImage(data: imageData!)
+                    completion(image: image!)
+                }
+            })
         }
-        //        else >> download and call completions?>>
     }
     
-    func downloadImage(URL: NSURL , completion: (imageData: NSData?)->()) {
+    /**
+    Download an image from the source url and return it's data in the callback
+    using an operation queue
+ 
+    - parameter URL: source url of the image
+    
+    - parameter completion: callback to retrieve the image data
+    */
+    
+ func downloadImage(URL: NSURL , completion: (imageData: NSData?)->()) {
         
         let imageDownloader = ImageDownloader(url: URL)
         imageDownloader.completionBlock = {
@@ -154,28 +167,5 @@ final class CachingManager {
             })
         }
         downloadQueue.addOperation(imageDownloader)
-    }
-    
-    func getCityPhotos(city: City, withCompletion completion: (photo: FlickrPhoto) -> ()) {
-        let params = ["method":"flickr.photos.search",
-                      "api_key":"b4988504fe7318e5d2d27672a50927b2",
-                      "lat":String(city.coord!.lat),
-                      "lon":String(city.coord!.lon),
-                      "format":"json",
-                      "in_gallery":"1",
-                      "privacy_filter":"1",
-                      "accuracy":"11",
-                      "group_id":"projectweather",
-                      "nojsoncallback":"1"]
-        
-        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (results: [FlickrPhoto]?, error : NSError?) in
-            if let results = results {
-                let cityPhoto = results[7]
-                print("the url for \(city.name) is \(city.photo?.photoUrl)")
-                completion(photo: cityPhoto)
-            } else {
-                print("error downlaoding city photos \(error?.description)")
-            }
-        }
     }
 }

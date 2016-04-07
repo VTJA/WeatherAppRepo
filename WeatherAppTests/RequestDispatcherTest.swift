@@ -50,24 +50,26 @@ class RequestDispatcherTest: XCTestCase {
         let bundle = NSBundle(forClass: self.dynamicType)
         let path = bundle.pathForResource("stubJSON", ofType: "json")!
         let jsonData = NSData(contentsOfFile: path)
-        let stubbedJSON = try? NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions())
-        let
         
-        print(stubbedJSON)
-        let params = ["q":"Lon",
-                      "appid": WeatherAPIKey,
-                      "units": "metric",
-                      "type": "like" ,
-                      "mode": "json"]
+        do {
+            let object = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: .AllowFragments)
+            if let stubCityArr = object as? [String:AnyObject] {
+                print(stubCityArr)
+            }
+        } catch {
+        }
         
         stub(isHost("api.openweathermap.org") && isPath(WeatherEndpoint.Search.path)) { _ in
-            return OHHTTPStubsResponse(JSONObject: stubbedJSON!, statusCode: 200, headers: nil)
+            return OHHTTPStubsResponse(JSONObject: jsonData!, statusCode: 200, headers: nil)
         }
         
         // when
         
-        requestDispatcher.performRequest(WeatherEndpoint.Search, parameters: ["":""]) {(forecasts: [City]?, error: NSError?) in
-            XCTAssertTrue(error == nil && forecasts[0] == )
+        requestDispatcher.performRequest(WeatherEndpoint.Search, parameters: ["":""]) {(cities: [City]?, error: NSError?) in
+            if let cities = cities {
+                // then
+               XCTAssertTrue(cities[0].id == 1264797)
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     private var cities = [City]()
     private var forecasts = [Forecast]()
     private let repo = GenericRepository<QueryImpl, City>()
-    private var photos = [FlickrPhoto]()
+    @IBOutlet weak var placeHolderLabel: UILabel!
 }
 
 extension MainViewController {
@@ -22,7 +22,6 @@ extension MainViewController {
         super.viewDidLoad()
         collectionView.configureLayout()
     }
-    
     override func viewWillAppear(animated: Bool) {
         CachingManager.sharedInstance.updateCacheIfNeed {[weak self] (cities) in
             if let strongSelf = self {
@@ -30,35 +29,36 @@ extension MainViewController {
                 strongSelf.collectionView.reloadData()
             }
         }
+        placeHolderLabel.hidden = false
+        if self.cities.count != 0 { placeHolderLabel.hidden = true }
     }
 }
 
 extension MainViewController {
-    
     @IBAction func deleteItemAction(sender: UIButton) {
         if let selectedCell = sender.getForecastCell() {
-            let destroyAction = UIAlertAction(title: "Remove", style: .Destructive) { (action) in
-                let indexPath = self.collectionView.indexPathForCell(selectedCell)
-                let selectedCity = self.cities[(indexPath?.row)!]
-                self.cities.removeAtIndex((indexPath?.row)!)
-                self.repo.deleteObject(selectedCity)
-                self.collectionView.reloadData()
+        let destroyAction = UIAlertAction(title: "Remove", style:.Destructive) {[weak self] (action) in
+                if let strongSelf = self {
+                    let indexPath = strongSelf.collectionView.indexPathForCell(selectedCell)
+                    let selectedCity = strongSelf.cities[(indexPath?.row)!]
+                    strongSelf.cities.removeAtIndex((indexPath?.row)!)
+                    strongSelf.repo.deleteObject(selectedCity)
+                    strongSelf.collectionView.reloadData()
+                    if strongSelf.cities.count == 0 { strongSelf.placeHolderLabel.hidden = false }
+                }
             }
-            
             let alertController = createAlertController(destroyAction)
-            
             self.presentViewController(alertController, animated: true) {}
         }
     }
-    
-    func createAlertController(destroyAction : UIAlertAction) -> UIAlertController {
-        let alertController = UIAlertController(title: "Warning", message: "Remove the city from list", preferredStyle: .Alert)
-        
+    func createAlertController(destroyAction: UIAlertAction) -> UIAlertController {
+        let alertController = UIAlertController(title: "Warning",
+                                                message: "Remove the city from list",
+                                                preferredStyle:.Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
         }
         alertController.addAction(cancelAction)
         alertController.addAction(destroyAction)
-        
         return alertController
     }
 }
@@ -68,21 +68,19 @@ extension UIView {
         if self.superview == nil {
             return nil
         }
-        
         if let cell = self.superview as? ForecastCollectionCell {
             return cell
         }
-        
         return self.superview?.getForecastCell()
     }
 }
 
 //MARK: - Collection View Data Source
 extension MainViewController : UICollectionViewDataSource {
-    internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    internal func collectionView(collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
         return cities.count
     }
-    
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
         
@@ -113,7 +111,6 @@ extension UICollectionView {
         collectionViewLayout = layout
     }
 }
-
 
 //MARK: - Table View Data Source
 extension MainViewController : UITableViewDataSource {

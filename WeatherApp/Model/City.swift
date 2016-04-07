@@ -9,11 +9,11 @@ import ObjectMapper
 import RealmSwift
 
 final class City: Object, Mappable {
+    
     dynamic var id: Int = 0
     dynamic var coord : Coord?
     dynamic var name: String = ""
     var forecasts = List<Forecast>()
-    var photo : FlickrPhoto?
     
     required convenience init?(_ map: Map) {
         self.init()

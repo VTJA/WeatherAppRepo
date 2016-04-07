@@ -48,8 +48,7 @@ class FileManager {
             return UIImage(data:imageData)
         }
         else {
-            return nil
-        }
+            return nil}
     }
     
     func getDocumentsPath() -> NSString? {

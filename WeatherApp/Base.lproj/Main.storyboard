@@ -18,9 +18,19 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cities were added. To add a city touch the + sign at the top right corner of the screen. To remove a city swipe down." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgB-gm-0Jl" userLabel="Placeholder Label">
+                                <rect key="frame" x="158" y="208" width="284" height="121"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="284" id="1iZ-aT-Zfi"/>
+                                    <constraint firstAttribute="height" constant="121" id="AA5-DB-CVD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-VW-89z">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4bd-uz-WPK">
                                     <size key="itemSize" width="497" height="442"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -198,10 +208,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="BgB-gm-0Jl" firstAttribute="centerX" secondItem="A2c-Xc-pwS" secondAttribute="centerX" id="0j0-0b-UFf"/>
                             <constraint firstAttribute="trailing" secondItem="cfx-VW-89z" secondAttribute="trailing" id="9lK-LJ-aqe"/>
+                            <constraint firstAttribute="trailing" secondItem="cfx-VW-89z" secondAttribute="trailing" id="JJh-9P-lH1"/>
+                            <constraint firstItem="bOK-29-4iS" firstAttribute="top" secondItem="cfx-VW-89z" secondAttribute="bottom" id="c44-Yx-jhC"/>
                             <constraint firstItem="cfx-VW-89z" firstAttribute="leading" secondItem="A2c-Xc-pwS" secondAttribute="leading" id="dTO-LM-RFE"/>
+                            <constraint firstItem="cfx-VW-89z" firstAttribute="top" secondItem="jzS-AB-mxX" secondAttribute="bottom" id="eyK-JO-4p2"/>
                             <constraint firstItem="cfx-VW-89z" firstAttribute="top" secondItem="jzS-AB-mxX" secondAttribute="bottom" id="gnV-g0-5JK"/>
                             <constraint firstAttribute="bottom" secondItem="cfx-VW-89z" secondAttribute="bottom" id="i61-6l-R8T"/>
+                            <constraint firstItem="BgB-gm-0Jl" firstAttribute="centerY" secondItem="A2c-Xc-pwS" secondAttribute="centerY" id="mQd-jW-iww"/>
+                            <constraint firstItem="cfx-VW-89z" firstAttribute="leading" secondItem="A2c-Xc-pwS" secondAttribute="leading" id="yQg-YM-kc9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ceP-se-C9x">
@@ -213,6 +229,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="cfx-VW-89z" id="024-BS-raO"/>
+                        <outlet property="placeHolderLabel" destination="BgB-gm-0Jl" id="Bvu-Ht-0MD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZCv-tt-Zjo" userLabel="First Responder" sceneMemberID="firstResponder"/>

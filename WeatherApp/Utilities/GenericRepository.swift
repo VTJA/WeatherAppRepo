@@ -13,7 +13,6 @@ import RealmSwift
 class GenericRepository <T : Query, C : Object>: Store {
     
     typealias StoredObject = C
-    
     typealias QueryType =  T
     
     private let context = try! Realm()
@@ -71,19 +70,13 @@ class GenericRepository <T : Query, C : Object>: Store {
 protocol Store {
     
     associatedtype StoredObject
-    
     associatedtype QueryType
     
     func storeObject(object: StoredObject) -> Bool
-    
     func storeObjects(object: [StoredObject]) -> Bool
-    
     func readObjects(query: QueryType) -> [StoredObject]?
-    
     func readObjects(objectType: StoredObject.Type) -> [StoredObject]
-    
     func updateValue(objects:AnyObject, forKeypath: String, forObject object: StoredObject) -> Bool
-    
     func deleteObject(object:StoredObject) -> Bool
 }
 
@@ -94,7 +87,6 @@ protocol Query {
 struct QueryImpl: Query {
     
     var name : String?
-    
     var id : String?
     
     func buildPredicate() -> NSPredicate {

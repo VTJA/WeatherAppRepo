@@ -13,7 +13,6 @@ final class Request: Object, Mappable {
     dynamic var cod: String?
     dynamic var city: City?
     dynamic var cnt: Int = 0
-    
     var list : List<Forecast> = List<Forecast>()
     
     required convenience init?(_ map: Map) {
