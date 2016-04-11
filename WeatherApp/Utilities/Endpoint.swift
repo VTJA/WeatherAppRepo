@@ -10,6 +10,7 @@ import Foundation
 import AlamofireObjectMapper
 
 let WeatherAPIKey = "867a6d0c3d80f5bb68392878262304f6"
+let GooglePlacesAPIKey = "AIzaSyDO4l0r9kr1dDrELDRnqbmm8a4tUaJ67lw"
 
 enum HTTPMethod: String {
     case GET = "GET"
@@ -36,6 +37,21 @@ enum PhotoEndpoint {
     case Photos
 }
 
+extension PhotoEndpoint : Endpoint {
+    var baseURL: NSURL {
+        return NSURL(string:"https://maps.googleapis.com/maps/api/place")!
+    }
+    var path: String {
+        return "/radarsearch/json"
+    }
+    var method: HTTPMethod {
+        return .GET
+    }
+    var keypath: String {
+        return "results.0.photos"
+    }
+}
+
 extension WeatherEndpoint : Endpoint {
     var baseURL: NSURL { return NSURL(string: "http://api.openweathermap.org/data/2.5")! }
     
@@ -51,9 +67,11 @@ extension WeatherEndpoint : Endpoint {
             return "/forecast/daily"
         }
     }
-    
-    var method : HTTPMethod { return .GET }
-    
-    var keypath: String { return "list" }
+    var method : HTTPMethod {
+        return .GET
+    }
+    var keypath: String {
+        return "list"
+    }
 }
 

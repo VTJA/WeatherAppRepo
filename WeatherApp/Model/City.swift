@@ -9,7 +9,6 @@ import ObjectMapper
 import RealmSwift
 
 final class City: Object, Mappable {
-    
     dynamic var id: Int = 0
     dynamic var coord : Coord?
     dynamic var name: String = ""

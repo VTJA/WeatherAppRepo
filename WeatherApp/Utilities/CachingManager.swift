@@ -42,10 +42,10 @@ final class CachingManager {
      
      */
     
-    func loadForecasts(city:City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
+    func loadForecasts(city:City,
+                       withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
         let cityForecasts = city.forecasts.map {$0}
         let latestForecast = city.forecasts.sorted("dt", ascending: true)
-        
         if let forecast = latestForecast.first {
             if validateForecast(forecast) {
                 print("forecasts for \(city.name) are valid")
@@ -73,7 +73,6 @@ final class CachingManager {
         if queue.tasks.count == 0 {
             let repo = GenericRepository<QueryImpl, City>()
             let cities = repo.readObjects(City)
-            
             if !cities.isEmpty {
                 for city in cities {
                     
@@ -84,7 +83,7 @@ final class CachingManager {
                     }
                 }
                 queue.tasks += { result, next in
-                    withCompletion(cities: cities.map{$0})
+                    withCompletion(cities: cities.map{ $0 })
                     print(self.queue)
                     next(nil)
                 }
@@ -113,6 +112,8 @@ final class CachingManager {
         RequestDispatcher.sharedInstance.performRequest(WeatherEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
             if let error = error {
                 print("error: \(error.description)")
+                let nc = NSNotificationCenter.defaultCenter()
+                nc.postNotificationName("MappingError", object: nil)
                 completion(result: nil, error: error)
             } else {
                 if let forecasts = forecasts {
@@ -125,16 +126,15 @@ final class CachingManager {
     }
     
     /**
-    Load an image from disk if it already exists, else download it from source url
-    - parameter name: file name of the image
-    
-    - parameter url: url of the image
- 
-    - parameter completion: callback to retrieve the result image
-    */
+     Load an image from disk if it already exists, else download it from source url
+     - parameter name: file name of the image
+     
+     - parameter url: url of the image
+     
+     - parameter completion: callback to retrieve the result image
+     */
     
     func image(name: String, format: String, url: NSURL, withCompletion completion: (image: UIImage)->()) {
-        
         if let image = fileManager.readData(name, format: format) {
             completion(image: image)
             print("image \(name) already cached")
@@ -145,21 +145,20 @@ final class CachingManager {
                     let image = UIImage(data: imageData!)
                     completion(image: image!)
                 }
-            })
+                })
         }
     }
     
     /**
-    Download an image from the source url and return it's data in the callback
-    using an operation queue
- 
-    - parameter URL: source url of the image
+     Download an image from the source url and return it's data in the callback
+     using an operation queue
+     
+     - parameter URL: source url of the image
+     
+     - parameter completion: callback to retrieve the image data
+     */
     
-    - parameter completion: callback to retrieve the image data
-    */
-    
- func downloadImage(URL: NSURL , completion: (imageData: NSData?)->()) {
-        
+    func downloadImage(URL: NSURL , completion: (imageData: NSData?)->()) {
         let imageDownloader = ImageDownloader(url: URL)
         imageDownloader.completionBlock = {
             dispatch_async(dispatch_get_main_queue(), {
@@ -167,5 +166,24 @@ final class CachingManager {
             })
         }
         downloadQueue.addOperation(imageDownloader)
+    }
+    
+    func downloadPhotoReference(city: City, completion:(CityPhoto?)->()) {
+        let params = [
+                      "key":GooglePlacesAPIKey,
+                      "location":"\(city.coord!.lat),\(city.coord!.lon)",
+                      "radius":"10000",
+                      "type":"cafe"]
+        
+        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (photos: [CityPhoto]?, error: NSError?) in
+            
+            if let photos = photos {
+//                let cityPhoto = photos[0]
+                print("result:\(photos)")
+//                completion(cityPhoto)
+            } else {
+                print(error?.description)
+            }
+        }
     }
 }

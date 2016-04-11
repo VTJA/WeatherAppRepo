@@ -9,11 +9,9 @@ import Alamofire
 import ObjectMapper
 
 class RequestDispatcher {
-    
     static let sharedInstance = RequestDispatcher()
     internal var manager: Manager
-    internal var reachibilityManager : NetworkReachabilityManager
-    
+    internal var reachibilityManager: NetworkReachabilityManager
     init(manager: Manager = Manager.sharedInstance) {
         self.manager = manager
         reachibilityManager = NetworkReachabilityManager(host:"http://openweathermap.org/api")!
@@ -23,39 +21,40 @@ class RequestDispatcher {
             }
         }
     }
-    
-    func performRequest<T: Mappable, E : Endpoint>(endpoint: E, parameters: [String: AnyObject]? = nil, responseCallback: ([T]?, NSError?)-> Void) {
+    func performRequest<T: Mappable, E: Endpoint>(endpoint: E,
+                        parameters: [String: AnyObject]? = nil,
+                        responseCallback: ([T]?, NSError?) -> Void) {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
         manager.request(method, URL, parameters: parameters, encoding: .URLEncodedInURL)
             .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+            .validate(contentType: ["application/json"])     
             .responseArray(endpoint.keypath) { (response:Alamofire.Response<[T], NSError>) in
                 responseCallback(response.result.value, response.result.error)
         }
     }
-    
     func reachibilityDidChange(status : NetworkReachabilityManager.NetworkReachabilityStatus) {
-        print("\(status)")
+        let nc = NSNotificationCenter.defaultCenter()
+        switch status {
+            case .Unknown, .NotReachable:
+            nc.postNotificationName("NetworkError", object: nil)
+        default:
+            break
+        }
     }
 }
 
 extension HTTPMethod {
-    
     func toAlamofireMethod() -> Alamofire.Method {
         switch self {
         case .GET:
             return Method.GET
-            
         case .POST:
             return Method.POST
-            
         case .PUT:
             return Method.PUT
-            
         case .DELETE:
             return Method.DELETE
         }
     }
 }
-

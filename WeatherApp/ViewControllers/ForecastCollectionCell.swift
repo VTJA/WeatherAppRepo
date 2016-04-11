@@ -15,6 +15,21 @@ final class ForecastCollectionCell: UICollectionViewCell {
     @IBOutlet weak var deleteButtonTop: NSLayoutConstraint!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    var shouldShowDelete: Bool = false {
+        didSet {
+            if shouldShowDelete {
+                deleteButtonTop.constant = -deleteButton.bounds.size.height
+                UIView.animateWithDuration(0.3) {
+                    self.layoutIfNeeded()
+                }
+            } else {
+                deleteButtonTop.constant = 0
+                UIView.animateWithDuration(0.3) {
+                    self.layoutIfNeeded()
+                }
+            }
+        }
+    }
     
     func setTableViewDataSourceDelegate
         <D:UITableViewDataSource>
@@ -36,18 +51,6 @@ final class ForecastCollectionCell: UICollectionViewCell {
     }
     
     func handleSwipes(sender:UISwipeGestureRecognizer) {
-        if (sender.direction == .Up) {
-            deleteButtonTop.constant = -deleteButton.bounds.size.height
-            UIView.animateWithDuration(0.3) {
-                self.layoutIfNeeded()
-            }
-        }
-        
-        if (sender.direction == .Down) {
-            deleteButtonTop.constant = 0
-            UIView.animateWithDuration(0.3) {
-                self.layoutIfNeeded()
-            }
-        }
+        shouldShowDelete = sender.direction == .Up
     }
 }

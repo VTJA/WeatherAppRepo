@@ -18,7 +18,6 @@ final class Request: Object, Mappable {
     required convenience init?(_ map: Map) {
         self.init()
     }
-    
     func mapping(map: Map) {
         cod <- map["cod"]
         city <- map["city"]
