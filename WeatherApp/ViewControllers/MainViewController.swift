@@ -15,7 +15,6 @@ class MainViewController: UIViewController {
     private var cities = [City]()
     private var forecasts = [Forecast]()
     private let repo = GenericRepository<QueryImpl, City>()
-    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -27,7 +26,6 @@ extension MainViewController {
         collectionView.configureLayout()
         let nc = NSNotificationCenter.defaultCenter()
         nc.addObserver(self, selector: #selector(MainViewController.showAlertController), name: "NetworkError", object: nil)
-        nc.addObserver(self, selector: #selector(MainViewController.showAlertController), name: "MappingError", object: nil)
     }
     override func viewWillAppear(animated: Bool) {
         CachingManager.sharedInstance.updateCacheIfNeed {[weak self] (cities) in

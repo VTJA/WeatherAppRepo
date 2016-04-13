@@ -48,6 +48,8 @@ final class ForecastCollectionCell: UICollectionViewCell {
         
         self.contentView.addGestureRecognizer(upSwipe)
         self.contentView.addGestureRecognizer(downSwipe)
+        
+        self.deleteButtonTop.constant = 0
     }
     
     func handleSwipes(sender:UISwipeGestureRecognizer) {

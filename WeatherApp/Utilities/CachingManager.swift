@@ -113,7 +113,7 @@ final class CachingManager {
             if let error = error {
                 print("error: \(error.description)")
                 let nc = NSNotificationCenter.defaultCenter()
-                nc.postNotificationName("MappingError", object: nil)
+                nc.postNotificationName("NetworkError", object: nil)
                 completion(result: nil, error: error)
             } else {
                 if let forecasts = forecasts {
@@ -166,24 +166,5 @@ final class CachingManager {
             })
         }
         downloadQueue.addOperation(imageDownloader)
-    }
-    
-    func downloadPhotoReference(city: City, completion:(CityPhoto?)->()) {
-        let params = [
-                      "key":GooglePlacesAPIKey,
-                      "location":"\(city.coord!.lat),\(city.coord!.lon)",
-                      "radius":"10000",
-                      "type":"cafe"]
-        
-        RequestDispatcher.sharedInstance.performRequest(PhotoEndpoint.Photos, parameters: params) { (photos: [CityPhoto]?, error: NSError?) in
-            
-            if let photos = photos {
-//                let cityPhoto = photos[0]
-                print("result:\(photos)")
-//                completion(cityPhoto)
-            } else {
-                print(error?.description)
-            }
-        }
     }
 }

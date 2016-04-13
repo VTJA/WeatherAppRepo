@@ -60,8 +60,11 @@ extension SearchViewController : UITableViewDataSource {
     }
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+
         cell.textLabel!.text = self.filteredCities[indexPath.row].name
         cell.textLabel!.sizeToFit()
+        cell.selectionStyle = .None
+        cell.textLabel?.textColor = UIColor.whiteColor()
         return cell;
     }
 }
