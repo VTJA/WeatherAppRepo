@@ -283,6 +283,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="gpD-cl-U6Y" id="ACb-OA-gs3"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -331,6 +334,7 @@
                     </view>
                     <connections>
                         <outlet property="matchesTableView" destination="tvH-nR-Cqk" id="2iz-sb-x6O"/>
+                        <outlet property="searchTextField" destination="hZp-Gi-pXI" id="ahD-nO-AjR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A7M-GM-wVX" userLabel="First Responder" sceneMemberID="firstResponder"/>

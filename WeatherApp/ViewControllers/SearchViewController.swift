@@ -11,24 +11,30 @@ import Bond
 
 class SearchViewController: UIViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
+    private var searchViewModel = SearchViewModel()
     
-    var searchViewModel = SearchViewModel()
+    private var filteredCities : [City] = [City]()
+    
+    private var repo = GenericRepository<QueryImpl, City>()
+    
+    @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var matchesTableView: UITableView!
     
     override func viewDidLoad() {
-        searchViewModel.searchText.bid
+        
+        searchViewModel.searchText.bidirectionalBindTo(searchTextField.bnd_text)
     }
     
 }
 
-extension SearchViewController : UISearchBarDelegate {
-    internal func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SearchViewController.performSearch), object: nil)
-        performSelector(#selector(SearchViewController.performSearch), withObject: nil, afterDelay: 0.3)
-        matchesTableView.reloadData()
-    }
+extension SearchViewController : UITextFieldDelegate {
+//    internal func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+//        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SearchViewController.performSearch), object: nil)
+//        performSelector(#selector(SearchViewController.performSearch), withObject: nil, afterDelay: 0.3)
+//        matchesTableView.reloadData()
+//    }
+    
 }
 
 extension SearchViewController : UITableViewDataSource {
