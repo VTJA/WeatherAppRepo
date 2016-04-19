@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (3.3.0)
+  - Alamofire (3.3.1)
   - AlamofireObjectMapper (2.1.2):
     - Alamofire (~> 3.2)
     - ObjectMapper (~> 1.0)
+  - Bond (4.3.1)
   - ObjectMapper (1.2.0)
-  - OCMock (3.2.2)
   - OHHTTPStubs (5.0.0):
     - OHHTTPStubs/Default (= 5.0.0)
   - OHHTTPStubs/Core (5.0.0)
@@ -18,30 +18,27 @@ PODS:
   - OHHTTPStubs/NSURLSession (5.0.0):
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (5.0.0)
-  - OHHTTPStubs/Swift (5.0.0):
-    - OHHTTPStubs/Core
-  - Realm (0.98.6):
-    - Realm/Headers (= 0.98.6)
-  - Realm/Headers (0.98.6)
-  - RealmSwift (0.98.6):
-    - Realm (= 0.98.6)
+  - Realm (0.98.8):
+    - Realm/Headers (= 0.98.8)
+  - Realm/Headers (0.98.8)
+  - RealmSwift (0.98.8):
+    - Realm (= 0.98.8)
 
 DEPENDENCIES:
   - Alamofire (~> 3.2)
   - AlamofireObjectMapper (~> 2.1)
+  - Bond (~> 4.3)
   - ObjectMapper (~> 1.1)
-  - OCMock (~> 3.2)
   - OHHTTPStubs
-  - OHHTTPStubs/Swift
   - RealmSwift (~> 0.98)
 
 SPEC CHECKSUMS:
-  Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   AlamofireObjectMapper: 82391c31f23e37bdb2660da174bcf81b202da39d
+  Bond: 55903fc67f09e8e49791a657163cabba1d6fb29d
   ObjectMapper: b1e9c7c8a9f6400b72690c80072c131504caa66f
-  OCMock: 18c9b7e67d4c2770e95bb77a9cc1ae0c91fe3835
   OHHTTPStubs: a5d2e9eea07869d42ec03338325f398bc520e159
-  Realm: 44803f35418c5d89b27825a564247fcd190de37e
-  RealmSwift: c7239c52c83f8c43525a5269ba7be1694da33afc
+  Realm: 0e293bb62999730599efc3048896bbd4f2e43bcd
+  RealmSwift: 064262d38113f23ff3508fb20a0a922e696bec01
 
 COCOAPODS: 0.39.0

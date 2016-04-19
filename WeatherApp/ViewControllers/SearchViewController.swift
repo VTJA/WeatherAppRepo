@@ -7,49 +7,26 @@
 //
 
 import UIKit
+import Bond
 
-final class SearchViewController: UIViewController {
+class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var searchViewModel = SearchViewModel()
+    
     @IBOutlet weak var matchesTableView: UITableView!
     
-    private var filteredCities : [City] = [City]()
-    
-    private var repo = GenericRepository<QueryImpl, City>()
-    
-    func performSearch() {
-        if (searchBar.text!.characters.count > 3) {
-            
-            let params = ["q":searchBar.text!,
-                          "appid": WeatherAPIKey,
-                          "units": "metric",
-                          "type": "like" ,
-                          "mode": "json"]
-            
-            RequestDispatcher.sharedInstance.performRequest(WeatherEndpoint.Search, parameters: params)
-            {[weak self] (result : [City]?, error : NSError?) -> Void in
-                if let strongSelf = self {
-                    if let filteredCities = result {
-                        strongSelf.filteredCities = filteredCities
-                    } else {
-                        print(error?.description)
-                    }
-                    strongSelf.matchesTableView.reloadData()
-                }
-            }
-        }
+    override func viewDidLoad() {
+        searchViewModel.searchText.bid
     }
+    
 }
 
 extension SearchViewController : UISearchBarDelegate {
     internal func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SearchViewController.performSearch), object: nil)
         performSelector(#selector(SearchViewController.performSearch), withObject: nil, afterDelay: 0.3)
-        
-        if searchBar.text?.characters.count < 3 {
-            filteredCities.removeAll()
-        }
         matchesTableView.reloadData()
     }
 }

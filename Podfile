@@ -8,6 +8,7 @@ target 'WeatherApp' do
     pod 'AlamofireObjectMapper', '~> 2.1'
     pod 'ObjectMapper', '~> 1.1'
     pod 'RealmSwift', '~> 0.98'
+    pod 'Bond', '~> 4.3'
 end
 
 target 'WeatherAppTests' do
