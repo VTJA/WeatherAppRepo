@@ -22,7 +22,7 @@ class RequestDispatcher {
         }
     }
     func performRequest<T: Mappable, E: Endpoint>(endpoint: E,
-                        parameters: [String: AnyObject]? = nil,
+                        parameters: [String: AnyObject],
                         responseCallback: ([T]?, NSError?) -> Void) {
         let URL = endpoint.baseURL.URLByAppendingPathComponent(endpoint.path)
         let method = endpoint.method.toAlamofireMethod()
