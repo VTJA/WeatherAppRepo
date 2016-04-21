@@ -12,13 +12,13 @@ class SearchViewModel {
     
     let filteredCities = ObservableArray<City>()
     
-    private var searchResults = [City]()
-    
     private var repo = GenericRepository<QueryImpl, City>()
     
     let searchText = Observable<String?>("")
     
     let validSearchText = Observable<Bool>(false)
+    
+    let errorMessages = EventProducer<String>()
     
     init() {
         searchText
@@ -37,7 +37,7 @@ class SearchViewModel {
     func performSearch(text: String?) -> () {
         if let text = text {
             let params = ["q": text,
-                          "appid": "867a6d0c3d80f5bb68392878262304f6",
+                          "appid": WeatherAPIKey,
                           "units": "metric",
                           "type": "like",
                           "mode": "json"]
@@ -48,11 +48,14 @@ class SearchViewModel {
                     self.filteredCities.removeAll()
                     self.filteredCities.insertContentsOf(result, atIndex: 0)
                 } else {
-                    print(error?.description)
+                    self.errorMessages
+                    .next("There was an API request issue of some sort.")
                 }
-                //TODO: signal reload of search table view
             }
         }
-        
+    }
+    
+    func storeCityAtIndex(index: Int) -> Bool {
+        return repo.storeObject(filteredCities[index])
     }
 }

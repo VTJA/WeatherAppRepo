@@ -8,15 +8,13 @@
 import Foundation
 import UIKit
 
-class ViewModel {
+class MainViewModel {
     
     var cities = [City]()
     
-    func refresh() -> () {
-        CachingManager.sharedInstance.updateCacheIfNeed {[weak self] (cities) in
-            if let strongSelf = self {
-                strongSelf.cities = cities
-            }
+    func refresh(completion:(cities: [City]) -> ()) -> () {
+        CachingManager.sharedInstance.updateCacheIfNeed { (cities) in
+            completion(cities: cities)
         }
     }
     
@@ -24,7 +22,7 @@ class ViewModel {
         return city.forecasts.map{$0}
     }
     
-    func titleTextForCity(index: Int) -> String {
+    func titleTextForCityLabel(index: Int) -> String {
         let city = cities[index]
         if let tempStr = city.forecasts[0].temp?.day {
             return "\(city.name) \(tempStr)\u{00B0} C"

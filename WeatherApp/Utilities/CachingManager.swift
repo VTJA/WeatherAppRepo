@@ -48,15 +48,12 @@ final class CachingManager {
         let latestForecast = city.forecasts.sorted("dt", ascending: true)
         if let forecast = latestForecast.first {
             if validateForecast(forecast) {
-                print("forecasts for \(city.name) are valid")
                 completion(result:cityForecasts, error: nil)
             } else {
                 downloadForecasts(city, withCompletion: completion)
-                print("forecasts for \(city.name) have invalid date.Refreshing...")
             }
         } else {
             downloadForecasts(city, withCompletion: completion)
-            print("forecasts for \(city.name) missing.Downloading forecasts...")
         }
     }
     
@@ -84,7 +81,7 @@ final class CachingManager {
                 }
                 queue.tasks += { result, next in
                     withCompletion(cities: cities.map{ $0 })
-                    print(self.queue)
+//                    print(self.queue)
                     next(nil)
                 }
                 queue.run()
@@ -137,7 +134,6 @@ final class CachingManager {
     func image(name: String, format: String, url: NSURL, withCompletion completion: (image: UIImage)->()) {
         if let image = fileManager.readData(name, format: format) {
             completion(image: image)
-            print("image \(name) already cached")
         } else {
             downloadImage(url, completion: { [weak self] (imageData) in
                 if let strongSelf = self {

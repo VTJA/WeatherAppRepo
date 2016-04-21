@@ -277,7 +277,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hZp-Gi-pXI">
-                                            <rect key="frame" x="8" y="0.0" width="584" height="30"/>
+                                            <rect key="frame" x="8" y="8" width="584" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="fFK-OX-jKg"/>
                                             </constraints>
@@ -289,7 +289,7 @@
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="hZp-Gi-pXI" firstAttribute="top" secondItem="dKy-Yv-HZg" secondAttribute="top" id="W4C-w0-lel"/>
+                                        <constraint firstItem="hZp-Gi-pXI" firstAttribute="top" secondItem="dKy-Yv-HZg" secondAttribute="top" constant="8" id="W4C-w0-lel"/>
                                         <constraint firstItem="hZp-Gi-pXI" firstAttribute="leading" secondItem="dKy-Yv-HZg" secondAttribute="leading" constant="8" id="eJp-vs-haZ"/>
                                         <constraint firstAttribute="trailing" secondItem="hZp-Gi-pXI" secondAttribute="trailing" constant="8" id="pCy-0e-lUU"/>
                                     </constraints>
@@ -297,7 +297,7 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tvH-nR-Cqk">
-                                <rect key="frame" x="0.0" y="30" width="600" height="506"/>
+                                <rect key="frame" x="0.0" y="37" width="600" height="499"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="fep-bD-bkT">
@@ -322,7 +322,7 @@
                             <constraint firstItem="590-s4-QJH" firstAttribute="leading" secondItem="php-CY-Pda" secondAttribute="leading" id="DbC-fv-VSp"/>
                             <constraint firstItem="b50-vB-8z0" firstAttribute="leading" secondItem="php-CY-Pda" secondAttribute="leading" id="EIi-6d-K63"/>
                             <constraint firstItem="iDm-V3-HiP" firstAttribute="top" secondItem="tvH-nR-Cqk" secondAttribute="bottom" id="Rkv-qW-bil"/>
-                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="top" secondItem="hZp-Gi-pXI" secondAttribute="bottom" id="VQC-Tc-FgY"/>
+                            <constraint firstItem="tvH-nR-Cqk" firstAttribute="top" secondItem="hZp-Gi-pXI" secondAttribute="bottom" constant="-1" id="VQC-Tc-FgY"/>
                             <constraint firstItem="iDm-V3-HiP" firstAttribute="top" secondItem="b50-vB-8z0" secondAttribute="bottom" id="bmS-tc-4MY"/>
                             <constraint firstAttribute="trailing" secondItem="590-s4-QJH" secondAttribute="trailing" id="hUD-gI-Ufv"/>
                             <constraint firstItem="590-s4-QJH" firstAttribute="top" secondItem="k53-qP-yao" secondAttribute="bottom" id="jAB-Ff-jSm"/>

@@ -14,18 +14,17 @@ class MainViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var placeHolderLabel: UILabel!
     
-    var viewModel: ViewModel!
+    let viewModel = MainViewModel()
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
+//    deinit {
+//        NSNotificationCenter.defaultCenter().removeObserver(self)
+//    }
 }
 
 extension MainViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = ViewModel()
         viewModel.configureCollectionView(collectionView)
         self.navigationController?.delegate = self
         //        let nc = NSNotificationCenter.defaultCenter()
@@ -33,11 +32,12 @@ extension MainViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
+        //        super.viewWillAppear(animated)
         print("viewWillAppear")
-        viewModel.refresh()
-        print("count: \(viewModel.cities.count)")
-        collectionView.reloadData()
+        viewModel.refresh { (cities) in
+            self.viewModel.cities = cities
+            self.collectionView.reloadData()
+        }
     }
     
     
@@ -48,38 +48,38 @@ extension MainViewController {
 
 extension MainViewController : UINavigationControllerDelegate {
     func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-//        print("willShowViewController")
-//        self.viewWillAppear(animated)
+        //        print("willShowViewController")
+        //        self.viewWillAppear(animated)
     }
 }
 
 extension MainViewController {
     @IBAction func deleteItemAction(sender: UIButton) {
         
-        if let selectedCell = sender.getForecastCell() {
-            let alertController = UIAlertController(title: "Warning",
-                                                    message: "Remove the city from list",
-                                                    preferredStyle:.Alert)
-            
-            //            let destroyAction = UIAlertAction(title: "Remove", style:.Destructive) {[weak self] (action) in
-            //                if let strongSelf = self {
-            //                        let indexPath = strongSelf.collectionView.indexPathForCell(selectedCell)
-            //                        let selectedCity = strongSelf.cities[(indexPath?.row)!]
-            //                        strongSelf.cities.removeAtIndex((indexPath?.row)!)
-            //                        strongSelf.repo.deleteObject(selectedCity)
-            //                        strongSelf.collectionView.reloadData()
-            //
-            //                        if strongSelf.cities.count == 0 {
-            //                            strongSelf.placeHolderLabel.hidden = false
-            //                        }
-            //                }
-            //            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            //            alertController.addAction(destroyAction)
-            alertController.addAction(cancelAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
+        //        if let selectedCell = sender.getForecastCell() {
+        //            let alertController = UIAlertController(title: "Warning",
+        //                                                    message: "Remove the city from list",
+        //                                                    preferredStyle:.Alert)
+        //
+        //            let destroyAction = UIAlertAction(title: "Remove", style:.Destructive) {[weak self] (action) in
+        //                if let strongSelf = self {
+        //                        let indexPath = strongSelf.collectionView.indexPathForCell(selectedCell)
+        //                        let selectedCity = strongSelf.cities[(indexPath?.row)!]
+        //                        strongSelf.cities.removeAtIndex((indexPath?.row)!)
+        //                        strongSelf.repo.deleteObject(selectedCity)
+        //                        strongSelf.collectionView.reloadData()
+        //
+        //                        if strongSelf.cities.count == 0 {
+        //                            strongSelf.placeHolderLabel.hidden = false
+        //                        }
+        //                }
+        //            }
+        //
+        //        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        //                    alertController.addAction(destroyAction)
+        //        alertController.addAction(cancelAction)
+        //        self.presentViewController(alertController, animated: true, completion: nil)
+        //    }
     }
 }
 
@@ -109,7 +109,7 @@ extension MainViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell",
                                                                          forIndexPath: indexPath) as! ForecastCollectionCell
         
-        cell.tempLabel.text = viewModel.titleTextForCity(indexPath.row)
+        cell.tempLabel.text = viewModel.titleTextForCityLabel(indexPath.row)
         
         cell.setTableViewDataSourceDelegate(self, forRow: indexPath.row)
         
@@ -137,8 +137,11 @@ extension MainViewController : UITableViewDataSource {
                             cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("dailyCell") as! DailyForecastCell
         cell.selectionStyle = .None
+        
         let city = viewModel.cities[tableView.tag]
+        
         let forecast = city.forecasts[indexPath.row]
+        
         cell.dayLabel?.text = viewModel.forecastCellText(forecast)
         
         viewModel.imageForForecast(forecast) { (image) in

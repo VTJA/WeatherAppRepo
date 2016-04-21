@@ -29,7 +29,7 @@ class SearchViewController: UIViewController {
         searchViewModel.searchText
         .bidirectionalBindTo(searchTextField.bnd_text)
         
-        searchViewModel.validSearchText.map{ $0 ? UIColor.blackColor() : UIColor.redColor()}
+        searchViewModel.validSearchText.map { $0 ? UIColor.blackColor() : UIColor.redColor()}
         .bindTo(searchTextField.bnd_textColor)
         
         searchViewModel.filteredCities.lift().bindTo(matchesTableView) { indexPath, dataSource, tableView in
@@ -40,6 +40,19 @@ class SearchViewController: UIViewController {
             cell.textLabel?.text = city.name
             
             return cell
+        }
+        
+        searchViewModel.errorMessages.observe {
+            [unowned self] error in
+            
+            let alertController = UIAlertController(title: "Something went wrong",
+                message: error, preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            let actionOk = UIAlertAction(title: "OK", style: .Default,
+                handler: { action in
+                    alertController.dismissViewControllerAnimated(true, completion: nil) })
+            
+            alertController.addAction(actionOk)
         }
     }
 }
@@ -56,7 +69,7 @@ extension SearchViewController : UITableViewDataSource {
 
 extension SearchViewController : UITableViewDelegate {
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if !repo.storeObject(self.filteredCities[indexPath.row]) { print("error writing to the database")}
+        if !searchViewModel.storeCityAtIndex(indexPath.row) { print("error writing to the database")}
         //TODO: Store filtered cities on selected cell
         self.navigationController?.popViewControllerAnimated(true)
     }

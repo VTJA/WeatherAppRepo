@@ -14,9 +14,8 @@ class FileManager {
         
         if let documentsPath = getDocumentsPath() {
             
-            print(documentsPath)
             guard let image = UIImage(data: data) else {
-                print("failed to create image from data")
+//                print("failed to create image from data")
                 return false
             }
             
@@ -24,7 +23,7 @@ class FileManager {
             
             UIImagePNGRepresentation(image)!.writeToFile(destinationPath, atomically: false)
             
-            print("\(filename) written to path")
+//            print("\(filename) written to path")
             return true
         }
         else {
@@ -40,11 +39,11 @@ class FileManager {
             let destinationPath = documentsPath.stringByAppendingPathComponent("\(filename).\(format)")
             
             guard let imageData = filemgr.contentsAtPath(destinationPath) else {
-                print("file \(filename) not found at path \(destinationPath)")
+//                print("file \(filename) not found at path \(destinationPath)")
                 return nil
             }
             
-            print("\(filename) read from path")
+//            print("\(filename) read from path")
             return UIImage(data:imageData)
         }
         else {
