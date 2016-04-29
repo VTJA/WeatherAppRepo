@@ -14,6 +14,8 @@ final class CachingManager {
     static let sharedInstance = CachingManager()
     static let secPerDay: Double = 86400
     
+    let queue = TaskQueue()
+    
     /**
      Check if a forecast date has expired (A forecast Date has expired if a day has passed since it's
      timestamp date)
@@ -24,33 +26,65 @@ final class CachingManager {
      
      */
     
-    internal func validateForecasts(forecast: Forecast) -> Bool {
+    internal func validateForecast(forecast: Forecast) -> Bool {
         return NSDate().timeIntervalSince1970 - forecast.dt > CachingManager.secPerDay ? false : true
     }
     
     /**
-     Check forecasts in database by id, if a forecast is missing download
+     Check forecasts in database by id, if the latest forecast date has expired or if the latest the forecast is nil, download it
      
-     - parameter forecast:a forecast stored in data base
+     - parameter city: a city stored in data base
+     
+     - parameter completion: completion callback
      
      - returns: void
      
      */
     
-    func loadForecast(forecast: Forecast, withCompletion completion: (result: Results<Forecast>?, error: NSError?)->()) {
-        let predicate = NSPredicate(format: "id = %@", forecast.id)
-        let forecasts = DataBaseManager.sharedInstance.realm.objects(Forecast).filter(predicate)
-        let latestForecast = forecasts.sorted("dt", ascending: false)
+    func loadForecasts(city:City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
+        
+        //        let predicate = NSPredicate(format: "id = %@", city.id)
+        //        let city = DataBaseManager.sharedInstance.realm.objects(City).filter(predicate)
+        let cityForecasts = city.forecasts.map { $0 }
+        let latestForecast = city.forecasts.sorted("dt", ascending: false)
         
         if let forecast = latestForecast.first {
-            if validateForecasts(forecast) {
-                completion(result: forecasts, error: nil)
+            if validateForecast(forecast) {
+                print("forecasts for \(city.name) are valid")
+                completion(result:cityForecasts, error: nil)
             } else {
-                downloadForecasts(forecast, withCompletion: completion)
+                downloadForecasts(city, withCompletion: completion)
+                print("forecasts for \(city.name) have invalid date.Downloading new forecasts...")
             }
-            
         } else {
-            downloadForecasts(forecast, withCompletion: completion)
+            downloadForecasts(city, withCompletion: completion)
+            print("forecasts for \(city.name) missing.Downloading forecasts...")
+        }
+    }
+    
+    func updateCacheIfNeed(withCompletion: (cities: [City])->()) {
+        if queue.tasks.count == 0 {
+            let realm = try! Realm()
+            let cities = realm.objects(City)
+            
+            if !cities.isEmpty {
+                for city in cities {
+                    
+                    queue.tasks += {result, next in
+                        self.loadForecasts(city, withCompletion: { (result, error) in
+                            next(nil)
+                        })
+                    }
+                    
+                }
+                
+                queue.tasks += { result, next in
+                    withCompletion(cities: cities.map{$0})
+                    print(self.queue)
+                    next(nil)
+                }
+                queue.run()
+            }
         }
     }
     
@@ -65,8 +99,8 @@ final class CachingManager {
      
      */
     
-    private func downloadForecasts(forecast: Forecast, withCompletion completion: (result: Results<Forecast>?, error: NSError?)->()) {
-        let params = ["id":String(forecast.id),
+    private func downloadForecasts(city: City, withCompletion completion: (result: [Forecast]?, error: NSError?)->()) {
+        let params = ["id":String(city.id),
                       "appid": APIkey,
                       "units": "metric",
                       "cnt" : "4",
@@ -74,9 +108,16 @@ final class CachingManager {
         
         RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (forecasts: [Forecast]?, error: NSError?) in
             if let error = error {
+                print("error: \(error.description)")
                 completion(result: nil, error: error)
             } else {
-//                DataBaseManager.sharedInstance.store(forecast)
+                let realm = try! Realm()
+                try! realm.write({
+                    city.forecasts.removeAll()
+                    print(city.forecasts)
+                    city.forecasts.appendContentsOf(forecasts!)
+                })
+                completion(result: forecasts, error: nil)
             }
         }
     }

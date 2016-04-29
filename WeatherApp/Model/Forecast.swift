@@ -11,8 +11,6 @@ import RealmSwift
 
 class Forecast: Object, Mappable  {
     
-    dynamic var id : Int = 0
-    
     dynamic var pressure: Double = 0
     
     dynamic var humidity: Double = 0
@@ -23,16 +21,11 @@ class Forecast: Object, Mappable  {
     
     dynamic var weather : Weather?
     
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-    
     required convenience init?(_ map: Map) {
         self.init()
     }
     
     func mapping(map: Map) {
-        id <- map[""]
         dt <- map["dt"]
         weather <- map["weather.0"]
         temp <- map["temp"]

@@ -28,7 +28,6 @@ final class SearchViewController: UIViewController {
                 {[unowned self] (result : [City]?, error : NSError?) -> Void in
                     
                     if let filteredCities = result {
-                        print(filteredCities)
                         self.filteredCities = filteredCities
                     } else {
                         print(error?.description)
@@ -46,7 +45,7 @@ extension SearchViewController : UISearchBarDelegate {
         performSelector(#selector(SearchViewController.performSearch), withObject: nil, afterDelay: 0.3)
         
         if searchBar.text?.characters.count < 3 {
-            filteredCities = [City]()
+            filteredCities.removeAll()
         }
         matchesTableView.reloadData()
     }
@@ -66,7 +65,7 @@ extension SearchViewController : UITableViewDataSource {
 
 extension SearchViewController : UITableViewDelegate {
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        DataBaseManager.sharedInstance.store(self.filteredCities[indexPath.row])
+        DataBaseManager.sharedInstance.store(city: self.filteredCities[indexPath.row])
         self.navigationController?.popViewControllerAnimated(true)
     }
 }

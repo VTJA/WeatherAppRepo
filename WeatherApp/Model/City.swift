@@ -16,10 +16,11 @@ final class City: Object, Mappable {
     
     dynamic var name: String = ""
     
-    let forecasts = List<Forecast>()
+    var forecasts = List<Forecast>()
     
     required convenience init?(_ map: Map) {
         self.init()
+
     }
     
     func mapping(map: Map) {

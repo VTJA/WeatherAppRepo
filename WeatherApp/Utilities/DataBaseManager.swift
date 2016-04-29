@@ -15,7 +15,7 @@ final class DataBaseManager {
     static let sharedInstance = DataBaseManager()
     let realm = try! Realm()
     
-    func store<T:Object>(object : T) {
+    func store (city object : City) {
         try! realm.write {
             realm.add(object, update: true)
         }

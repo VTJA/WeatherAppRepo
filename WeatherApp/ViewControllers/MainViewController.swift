@@ -13,7 +13,7 @@ final class MainViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var cities = Results<City>?()
+    private var cities = [City]()
     private var forecasts = [Forecast]()
     
     override func viewDidLoad() {
@@ -21,37 +21,21 @@ final class MainViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        let realm = try! Realm()
-        cities = realm.objects(City)
-        collectionView.reloadData()
-        
-        if cities?.count != 0 {
-            let city = cities!.first!
-            let params : [String : AnyObject] = ["q":city.name,
-                                                 "appid": APIkey,
-                                                 "units": "metric",
-                                                 "cnt" : "4",
-                                                 "mode": "json"]
-            
-            RequestDispatcher.sharedInstance.performRequest(MyEndpoint.ForecastByDays, parameters: params) { (result : [Forecast]?, error:  NSError?) in
-                if let result = result {
-                    self.forecasts = result
-                    DataBaseManager.sharedInstance.store(self.forecasts[0])
-                    print(self.forecasts)
-                }
-            }
+        CachingManager.sharedInstance.updateCacheIfNeed { (cities) in
+            self.cities = cities
+            self.collectionView.reloadData()
         }
     }
 }
 
 extension MainViewController : UICollectionViewDataSource {
     internal func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (cities?.count)!
+        return cities.count
     }
     
     internal func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("forecastCollectionCell", forIndexPath: indexPath)  as! ForecastCollectionCell
-        cell.tempLabel.text = " \(cities![indexPath.row].name) C\u{02DA}" ?? ""
+        cell.tempLabel.text = " \(cities[indexPath.row].name) C\u{02DA}" ?? ""
         //        cell.tempLabel.text = "                cell?.textLabel?.text = storedForecasts![indexPath.row].name C\u{02DA}" ?? ""
         return cell
     }
